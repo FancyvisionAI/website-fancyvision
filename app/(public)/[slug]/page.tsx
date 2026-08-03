@@ -1,0 +1,87 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+import { ContentCard } from "@/components/public/content-card";
+import { PageHero } from "@/components/public/page-hero";
+import { db } from "@/lib/db";
+import { contentRepository } from "@/lib/repositories/content";
+
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const pages = await db.page.findMany({
+    where: {
+      locale: "fr",
+      status: "PUBLISHED",
+      slug: { startsWith: "formation-ia-" },
+    },
+    select: { slug: true },
+  });
+  return pages.map(({ slug }) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const page = await contentRepository.page(slug);
+  if (!page) return {};
+  return {
+    title: page.title,
+    description: page.description,
+  };
+}
+
+export default async function DatabaseLandingPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const [page, trainings] = await Promise.all([
+    contentRepository.page(slug),
+    contentRepository.trainings(),
+  ]);
+  if (!page || !slug.startsWith("formation-ia-")) notFound();
+
+  return (
+    <>
+      <PageHero
+        eyebrow="Formation IA partout en France"
+        title={page.headline ?? page.title}
+        description={page.description}
+        cta={{ label: "Parler de votre besoin", href: "/rendez-vous" }}
+      />
+      <section className="section-pad bg-[#f3f6fb]">
+        <div className="container-shell">
+          <div className="mb-9 grid gap-5 lg:grid-cols-[.55fr_1fr] lg:items-end">
+            <span className="eyebrow text-[#597dc1]">Programmes disponibles</span>
+            <div>
+              <h2 className="max-w-3xl text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+                Une formation pratique, adaptée à votre équipe.
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-[#647086]">
+                Sur site ou à distance, chaque parcours associe démonstrations, exercices métier et ressources directement réutilisables.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {trainings.slice(0, 6).map((training, index) => (
+              <ContentCard
+                key={training.id}
+                href={`/formations/${training.slug}`}
+                index={index}
+                eyebrow={training.category?.name}
+                title={training.title}
+                description={training.excerpt}
+                meta={training.duration}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
