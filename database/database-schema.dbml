@@ -1,0 +1,680 @@
+// FancyVision relational schema
+// Generated from prisma/schema.prisma and prisma/migrations.
+// This is documentation only; it does not modify the database.
+
+Enum UserStatus {
+  ACTIVE
+  INVITED
+  SUSPENDED
+}
+
+Enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+Enum RequestStatus {
+  NEW
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+Enum MenuLocation {
+  HEADER
+  FOOTER
+  MOBILE
+}
+
+Enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+Table User {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text
+  email text [not null, unique]
+  emailVerified timestamp(3)
+  image text
+  passwordHash text
+  status UserStatus [not null, default: 'ACTIVE']
+  roleId text
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Application identities, credentials linkage, status, and optional role assignment.'
+}
+
+Table Account {
+  userId text [not null]
+  type text [not null]
+  provider text [not null]
+  providerAccountId text [not null]
+  refresh_token text
+  access_token text
+  expires_at integer
+  token_type text
+  scope text
+  id_token text
+  session_state text
+
+  indexes {
+    (provider, providerAccountId) [pk, name: 'Account_pkey']
+  }
+
+  Note: 'External authentication-provider accounts linked to users.'
+}
+
+Table Session {
+  sessionToken text [pk, not null, unique]
+  userId text [not null]
+  expires timestamp(3) [not null]
+
+  Note: 'Persisted authentication sessions associated with users.'
+}
+
+Table VerificationToken {
+  identifier text [not null]
+  token text [not null, unique]
+  expires timestamp(3) [not null]
+
+  indexes {
+    (identifier, token) [pk, name: 'VerificationToken_pkey']
+  }
+
+  Note: 'Short-lived tokens used by authentication verification flows.'
+}
+
+Table Role {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null, unique]
+  description text
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Named authorization roles assigned to users.'
+}
+
+Table Permission {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  key text [not null, unique]
+  description text
+
+  Note: 'Atomic authorization capabilities attached to roles.'
+}
+
+Table RolePermission {
+  roleId text [not null]
+  permissionId text [not null]
+
+  indexes {
+    (roleId, permissionId) [pk, name: 'RolePermission_pkey']
+  }
+
+  Note: 'Junction table implementing the many-to-many role-permission assignment.'
+}
+
+Table Page {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  locale text [not null, default: 'fr']
+  title text [not null]
+  slug text [not null]
+  eyebrow text
+  headline text
+  description text
+  status ContentStatus [not null, default: 'DRAFT']
+  publishedAt timestamp(3)
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (locale, slug) [unique, name: 'Page_locale_slug_key']
+    (status, publishedAt) [name: 'Page_status_publishedAt_idx']
+  }
+
+  Note: 'Localized CMS pages and their publication lifecycle.'
+}
+
+Table Section {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  pageId text [not null]
+  type text [not null]
+  name text [not null]
+  data jsonb [not null]
+  order integer [not null, default: 0]
+  visible boolean [not null, default: true]
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (pageId, order) [name: 'Section_pageId_order_idx']
+  }
+
+  Note: 'Ordered structured content blocks belonging to a page.'
+}
+
+Table Seo {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  pageId text [unique]
+  serviceId text [unique]
+  trainingId text [unique]
+  articleId text [unique]
+  caseStudyId text [unique]
+  title text [not null]
+  description text [not null]
+  keywords text[] [not null]
+  canonical text
+  ogImage text
+  schema jsonb
+  noIndex boolean [not null, default: false]
+
+  Note: 'Optional one-to-one SEO metadata for one of several content types.'
+}
+
+Table Setting {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  key text [not null, unique]
+  value jsonb [not null]
+  group text [not null, default: 'general']
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Keyed JSON configuration grouped by application area.'
+}
+
+Table Menu {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  location MenuLocation [not null]
+  locale text [not null, default: 'fr']
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (location, locale) [unique, name: 'Menu_location_locale_key']
+  }
+
+  Note: 'Localized navigation menus by fixed header/footer location.'
+}
+
+Table MenuItem {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  menuId text [not null]
+  parentId text
+  label text [not null]
+  url text [not null]
+  external boolean [not null, default: false]
+  order integer [not null, default: 0]
+  visible boolean [not null, default: true]
+
+  indexes {
+    (menuId, order) [name: 'MenuItem_menuId_order_idx']
+  }
+
+  Note: 'Ordered hierarchical navigation entries belonging to a menu.'
+}
+
+Table Media {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  url text [not null]
+  key text [unique]
+  mimeType text [not null]
+  size integer [not null]
+  width integer
+  height integer
+  alt text [not null]
+  folder text [default: '/']
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Metadata for uploaded media assets.'
+}
+
+Table Redirect {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  source text [not null, unique]
+  target text [not null]
+  permanent boolean [not null, default: true]
+  active boolean [not null, default: true]
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Managed source-to-target URL redirects.'
+}
+
+Table ServiceCategory {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  slug text [not null, unique]
+  description text
+  order integer [not null, default: 0]
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Ordered taxonomy for consulting and data services.'
+}
+
+Table Service {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  locale text [not null, default: 'fr']
+  categoryId text
+  title text [not null]
+  slug text [not null]
+  excerpt text [not null]
+  content jsonb [not null]
+  icon text
+  image text
+  status ContentStatus [not null, default: 'DRAFT']
+  order integer [not null, default: 0]
+  featured boolean [not null, default: false]
+  publishedAt timestamp(3)
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (locale, slug) [unique, name: 'Service_locale_slug_key']
+    (status, order) [name: 'Service_status_order_idx']
+  }
+
+  Note: 'Localized service offerings, content, ordering, and publication state.'
+}
+
+Table TrainingCategory {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  slug text [not null, unique]
+  description text
+  order integer [not null, default: 0]
+
+  Note: 'Ordered taxonomy for training products.'
+}
+
+Table Training {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  locale text [not null, default: 'fr']
+  categoryId text
+  title text [not null]
+  slug text [not null]
+  excerpt text [not null]
+  content jsonb [not null]
+  objectives text[] [not null]
+  audience text[] [not null]
+  modules jsonb [not null]
+  priceCents integer
+  duration text
+  image text
+  pdfUrl text
+  instructor text
+  difficulty Difficulty [not null, default: 'ALL_LEVELS']
+  status ContentStatus [not null, default: 'DRAFT']
+  featured boolean [not null, default: false]
+  order integer [not null, default: 0]
+  publishedAt timestamp(3)
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (locale, slug) [unique, name: 'Training_locale_slug_key']
+    (status, order) [name: 'Training_status_order_idx']
+  }
+
+  Note: 'Localized training products, curricula, commercial fields, and publication state.'
+}
+
+Table CaseStudy {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  locale text [not null, default: 'fr']
+  serviceId text
+  title text [not null]
+  slug text [not null]
+  company text [not null]
+  companyLogo text
+  sector text
+  teamSize integer
+  excerpt text [not null]
+  before text [not null]
+  after text [not null]
+  content jsonb [not null]
+  metrics jsonb [not null]
+  gallery text[] [not null]
+  coverImage text
+  status ContentStatus [not null, default: 'DRAFT']
+  featured boolean [not null, default: false]
+  publishedAt timestamp(3)
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (locale, slug) [unique, name: 'CaseStudy_locale_slug_key']
+    (status, publishedAt) [name: 'CaseStudy_status_publishedAt_idx']
+  }
+
+  Note: 'Localized client case-study content optionally associated with a service.'
+}
+
+Table ArticleCategory {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  slug text [not null, unique]
+  description text
+
+  Note: 'Taxonomy for editorial articles.'
+}
+
+Table Tag {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  slug text [not null, unique]
+
+  Note: 'Reusable tags linked to articles through a junction table.'
+}
+
+Table Article {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  locale text [not null, default: 'fr']
+  categoryId text
+  authorId text
+  title text [not null]
+  slug text [not null]
+  excerpt text [not null]
+  content jsonb [not null]
+  coverImage text
+  status ContentStatus [not null, default: 'DRAFT']
+  readingTime integer [not null, default: 5]
+  featured boolean [not null, default: false]
+  scheduledFor timestamp(3)
+  publishedAt timestamp(3)
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (locale, slug) [unique, name: 'Article_locale_slug_key']
+    (status, publishedAt) [name: 'Article_status_publishedAt_idx']
+  }
+
+  Note: 'Localized editorial content, authorship, scheduling, and publication state.'
+}
+
+Table ArticleTag {
+  articleId text [not null]
+  tagId text [not null]
+
+  indexes {
+    (articleId, tagId) [pk, name: 'ArticleTag_pkey']
+  }
+
+  Note: 'Junction table implementing the many-to-many article-tag relationship.'
+}
+
+Table ArticleRelation {
+  fromId text [not null]
+  toId text [not null]
+
+  indexes {
+    (fromId, toId) [pk, name: 'ArticleRelation_pkey']
+  }
+
+  Note: 'Directional self-junction relating one article to another.'
+}
+
+Table Faq {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  category text [not null]
+  question text [not null]
+  answer text [not null]
+  order integer [not null, default: 0]
+  visible boolean [not null, default: true]
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Frequently asked questions with category, ordering, and visibility.'
+}
+
+Table Testimonial {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  company text
+  position text
+  quote text [not null]
+  avatar text
+  rating integer [not null, default: 5]
+  visible boolean [not null, default: true]
+  order integer [not null, default: 0]
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Customer testimonial content and display controls.'
+}
+
+Table NewsletterSubscriber {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  email text [not null, unique]
+  locale text [not null, default: 'fr']
+  source text
+  confirmedAt timestamp(3)
+  unsubscribedAt timestamp(3)
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+
+  Note: 'Newsletter subscription lifecycle and source attribution.'
+}
+
+Table ContactRequest {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  email text [not null]
+  phone text
+  company text
+  subject text
+  message text [not null]
+  status RequestStatus [not null, default: 'NEW']
+  replyStatus text
+  metadata jsonb
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (status, createdAt) [name: 'ContactRequest_status_createdAt_idx']
+  }
+
+  Note: 'Inbound contact-form requests and processing state.'
+}
+
+Table Appointment {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  email text [not null]
+  phone text
+  company text
+  preferredDate timestamp(3)
+  topic text
+  message text
+  status RequestStatus [not null, default: 'NEW']
+  assignedConsultantId text
+  notes text
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (status, preferredDate) [name: 'Appointment_status_preferredDate_idx']
+  }
+
+  Note: 'Appointment requests, scheduling preference, consultant assignment, and notes.'
+}
+
+Table Event {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  slug text [not null, unique]
+  title text [not null]
+  description text [not null]
+  type text [not null]
+  audience text [not null]
+  location text [not null]
+  host text [not null]
+  startAt timestamp(3) [not null]
+  endAt timestamp(3)
+  image text
+  capacity integer
+  status ContentStatus [not null, default: 'DRAFT']
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (status, startAt) [name: 'Event_status_startAt_idx']
+  }
+
+  Note: 'Published event schedule, audience, capacity, and registration ownership.'
+}
+
+Table EventRegistration {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  eventId text [not null]
+  name text [not null]
+  email text [not null]
+  phone text
+  company text
+  message text
+  status RequestStatus [not null, default: 'NEW']
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  indexes {
+    (eventId, email) [unique, name: 'EventRegistration_eventId_email_key']
+    (eventId, createdAt) [name: 'EventRegistration_eventId_createdAt_idx']
+  }
+
+  Note: 'Per-event attendee registration and processing state.'
+}
+
+Table TeamMember {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  position text [not null]
+  biography text [not null]
+  picture text
+  linkedin text
+  social jsonb
+  order integer [not null, default: 0]
+  visible boolean [not null, default: true]
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+  updatedAt timestamp(3) [not null, note: 'Prisma-managed @updatedAt']
+
+  Note: 'Team profile content and visibility controls.'
+}
+
+Table AnalyticsEvent {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  name text [not null]
+  path text
+  sessionId text
+  metadata jsonb
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (name, createdAt) [name: 'AnalyticsEvent_name_createdAt_idx']
+  }
+
+  Note: 'Append-only lightweight analytics events.'
+}
+
+Table AuditLog {
+  id text [pk, not null, note: 'Prisma app default cuid()']
+  userId text
+  action text [not null]
+  entity text [not null]
+  entityId text
+  before jsonb
+  after jsonb
+  ipAddress text
+  createdAt timestamp(3) [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (entity, createdAt) [name: 'AuditLog_entity_createdAt_idx']
+  }
+
+  Note: 'Append-only administrative audit records with optional user attribution.'
+}
+
+Ref User_roleId_fkey: User.roleId > Role.id [delete: set null, update: cascade]
+Ref Account_userId_fkey: Account.userId > User.id [delete: cascade, update: cascade]
+Ref Session_userId_fkey: Session.userId > User.id [delete: cascade, update: cascade]
+Ref RolePermission_roleId_fkey: RolePermission.roleId > Role.id [delete: cascade, update: cascade]
+Ref RolePermission_permissionId_fkey: RolePermission.permissionId > Permission.id [delete: cascade, update: cascade]
+Ref Section_pageId_fkey: Section.pageId > Page.id [delete: cascade, update: cascade]
+Ref Seo_pageId_fkey: Seo.pageId > Page.id [delete: cascade, update: cascade]
+Ref Seo_serviceId_fkey: Seo.serviceId > Service.id [delete: cascade, update: cascade]
+Ref Seo_trainingId_fkey: Seo.trainingId > Training.id [delete: cascade, update: cascade]
+Ref Seo_articleId_fkey: Seo.articleId > Article.id [delete: cascade, update: cascade]
+Ref Seo_caseStudyId_fkey: Seo.caseStudyId > CaseStudy.id [delete: cascade, update: cascade]
+Ref Service_categoryId_fkey: Service.categoryId > ServiceCategory.id [delete: set null, update: cascade]
+Ref Training_categoryId_fkey: Training.categoryId > TrainingCategory.id [delete: set null, update: cascade]
+Ref Article_categoryId_fkey: Article.categoryId > ArticleCategory.id [delete: set null, update: cascade]
+Ref Article_authorId_fkey: Article.authorId > User.id [delete: set null, update: cascade]
+Ref ArticleTag_articleId_fkey: ArticleTag.articleId > Article.id [delete: cascade, update: cascade]
+Ref ArticleTag_tagId_fkey: ArticleTag.tagId > Tag.id [delete: cascade, update: cascade]
+Ref ArticleRelation_fromId_fkey: ArticleRelation.fromId > Article.id [delete: cascade, update: cascade]
+Ref ArticleRelation_toId_fkey: ArticleRelation.toId > Article.id [delete: cascade, update: cascade]
+Ref CaseStudy_serviceId_fkey: CaseStudy.serviceId > Service.id [delete: set null, update: cascade]
+Ref Appointment_assignedConsultantId_fkey: Appointment.assignedConsultantId > User.id [delete: set null, update: cascade]
+Ref MenuItem_menuId_fkey: MenuItem.menuId > Menu.id [delete: cascade, update: cascade]
+Ref MenuItem_parentId_fkey: MenuItem.parentId > MenuItem.id [delete: cascade, update: cascade]
+Ref AuditLog_userId_fkey: AuditLog.userId > User.id [delete: set null, update: cascade]
+Ref EventRegistration_eventId_fkey: EventRegistration.eventId > Event.id [delete: cascade, update: cascade]
+
+TableGroup "Authentication & Authorization" {
+  User
+  Account
+  Session
+  VerificationToken
+  Role
+  Permission
+  RolePermission
+}
+
+TableGroup "Content & Navigation" {
+  Page
+  Section
+  Seo
+  Setting
+  Menu
+  MenuItem
+  Media
+  Redirect
+}
+
+TableGroup "Offerings & Learning" {
+  ServiceCategory
+  Service
+  TrainingCategory
+  Training
+  CaseStudy
+}
+
+TableGroup "Publishing" {
+  ArticleCategory
+  Tag
+  Article
+  ArticleTag
+  ArticleRelation
+}
+
+TableGroup "Engagement & CRM" {
+  Faq
+  Testimonial
+  NewsletterSubscriber
+  ContactRequest
+  Appointment
+  Event
+  EventRegistration
+}
+
+TableGroup "Organization & Observability" {
+  TeamMember
+  AnalyticsEvent
+  AuditLog
+}
+
+

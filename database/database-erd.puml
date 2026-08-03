@@ -1,0 +1,457 @@
+@startuml
+' FancyVision database ERD — generated from prisma/schema.prisma and SQL migrations
+left to right direction
+scale max 12000 width
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam dpi 140
+skinparam ArrowColor #65758B
+skinparam ArrowThickness 1
+skinparam entity {
+  BackgroundColor #FFFFFF
+  BorderColor #AAB7C7
+  FontColor #172033
+  HeaderBackgroundColor #E8F1FF
+  HeaderFontColor #10274A
+}
+hide circle
+
+package "Authentication & Authorization" #EEF3FA {
+  entity "User" as User #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+      name : TEXT
+    * email : TEXT <<UQ>>
+      emailVerified : TIMESTAMP(3)
+      image : TEXT
+      passwordHash : TEXT
+    * status : UserStatus default: 'ACTIVE'
+      roleId : TEXT <<FK>>
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Account" as Account {
+    * userId : TEXT <<FK>>
+    * type : TEXT
+    * provider : TEXT <<PK>>
+    * providerAccountId : TEXT <<PK>>
+      refresh_token : TEXT
+      access_token : TEXT
+      expires_at : INTEGER
+      token_type : TEXT
+      scope : TEXT
+      id_token : TEXT
+      session_state : TEXT
+  }
+  entity "Session" as Session {
+    * sessionToken : TEXT <<PK>> <<UQ>>
+    * userId : TEXT <<FK>>
+    * expires : TIMESTAMP(3)
+  }
+  entity "VerificationToken" as VerificationToken {
+    * identifier : TEXT <<PK>>
+    * token : TEXT <<PK>> <<UQ>>
+    * expires : TIMESTAMP(3)
+  }
+  entity "Role" as Role {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT <<UQ>>
+      description : TEXT
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Permission" as Permission {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * key : TEXT <<UQ>>
+      description : TEXT
+  }
+  entity "RolePermission" as RolePermission #ECEFF3 {
+    * roleId : TEXT <<PK>> <<FK>>
+    * permissionId : TEXT <<PK>> <<FK>>
+  }
+}
+
+package "Content & Navigation" #F5F0FA {
+  entity "Page" as Page #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * locale : TEXT default: 'fr'
+    * title : TEXT
+    * slug : TEXT
+      eyebrow : TEXT
+      headline : TEXT
+      description : TEXT
+    * status : ContentStatus default: 'DRAFT'
+      publishedAt : TIMESTAMP(3)
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Section" as Section {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * pageId : TEXT <<FK>>
+    * type : TEXT
+    * name : TEXT
+    * data : JSONB
+    * order : INTEGER default: 0
+    * visible : BOOLEAN default: true
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Seo" as Seo {
+    * id : TEXT <<PK>> Prisma app default cuid()
+      pageId : TEXT <<FK>> <<UQ>>
+      serviceId : TEXT <<FK>> <<UQ>>
+      trainingId : TEXT <<FK>> <<UQ>>
+      articleId : TEXT <<FK>> <<UQ>>
+      caseStudyId : TEXT <<FK>> <<UQ>>
+    * title : TEXT
+    * description : TEXT
+    * keywords : TEXT[]
+      canonical : TEXT
+      ogImage : TEXT
+      schema : JSONB
+    * noIndex : BOOLEAN default: false
+  }
+  entity "Setting" as Setting {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * key : TEXT <<UQ>>
+    * value : JSONB
+    * group : TEXT default: 'general'
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Menu" as Menu {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * location : MenuLocation
+    * locale : TEXT default: 'fr'
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "MenuItem" as MenuItem {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * menuId : TEXT <<FK>>
+      parentId : TEXT <<FK>>
+    * label : TEXT
+    * url : TEXT
+    * external : BOOLEAN default: false
+    * order : INTEGER default: 0
+    * visible : BOOLEAN default: true
+  }
+  entity "Media" as Media {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * url : TEXT
+      key : TEXT <<UQ>>
+    * mimeType : TEXT
+    * size : INTEGER
+      width : INTEGER
+      height : INTEGER
+    * alt : TEXT
+      folder : TEXT default: '/'
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Redirect" as Redirect {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * source : TEXT <<UQ>>
+    * target : TEXT
+    * permanent : BOOLEAN default: true
+    * active : BOOLEAN default: true
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+}
+
+package "Offerings & Learning" #EEF8F2 {
+  entity "ServiceCategory" as ServiceCategory {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * slug : TEXT <<UQ>>
+      description : TEXT
+    * order : INTEGER default: 0
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Service" as Service #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * locale : TEXT default: 'fr'
+      categoryId : TEXT <<FK>>
+    * title : TEXT
+    * slug : TEXT
+    * excerpt : TEXT
+    * content : JSONB
+      icon : TEXT
+      image : TEXT
+    * status : ContentStatus default: 'DRAFT'
+    * order : INTEGER default: 0
+    * featured : BOOLEAN default: false
+      publishedAt : TIMESTAMP(3)
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "TrainingCategory" as TrainingCategory {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * slug : TEXT <<UQ>>
+      description : TEXT
+    * order : INTEGER default: 0
+  }
+  entity "Training" as Training #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * locale : TEXT default: 'fr'
+      categoryId : TEXT <<FK>>
+    * title : TEXT
+    * slug : TEXT
+    * excerpt : TEXT
+    * content : JSONB
+    * objectives : TEXT[]
+    * audience : TEXT[]
+    * modules : JSONB
+      priceCents : INTEGER
+      duration : TEXT
+      image : TEXT
+      pdfUrl : TEXT
+      instructor : TEXT
+    * difficulty : Difficulty default: 'ALL_LEVELS'
+    * status : ContentStatus default: 'DRAFT'
+    * featured : BOOLEAN default: false
+    * order : INTEGER default: 0
+      publishedAt : TIMESTAMP(3)
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "CaseStudy" as CaseStudy {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * locale : TEXT default: 'fr'
+      serviceId : TEXT <<FK>>
+    * title : TEXT
+    * slug : TEXT
+    * company : TEXT
+      companyLogo : TEXT
+      sector : TEXT
+      teamSize : INTEGER
+    * excerpt : TEXT
+    * before : TEXT
+    * after : TEXT
+    * content : JSONB
+    * metrics : JSONB
+    * gallery : TEXT[]
+      coverImage : TEXT
+    * status : ContentStatus default: 'DRAFT'
+    * featured : BOOLEAN default: false
+      publishedAt : TIMESTAMP(3)
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+}
+
+package "Publishing" #FFF5E8 {
+  entity "ArticleCategory" as ArticleCategory {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * slug : TEXT <<UQ>>
+      description : TEXT
+  }
+  entity "Tag" as Tag {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * slug : TEXT <<UQ>>
+  }
+  entity "Article" as Article #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * locale : TEXT default: 'fr'
+      categoryId : TEXT <<FK>>
+      authorId : TEXT <<FK>>
+    * title : TEXT
+    * slug : TEXT
+    * excerpt : TEXT
+    * content : JSONB
+      coverImage : TEXT
+    * status : ContentStatus default: 'DRAFT'
+    * readingTime : INTEGER default: 5
+    * featured : BOOLEAN default: false
+      scheduledFor : TIMESTAMP(3)
+      publishedAt : TIMESTAMP(3)
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "ArticleTag" as ArticleTag #ECEFF3 {
+    * articleId : TEXT <<PK>> <<FK>>
+    * tagId : TEXT <<PK>> <<FK>>
+  }
+  entity "ArticleRelation" as ArticleRelation #ECEFF3 {
+    * fromId : TEXT <<PK>> <<FK>>
+    * toId : TEXT <<PK>> <<FK>>
+  }
+}
+
+package "Engagement & CRM" #EAF7F8 {
+  entity "Faq" as Faq {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * category : TEXT
+    * question : TEXT
+    * answer : TEXT
+    * order : INTEGER default: 0
+    * visible : BOOLEAN default: true
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Testimonial" as Testimonial {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+      company : TEXT
+      position : TEXT
+    * quote : TEXT
+      avatar : TEXT
+    * rating : INTEGER default: 5
+    * visible : BOOLEAN default: true
+    * order : INTEGER default: 0
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "NewsletterSubscriber" as NewsletterSubscriber {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * email : TEXT <<UQ>>
+    * locale : TEXT default: 'fr'
+      source : TEXT
+      confirmedAt : TIMESTAMP(3)
+      unsubscribedAt : TIMESTAMP(3)
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+  }
+  entity "ContactRequest" as ContactRequest #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * email : TEXT
+      phone : TEXT
+      company : TEXT
+      subject : TEXT
+    * message : TEXT
+    * status : RequestStatus default: 'NEW'
+      replyStatus : TEXT
+      metadata : JSONB
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Appointment" as Appointment #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * email : TEXT
+      phone : TEXT
+      company : TEXT
+      preferredDate : TIMESTAMP(3)
+      topic : TEXT
+      message : TEXT
+    * status : RequestStatus default: 'NEW'
+      assignedConsultantId : TEXT <<FK>>
+      notes : TEXT
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "Event" as Event #DDEBFF {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * slug : TEXT <<UQ>>
+    * title : TEXT
+    * description : TEXT
+    * type : TEXT
+    * audience : TEXT
+    * location : TEXT
+    * host : TEXT
+    * startAt : TIMESTAMP(3)
+      endAt : TIMESTAMP(3)
+      image : TEXT
+      capacity : INTEGER
+    * status : ContentStatus default: 'DRAFT'
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "EventRegistration" as EventRegistration {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * eventId : TEXT <<FK>>
+    * name : TEXT
+    * email : TEXT
+      phone : TEXT
+      company : TEXT
+      message : TEXT
+    * status : RequestStatus default: 'NEW'
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+}
+
+package "Organization & Observability" #F5F5F5 {
+  entity "TeamMember" as TeamMember {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+    * position : TEXT
+    * biography : TEXT
+      picture : TEXT
+      linkedin : TEXT
+      social : JSONB
+    * order : INTEGER default: 0
+    * visible : BOOLEAN default: true
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+    * updatedAt : TIMESTAMP(3) Prisma-managed @updatedAt
+  }
+  entity "AnalyticsEvent" as AnalyticsEvent {
+    * id : TEXT <<PK>> Prisma app default cuid()
+    * name : TEXT
+      path : TEXT
+      sessionId : TEXT
+      metadata : JSONB
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+  }
+  entity "AuditLog" as AuditLog {
+    * id : TEXT <<PK>> Prisma app default cuid()
+      userId : TEXT <<FK>>
+    * action : TEXT
+    * entity : TEXT
+      entityId : TEXT
+      before : JSONB
+      after : JSONB
+      ipAddress : TEXT
+    * createdAt : TIMESTAMP(3) default: CURRENT_TIMESTAMP
+  }
+}
+
+Role |o--o{ User : "assigned to [User.roleId]"
+User ||--o{ Account : "owns [Account.userId]"
+User ||--o{ Session : "has [Session.userId]"
+Role ||--o{ RolePermission : "grants through [RolePermission.roleId]"
+Permission ||--o{ RolePermission : "assigned through [RolePermission.permissionId]"
+Page ||--o{ Section : "contains [Section.pageId]"
+Page |o--o| Seo : "has SEO [Seo.pageId]"
+Service |o--o| Seo : "has SEO [Seo.serviceId]"
+Training |o--o| Seo : "has SEO [Seo.trainingId]"
+Article |o--o| Seo : "has SEO [Seo.articleId]"
+CaseStudy |o--o| Seo : "has SEO [Seo.caseStudyId]"
+ServiceCategory |o--o{ Service : "classifies [Service.categoryId]"
+TrainingCategory |o--o{ Training : "classifies [Training.categoryId]"
+ArticleCategory |o--o{ Article : "classifies [Article.categoryId]"
+User |o--o{ Article : "authors [Article.authorId]"
+Article ||--o{ ArticleTag : "tagged through [ArticleTag.articleId]"
+Tag ||--o{ ArticleTag : "labels through [ArticleTag.tagId]"
+Article ||--o{ ArticleRelation : "relates from [ArticleRelation.fromId]"
+Article ||--o{ ArticleRelation : "relates to [ArticleRelation.toId]"
+Service |o--o{ CaseStudy : "demonstrated by [CaseStudy.serviceId]"
+User |o--o{ Appointment : "assigned to [Appointment.assignedConsultantId]"
+Menu ||--o{ MenuItem : "contains [MenuItem.menuId]"
+MenuItem |o--o{ MenuItem : "parent of [MenuItem.parentId]"
+User |o--o{ AuditLog : "performs [AuditLog.userId]"
+Event ||--o{ EventRegistration : "receives [EventRegistration.eventId]"
+
+legend bottom
+  |= Color |= Meaning |
+  |<#DDEBFF> | Core / high-traffic entity |
+  |<#ECEFF3> | Junction entity |
+  |<#FFFFFF> | Supporting entity |
+  * = NOT NULL
+  <<PK>> = primary key
+  <<FK>> = foreign key
+  <<UQ>> = unique constraint
+  |o / o| = zero or one (mirrored by side)
+  || = exactly one
+  o{ = zero or many
+endlegend
+@enduml

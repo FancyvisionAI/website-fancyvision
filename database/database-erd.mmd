@@ -1,0 +1,420 @@
+%% FancyVision database ERD
+%% Source: prisma/schema.prisma and prisma/migrations
+%% Crow's-foot notation: || exactly one, |o/o| zero or one, }o/o{ zero or many
+erDiagram
+
+    %% Authentication & Authorization
+    User {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NULL"
+        text email UK "NOT NULL"
+        timestamp emailVerified "NULL"
+        text image "NULL"
+        text passwordHash "NULL"
+        userstatus status "NOT NULL; default 'ACTIVE'"
+        text roleId FK "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Account {
+        text userId FK "NOT NULL"
+        text type "NOT NULL"
+        text provider PK "NOT NULL"
+        text providerAccountId PK "NOT NULL"
+        text refresh_token "NULL"
+        text access_token "NULL"
+        integer expires_at "NULL"
+        text token_type "NULL"
+        text scope "NULL"
+        text id_token "NULL"
+        text session_state "NULL"
+    }
+    Session {
+        text sessionToken PK,UK "NOT NULL"
+        text userId FK "NOT NULL"
+        timestamp expires "NOT NULL"
+    }
+    VerificationToken {
+        text identifier PK "NOT NULL"
+        text token PK,UK "NOT NULL"
+        timestamp expires "NOT NULL"
+    }
+    Role {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name UK "NOT NULL"
+        text description "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Permission {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text key UK "NOT NULL"
+        text description "NULL"
+    }
+    RolePermission {
+        text roleId PK,FK "NOT NULL"
+        text permissionId PK,FK "NOT NULL"
+    }
+
+    %% Content & Navigation
+    Page {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text locale "NOT NULL; default 'fr'"
+        text title "NOT NULL"
+        text slug "NOT NULL"
+        text eyebrow "NULL"
+        text headline "NULL"
+        text description "NULL"
+        contentstatus status "NOT NULL; default 'DRAFT'"
+        timestamp publishedAt "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Section {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text pageId FK "NOT NULL"
+        text type "NOT NULL"
+        text name "NOT NULL"
+        jsonb data "NOT NULL"
+        integer order "NOT NULL; default 0"
+        boolean visible "NOT NULL; default true"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Seo {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text pageId FK,UK "NULL"
+        text serviceId FK,UK "NULL"
+        text trainingId FK,UK "NULL"
+        text articleId FK,UK "NULL"
+        text caseStudyId FK,UK "NULL"
+        text title "NOT NULL"
+        text description "NOT NULL"
+        text_array keywords "NOT NULL"
+        text canonical "NULL"
+        text ogImage "NULL"
+        jsonb schema "NULL"
+        boolean noIndex "NOT NULL; default false"
+    }
+    Setting {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text key UK "NOT NULL"
+        jsonb value "NOT NULL"
+        text group "NOT NULL; default 'general'"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Menu {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        menulocation location "NOT NULL"
+        text locale "NOT NULL; default 'fr'"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    MenuItem {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text menuId FK "NOT NULL"
+        text parentId FK "NULL"
+        text label "NOT NULL"
+        text url "NOT NULL"
+        boolean external "NOT NULL; default false"
+        integer order "NOT NULL; default 0"
+        boolean visible "NOT NULL; default true"
+    }
+    Media {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text url "NOT NULL"
+        text key UK "NULL"
+        text mimeType "NOT NULL"
+        integer size "NOT NULL"
+        integer width "NULL"
+        integer height "NULL"
+        text alt "NOT NULL"
+        text folder "NULL; default '/'"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Redirect {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text source UK "NOT NULL"
+        text target "NOT NULL"
+        boolean permanent "NOT NULL; default true"
+        boolean active "NOT NULL; default true"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+
+    %% Offerings & Learning
+    ServiceCategory {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text slug UK "NOT NULL"
+        text description "NULL"
+        integer order "NOT NULL; default 0"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Service {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text locale "NOT NULL; default 'fr'"
+        text categoryId FK "NULL"
+        text title "NOT NULL"
+        text slug "NOT NULL"
+        text excerpt "NOT NULL"
+        jsonb content "NOT NULL"
+        text icon "NULL"
+        text image "NULL"
+        contentstatus status "NOT NULL; default 'DRAFT'"
+        integer order "NOT NULL; default 0"
+        boolean featured "NOT NULL; default false"
+        timestamp publishedAt "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    TrainingCategory {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text slug UK "NOT NULL"
+        text description "NULL"
+        integer order "NOT NULL; default 0"
+    }
+    Training {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text locale "NOT NULL; default 'fr'"
+        text categoryId FK "NULL"
+        text title "NOT NULL"
+        text slug "NOT NULL"
+        text excerpt "NOT NULL"
+        jsonb content "NOT NULL"
+        text_array objectives "NOT NULL"
+        text_array audience "NOT NULL"
+        jsonb modules "NOT NULL"
+        integer priceCents "NULL"
+        text duration "NULL"
+        text image "NULL"
+        text pdfUrl "NULL"
+        text instructor "NULL"
+        difficulty difficulty "NOT NULL; default 'ALL_LEVELS'"
+        contentstatus status "NOT NULL; default 'DRAFT'"
+        boolean featured "NOT NULL; default false"
+        integer order "NOT NULL; default 0"
+        timestamp publishedAt "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    CaseStudy {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text locale "NOT NULL; default 'fr'"
+        text serviceId FK "NULL"
+        text title "NOT NULL"
+        text slug "NOT NULL"
+        text company "NOT NULL"
+        text companyLogo "NULL"
+        text sector "NULL"
+        integer teamSize "NULL"
+        text excerpt "NOT NULL"
+        text before "NOT NULL"
+        text after "NOT NULL"
+        jsonb content "NOT NULL"
+        jsonb metrics "NOT NULL"
+        text_array gallery "NOT NULL"
+        text coverImage "NULL"
+        contentstatus status "NOT NULL; default 'DRAFT'"
+        boolean featured "NOT NULL; default false"
+        timestamp publishedAt "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+
+    %% Publishing
+    ArticleCategory {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text slug UK "NOT NULL"
+        text description "NULL"
+    }
+    Tag {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text slug UK "NOT NULL"
+    }
+    Article {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text locale "NOT NULL; default 'fr'"
+        text categoryId FK "NULL"
+        text authorId FK "NULL"
+        text title "NOT NULL"
+        text slug "NOT NULL"
+        text excerpt "NOT NULL"
+        jsonb content "NOT NULL"
+        text coverImage "NULL"
+        contentstatus status "NOT NULL; default 'DRAFT'"
+        integer readingTime "NOT NULL; default 5"
+        boolean featured "NOT NULL; default false"
+        timestamp scheduledFor "NULL"
+        timestamp publishedAt "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    ArticleTag {
+        text articleId PK,FK "NOT NULL"
+        text tagId PK,FK "NOT NULL"
+    }
+    ArticleRelation {
+        text fromId PK,FK "NOT NULL"
+        text toId PK,FK "NOT NULL"
+    }
+
+    %% Engagement & CRM
+    Faq {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text category "NOT NULL"
+        text question "NOT NULL"
+        text answer "NOT NULL"
+        integer order "NOT NULL; default 0"
+        boolean visible "NOT NULL; default true"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Testimonial {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text company "NULL"
+        text position "NULL"
+        text quote "NOT NULL"
+        text avatar "NULL"
+        integer rating "NOT NULL; default 5"
+        boolean visible "NOT NULL; default true"
+        integer order "NOT NULL; default 0"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    NewsletterSubscriber {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text email UK "NOT NULL"
+        text locale "NOT NULL; default 'fr'"
+        text source "NULL"
+        timestamp confirmedAt "NULL"
+        timestamp unsubscribedAt "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+    }
+    ContactRequest {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text email "NOT NULL"
+        text phone "NULL"
+        text company "NULL"
+        text subject "NULL"
+        text message "NOT NULL"
+        requeststatus status "NOT NULL; default 'NEW'"
+        text replyStatus "NULL"
+        jsonb metadata "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Appointment {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text email "NOT NULL"
+        text phone "NULL"
+        text company "NULL"
+        timestamp preferredDate "NULL"
+        text topic "NULL"
+        text message "NULL"
+        requeststatus status "NOT NULL; default 'NEW'"
+        text assignedConsultantId FK "NULL"
+        text notes "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    Event {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text slug UK "NOT NULL"
+        text title "NOT NULL"
+        text description "NOT NULL"
+        text type "NOT NULL"
+        text audience "NOT NULL"
+        text location "NOT NULL"
+        text host "NOT NULL"
+        timestamp startAt "NOT NULL"
+        timestamp endAt "NULL"
+        text image "NULL"
+        integer capacity "NULL"
+        contentstatus status "NOT NULL; default 'DRAFT'"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    EventRegistration {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text eventId FK "NOT NULL"
+        text name "NOT NULL"
+        text email "NOT NULL"
+        text phone "NULL"
+        text company "NULL"
+        text message "NULL"
+        requeststatus status "NOT NULL; default 'NEW'"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+
+    %% Organization & Observability
+    TeamMember {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text position "NOT NULL"
+        text biography "NOT NULL"
+        text picture "NULL"
+        text linkedin "NULL"
+        jsonb social "NULL"
+        integer order "NOT NULL; default 0"
+        boolean visible "NOT NULL; default true"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+        timestamp updatedAt "NOT NULL; Prisma-managed @updatedAt"
+    }
+    AnalyticsEvent {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text name "NOT NULL"
+        text path "NULL"
+        text sessionId "NULL"
+        jsonb metadata "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+    }
+    AuditLog {
+        text id PK "NOT NULL; Prisma app default cuid()"
+        text userId FK "NULL"
+        text action "NOT NULL"
+        text entity "NOT NULL"
+        text entityId "NULL"
+        jsonb before "NULL"
+        jsonb after "NULL"
+        text ipAddress "NULL"
+        timestamp createdAt "NOT NULL; default CURRENT_TIMESTAMP"
+    }
+
+    Role |o--o{ User : "assigned to via roleId"
+    User ||--o{ Account : "owns via userId"
+    User ||--o{ Session : "has via userId"
+    Role ||--o{ RolePermission : "grants through via roleId"
+    Permission ||--o{ RolePermission : "assigned through via permissionId"
+    Page ||--o{ Section : "contains via pageId"
+    Page |o--o| Seo : "has SEO via pageId"
+    Service |o--o| Seo : "has SEO via serviceId"
+    Training |o--o| Seo : "has SEO via trainingId"
+    Article |o--o| Seo : "has SEO via articleId"
+    CaseStudy |o--o| Seo : "has SEO via caseStudyId"
+    ServiceCategory |o--o{ Service : "classifies via categoryId"
+    TrainingCategory |o--o{ Training : "classifies via categoryId"
+    ArticleCategory |o--o{ Article : "classifies via categoryId"
+    User |o--o{ Article : "authors via authorId"
+    Article ||--o{ ArticleTag : "tagged through via articleId"
+    Tag ||--o{ ArticleTag : "labels through via tagId"
+    Article ||--o{ ArticleRelation : "relates from via fromId"
+    Article ||--o{ ArticleRelation : "relates to via toId"
+    Service |o--o{ CaseStudy : "demonstrated by via serviceId"
+    User |o--o{ Appointment : "assigned to via assignedConsultantId"
+    Menu ||--o{ MenuItem : "contains via menuId"
+    MenuItem |o--o{ MenuItem : "parent of via parentId"
+    User |o--o{ AuditLog : "performs via userId"
+    Event ||--o{ EventRegistration : "receives via eventId"
