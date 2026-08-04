@@ -2,7 +2,15 @@
 
 ## 1. Préparer PostgreSQL
 
-Créez une base PostgreSQL managée (Vercel Postgres/Neon, Supabase, Railway ou RDS). Copiez son URL avec SSL dans `DATABASE_URL`.
+Créez une base PostgreSQL managée via une intégration Vercel Marketplace
+(Prisma Postgres, Neon, Supabase, Railway ou équivalent). Dans Vercel, ajoutez
+la chaîne de connexion distante et SSL fournie par ce service sous le nom exact
+`DATABASE_URL`. L'hôte ne doit jamais être `localhost` ou `127.0.0.1`.
+
+Pour les fonctions serverless, utilisez l'URL poolée/compatible serverless du
+fournisseur lorsqu'elle est disponible. Si le fournisseur impose une URL directe
+pour les migrations, exécutez `prisma migrate deploy` avec cette URL directe
+injectée temporairement comme `DATABASE_URL`; ne la placez pas dans le dépôt.
 
 ## 2. Créer le projet Vercel
 
@@ -23,10 +31,14 @@ Ajoutez toutes les variables de `.env.example` dans Project Settings → Environ
 - les variables SMTP
 
 Séparez les bases Preview et Production afin qu’une branche de test ne modifie jamais les contenus publics.
+Appliquez la variable de production à l'environnement **Production**, puis créez
+une autre `DATABASE_URL` pointant vers une base séparée pour **Preview**. Après
+toute modification d'une variable Vercel, déclenchez un nouveau déploiement.
 
 ## 4. Déployer la base
 
-Depuis une machine autorisée à joindre la base de production :
+Depuis une machine autorisée à joindre la base de production, injectez l'URL
+distante directement dans l'environnement du processus :
 
 ```bash
 DATABASE_URL="..." npm run db:deploy
