@@ -3,7 +3,8 @@ import type { MetadataRoute } from "next";
 import { db } from "@/lib/db";
 import { absoluteUrl } from "@/lib/utils";
 
-export const revalidate = 3600;
+// The sitemap reflects live CMS records and must not require a database during builds.
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [pages, services, trainings, articles, cases] = await Promise.all([

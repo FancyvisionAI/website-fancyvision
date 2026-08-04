@@ -4,7 +4,9 @@ import { Newsletter } from "@/components/public/newsletter";
 import { CookieBanner } from "@/components/public/cookie-banner";
 import { contentRepository } from "@/lib/repositories/content";
 
-export const revalidate = 60;
+// Public content is database-backed, so it must be resolved at request time.
+// This keeps builds independent from database network availability.
+export const dynamic = "force-dynamic";
 
 export default async function PublicLayout({
   children,

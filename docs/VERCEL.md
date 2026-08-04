@@ -7,18 +7,9 @@ Créez une base PostgreSQL managée (Vercel Postgres/Neon, Supabase, Railway ou 
 ## 2. Créer le projet Vercel
 
 Importez le dépôt dans Vercel. Le framework Next.js est détecté automatiquement.
-
-Build command :
-
-```text
-npm run build
-```
-
-Install command :
-
-```text
-npm install
-```
+Conservez le preset **Next.js** et laissez les commandes Build, Install et Output
+Directory sans override : Vercel utilise le lockfile npm et le script
+`npm run build` automatiquement.
 
 ## 3. Configurer les secrets
 

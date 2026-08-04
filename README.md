@@ -26,6 +26,12 @@ npm install
 npm run db:deploy
 npm run db:seed
 npm run dev
+
+
+## in case .next error
+Remove-Item -Recurse -Force .next
+npm run build
+npm run start
 ```
 
 Sous PowerShell :

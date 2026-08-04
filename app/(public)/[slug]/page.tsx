@@ -3,22 +3,9 @@ import { notFound } from "next/navigation";
 
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
-import { db } from "@/lib/db";
 import { contentRepository } from "@/lib/repositories/content";
 
 export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  const pages = await db.page.findMany({
-    where: {
-      locale: "fr",
-      status: "PUBLISHED",
-      slug: { startsWith: "formation-ia-" },
-    },
-    select: { slug: true },
-  });
-  return pages.map(({ slug }) => ({ slug }));
-}
 
 export async function generateMetadata({
   params,
