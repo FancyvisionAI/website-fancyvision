@@ -18,6 +18,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@fancyvision/chat-widget": "file:../widget-fancyvision",
     "@auth/prisma-adapter": "^2.11.3",
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^6.19.0",

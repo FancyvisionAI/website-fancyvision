@@ -2,6 +2,7 @@ import { Footer } from "@/components/public/footer";
 import { Header } from "@/components/public/header";
 import { Newsletter } from "@/components/public/newsletter";
 import { CookieBanner } from "@/components/public/cookie-banner";
+import { FancyVisionChat } from "@/components/public/fancyvision-chat";
 import { contentRepository } from "@/lib/repositories/content";
 
 // Public content is database-backed, so it must be resolved at request time.
@@ -25,6 +26,7 @@ export default async function PublicLayout({
       {cookie?.enabled && cookie.text ? (
         <CookieBanner text={cookie.text} />
       ) : null}
+      <FancyVisionChat />
     </>
   );
 }
