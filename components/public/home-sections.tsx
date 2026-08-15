@@ -1,11 +1,12 @@
 import type { CaseStudy, Faq, Section, Service, Testimonial } from "@prisma/client";
 import { ArrowRight, ArrowUpRight, Check, MoveRight } from "lucide-react";
+import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
-import Link from "next/link";
 
 import { FaqList } from "@/components/public/faq-list";
 import { Reveal } from "@/components/public/reveal";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 type HomeService = Service & {
   category?: { slug: string; name: string } | null;
@@ -39,7 +40,8 @@ function EditorialHeading({
   );
 }
 
-export function HeroSection({ data }: { data: Record<string, unknown> }) {
+export async function HeroSection({ data }: { data: Record<string, unknown> }) {
+  const t = await getTranslations("HomeSections");
   const title = text(data.title);
   const [firstLine, ...remaining] = title.split("\n");
   return (
@@ -60,7 +62,7 @@ export function HeroSection({ data }: { data: Record<string, unknown> }) {
           </p>
           <Button asChild variant="accent" className="mt-8 h-12 px-6">
             <Link href={text(data.primaryHref, "/rendez-vous")}>
-              {text(data.primaryLabel, "Échangeons sur votre projet")}
+              {text(data.primaryLabel, t("heroPrimaryCta"))}
               <ArrowRight className="ml-5 size-4" />
             </Link>
           </Button>
@@ -71,7 +73,7 @@ export function HeroSection({ data }: { data: Record<string, unknown> }) {
               className="mt-3 border-white/30 bg-transparent text-white hover:bg-white/10"
             >
               <Link href={text(data.secondaryHref)}>
-                {text(data.secondaryLabel, "Voir les prochaines sessions")}
+                {text(data.secondaryLabel, t("heroSecondaryCta"))}
               </Link>
             </Button>
           )}
@@ -85,16 +87,16 @@ export function HeroSection({ data }: { data: Record<string, unknown> }) {
 export function LogosSection({ data }: { data: Record<string, unknown> }) {
   const logos = list<string>(data.logos);
   return (
-    <section className="border-b border-[#dfe7f4] bg-white py-14">
+    <section className="border-b border-lime bg-canvas py-14">
       <div className="container-shell">
-        <p className="mb-10 text-center text-base font-medium text-[#303b64]">
+        <p className="mb-10 text-center text-base font-medium text-ink">
           {text(data.title)}
         </p>
-        <div className="grid grid-cols-2 items-center border-l border-t border-[#dfe7f4] sm:grid-cols-4 lg:grid-cols-8">
+        <div className="grid grid-cols-2 items-center border-l border-t border-lime sm:grid-cols-4 lg:grid-cols-8">
           {logos.map((logo) => (
             <span
               key={logo}
-              className="grid h-20 place-items-center border-b border-r border-[#dfe7f4] px-3 text-sm font-semibold tracking-[-0.02em] text-[#6d798c]"
+              className="grid h-20 place-items-center border-b border-r border-lime px-3 text-sm font-semibold tracking-[-0.02em] text-[#6d798c]"
             >
               {logo}
             </span>
@@ -105,28 +107,29 @@ export function LogosSection({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export function ServicesSection({
+export async function ServicesSection({
   data,
   services,
 }: {
   data: Record<string, unknown>;
   services: HomeService[];
 }) {
+  const t = await getTranslations("HomeSections");
   const categorySlug = text(data.categorySlug);
   const visibleServices = categorySlug
     ? services.filter((service) => service.category?.slug === categorySlug)
     : services;
   return (
-    <section className="section-pad bg-white">
-      <div className="container-shell grid border-l border-t border-[#dfe7f4] lg:grid-cols-[.5fr_1fr]">
-        <Reveal className="flex min-h-64 flex-col justify-between border-b border-r border-[#dfe7f4] p-7 lg:min-h-full lg:p-9">
+    <section className="section-pad bg-canvas">
+      <div className="container-shell grid border-l border-t border-lime lg:grid-cols-[.5fr_1fr]">
+        <Reveal className="flex min-h-64 flex-col justify-between border-b border-r border-lime p-7 lg:min-h-full lg:p-9">
           <div>
-            <span className="eyebrow text-[#303b64]">{text(data.eyebrow)}</span>
+            <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
             <h2 className="mt-5 max-w-sm text-4xl font-normal leading-[1.18] tracking-[-0.025em]">
               <EditorialHeading>{text(data.title).replace("\n", " ")}</EditorialHeading>
             </h2>
             {text(data.description) && (
-              <p className="mt-5 max-w-md text-sm leading-6 text-[#566174]">
+              <p className="mt-5 max-w-md text-sm leading-6 text-muted">
                 {text(data.description)}
               </p>
             )}
@@ -134,7 +137,7 @@ export function ServicesSection({
           <div className="relative mt-12 aspect-[1.6/1] overflow-hidden">
             <Image
               src={text(data.image, "/images/fancyvision-ai-strategy.webp")}
-              alt="Consultants FancyVision en atelier"
+              alt={t("servicesImageAlt")}
               fill
               className="masked-image object-cover"
               sizes="(max-width: 1024px) 100vw, 35vw"
@@ -146,13 +149,13 @@ export function ServicesSection({
             <Reveal key={service.id} delay={index * 0.05} className="h-full">
               <Link
                 href={`/services/${service.slug}`}
-                className="group flex h-full min-h-48 items-center gap-5 border-b border-r border-[#dfe7f4] p-6 transition hover:bg-[#f1f5fa] lg:p-8"
+                className="group flex h-full min-h-48 items-center gap-5 border-b border-r border-lime p-6 transition hover:bg-[#f1f5fa] lg:p-8"
               >
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-xl font-medium tracking-[-0.025em] text-[#1a203d]">
+                  <h3 className="text-xl font-medium tracking-[-0.025em] text-ink">
                     {service.title}
                   </h3>
-                  <p className="mt-3 line-clamp-4 text-sm leading-6 text-[#566174]">
+                  <p className="mt-3 line-clamp-4 text-sm leading-6 text-muted">
                     {service.excerpt}
                   </p>
                 </div>
@@ -171,18 +174,18 @@ export function ServicesSection({
 export function SplitFeature({ data }: { data: Record<string, unknown> }) {
   const reverse = data.reverse === true;
   return (
-    <section className="bg-white">
-      <div className="container-shell grid border-l border-t border-[#dfe7f4] lg:grid-cols-2">
+    <section className="bg-canvas">
+      <div className="container-shell grid border-l border-t border-lime lg:grid-cols-2">
         <Reveal
-          className={`flex min-h-[380px] flex-col justify-center border-b border-r border-[#dfe7f4] p-7 lg:p-12 ${
+          className={`flex min-h-[380px] flex-col justify-center border-b border-r border-lime p-7 lg:p-12 ${
             reverse ? "lg:order-2" : ""
           }`}
         >
-          <span className="eyebrow text-[#303b64]">{text(data.eyebrow)}</span>
+          <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
           <h2 className="mt-5 max-w-xl text-[clamp(2.25rem,4vw,3rem)] font-normal leading-[1.18] tracking-[-0.025em]">
             <EditorialHeading>{text(data.title)}</EditorialHeading>
           </h2>
-          <p className="mt-5 max-w-xl text-base leading-6 text-[#566174]">
+          <p className="mt-5 max-w-xl text-base leading-6 text-muted">
             {text(data.description)}
           </p>
           <Button asChild className="mt-8 w-fit">
@@ -193,7 +196,7 @@ export function SplitFeature({ data }: { data: Record<string, unknown> }) {
           </Button>
         </Reveal>
         <div
-          className={`flex min-h-[340px] items-center border-b border-r border-[#dfe7f4] p-7 lg:min-h-[440px] lg:p-12 ${
+          className={`flex min-h-[340px] items-center border-b border-r border-lime p-7 lg:min-h-[440px] lg:p-12 ${
             reverse ? "lg:order-1" : ""
           }`}
         >
@@ -212,7 +215,8 @@ export function SplitFeature({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export function CtaSection({ data }: { data: Record<string, unknown> }) {
+export async function CtaSection({ data }: { data: Record<string, unknown> }) {
+  const t = await getTranslations("HomeSections");
   return (
     <section className="reference-hero relative overflow-hidden py-20 text-center text-white md:py-24">
       <div className="container-shell relative z-10 flex flex-col items-center">
@@ -225,7 +229,7 @@ export function CtaSection({ data }: { data: Record<string, unknown> }) {
           </p>
           <Button asChild variant="accent" className="mt-8">
             <Link href={text(data.ctaHref, "/rendez-vous")}>
-              {text(data.ctaLabel, "Échanger avec nous")}
+              {text(data.ctaLabel, t("ctaLabel"))}
               <ArrowRight className="ml-5 size-4" />
             </Link>
           </Button>
@@ -242,13 +246,14 @@ type Advantage = {
   stats: Array<{ value: string; label: string }>;
 };
 
-export function AdvantagesSection({ data }: { data: Record<string, unknown> }) {
+export async function AdvantagesSection({ data }: { data: Record<string, unknown> }) {
+  const t = await getTranslations("HomeSections");
   const items = list<Advantage>(data.items);
   return (
     <section className="section-pad overflow-hidden bg-[#f3f6fb]">
       <div className="container-shell">
         <Reveal className="mb-9 grid gap-5 lg:grid-cols-[.45fr_1fr] lg:items-end">
-          <span className="eyebrow text-[#597dc1]">{text(data.eyebrow)}</span>
+          <span className="eyebrow text-cobalt">{text(data.eyebrow)}</span>
           <h2 className="max-w-3xl text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
             <EditorialHeading>{text(data.title)}</EditorialHeading>
           </h2>
@@ -258,7 +263,7 @@ export function AdvantagesSection({ data }: { data: Record<string, unknown> }) {
             <Reveal
               key={item.number}
               delay={index * 0.06}
-              className="group relative overflow-hidden rounded-[1.75rem] border border-[#d9e2f0] bg-white p-6 shadow-[0_18px_50px_rgba(34,53,92,.06)] transition duration-300 hover:-translate-y-1 hover:border-[#9db2d6] hover:shadow-[0_24px_60px_rgba(34,53,92,.11)] lg:p-7"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-[#d9e2f0] bg-canvas p-6 shadow-[0_18px_50px_rgba(34,53,92,.06)] transition duration-300 hover:-translate-y-1 hover:border-[#9db2d6] hover:shadow-[0_24px_60px_rgba(34,53,92,.11)] lg:p-7"
             >
               <div className="absolute -right-12 -top-14 size-36 rounded-full bg-[#dce7fb] opacity-55 blur-2xl transition group-hover:scale-125" />
               <div className="relative flex items-center justify-between">
@@ -266,7 +271,7 @@ export function AdvantagesSection({ data }: { data: Record<string, unknown> }) {
                   {item.number}
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#7890b6]">
-                  Étape 0{index + 1}
+                  {t("step", { number: index + 1 })}
                 </span>
               </div>
               <h3 className="relative mt-7 text-2xl font-medium tracking-[-0.03em] text-[#101a35]">
@@ -291,21 +296,24 @@ export function AdvantagesSection({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export function CasesSection({ cases }: { cases: CaseStudy[] }) {
+export async function CasesSection({ cases }: { cases: CaseStudy[] }) {
   if (!cases.length) return null;
+  const t = await getTranslations("HomeSections");
   return (
-    <section className="section-pad bg-[#f1f5fa]">
+    <section className="section-pad bg-lime">
       <div className="container-shell">
         <Reveal className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <span className="eyebrow text-[#303b64]">Études de cas</span>
+            <span className="eyebrow text-ink">{t("casesEyebrow")}</span>
             <h2 className="mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
-              Les projets <span className="font-editorial">IA</span> déployés chez nos clients
+              {t.rich("casesTitle", {
+                em: (chunks) => <span className="font-editorial">{chunks}</span>,
+              })}
             </h2>
           </div>
           <Button asChild variant="outline">
             <Link href="/etudes-de-cas">
-              Voir toutes nos études de cas
+              {t("casesViewAll")}
               <MoveRight className="ml-5 size-4" />
             </Link>
           </Button>
@@ -315,9 +323,9 @@ export function CasesSection({ cases }: { cases: CaseStudy[] }) {
             <Link
               href={`/etudes-de-cas/${item.slug}`}
               key={item.id}
-              className="group grid min-h-72 bg-white p-6 transition hover:shadow-[0_20px_55px_rgba(26,32,61,.08)] md:grid-cols-[.7fr_1fr]"
+              className="group grid min-h-72 bg-canvas p-6 transition hover:shadow-[0_20px_55px_rgba(26,32,61,.08)] md:grid-cols-[.7fr_1fr]"
             >
-              <div className="relative min-h-52 overflow-hidden bg-[#303b64]">
+              <div className="relative min-h-52 overflow-hidden bg-accent">
                 {item.coverImage && (
                   <Image
                     src={item.coverImage}
@@ -327,7 +335,7 @@ export function CasesSection({ cases }: { cases: CaseStudy[] }) {
                     sizes="(max-width: 768px) 100vw, 42vw"
                   />
                 )}
-                <div className="absolute left-5 top-5 bg-white px-4 py-3 text-sm font-semibold">
+                <div className="absolute left-5 top-5 bg-canvas px-4 py-3 text-sm font-semibold">
                   {item.company}
                 </div>
               </div>
@@ -341,8 +349,8 @@ export function CasesSection({ cases }: { cases: CaseStudy[] }) {
                       <span className="bg-[#374580] px-3 py-2 text-xs text-white">{item.sector}</span>
                     )}
                     {item.teamSize && (
-                      <span className="bg-[#f1f5fa] px-3 py-2 text-xs">
-                        {item.teamSize} collaborateurs
+                      <span className="bg-lime px-3 py-2 text-xs">
+                        {t("teamSize", { count: item.teamSize })}
                       </span>
                     )}
                   </div>
@@ -360,10 +368,10 @@ export function CasesSection({ cases }: { cases: CaseStudy[] }) {
 export function ProcessSection({ data }: { data: Record<string, unknown> }) {
   const steps = list<string>(data.steps);
   return (
-    <section className="section-pad bg-white">
+    <section className="section-pad bg-canvas">
       <div className="container-shell">
         <Reveal className="mb-9 max-w-3xl">
-          <span className="eyebrow text-[#303b64]">{text(data.eyebrow)}</span>
+          <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
           <h2 className="mt-5 text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
             <EditorialHeading>{text(data.title).replace("\n", " ")}</EditorialHeading>
           </h2>
@@ -372,9 +380,9 @@ export function ProcessSection({ data }: { data: Record<string, unknown> }) {
           {steps.map((step, index) => (
             <Reveal
               key={step}
-              className="group flex min-h-44 flex-col justify-between rounded-2xl border border-[#dfe7f4] bg-[#f7f9fc] p-6 transition hover:-translate-y-1 hover:border-[#9db2d6] hover:bg-white hover:shadow-[0_18px_45px_rgba(34,53,92,.08)]"
+              className="group flex min-h-44 flex-col justify-between rounded-2xl border border-lime bg-lime p-6 transition hover:-translate-y-1 hover:border-[#9db2d6] hover:bg-canvas hover:shadow-[0_18px_45px_rgba(34,53,92,.08)]"
             >
-              <span className="text-right text-3xl font-medium text-[#7890b6] transition group-hover:text-[#303b64]">0{index + 1}</span>
+              <span className="text-right text-3xl font-medium text-[#7890b6] transition group-hover:text-ink">0{index + 1}</span>
               <h3 className="text-lg font-medium leading-[1.4]">{step}</h3>
             </Reveal>
           ))}
@@ -395,29 +403,32 @@ type EventPreviewItem = {
   href: string;
 };
 
-export function EventsPreview({ data }: { data: Record<string, unknown> }) {
+export async function EventsPreview({ data }: { data: Record<string, unknown> }) {
+  const t = await getTranslations("HomeSections");
+  const locale = await getLocale();
+  const intlLocale = locale === "en" ? "en-US" : "fr-FR";
   const items = list<EventPreviewItem>(data.items).slice(0, 3);
   return (
-    <section className="section-pad bg-[#f1f5fa]">
+    <section className="section-pad bg-lime">
       <div className="container-shell">
         <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <span className="eyebrow text-[#303b64]">{text(data.eyebrow)}</span>
+            <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
             <h2 className="mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
               <EditorialHeading>{text(data.title)}</EditorialHeading>
             </h2>
-            <p className="mt-4 max-w-2xl leading-6 text-[#566174]">
+            <p className="mt-4 max-w-2xl leading-6 text-muted">
               {text(data.description)}
             </p>
           </div>
           <Button asChild variant="outline">
             <Link href="/evenements">
-              Voir tout l’agenda
+              {t("eventsViewAll")}
               <ArrowRight className="ml-5 size-4" />
             </Link>
           </Button>
         </Reveal>
-        <div className="grid border-l border-t border-[#dfe7f4] lg:grid-cols-3">
+        <div className="grid border-l border-t border-lime lg:grid-cols-3">
           {items.map((item) => {
             const date = new Date();
             date.setDate(date.getDate() + item.offsetDays);
@@ -426,18 +437,18 @@ export function EventsPreview({ data }: { data: Record<string, unknown> }) {
               <Link
                 key={item.id}
                 href={item.href}
-                className="group flex min-h-60 flex-col border-b border-r border-[#dfe7f4] bg-white p-6 transition hover:bg-[#e8eef7]"
+                className="group flex min-h-60 flex-col border-b border-r border-lime bg-canvas p-6 transition hover:bg-[#e8eef7]"
               >
-                <div className="flex justify-between gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#597dc1]">
+                <div className="flex justify-between gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-cobalt">
                   <span>{item.type}</span>
                   <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
                 <h3 className="mt-8 text-2xl font-medium leading-[1.3] tracking-[-0.025em]">
                   {item.title}
                 </h3>
-                <div className="mt-auto pt-8 text-sm leading-6 text-[#566174]">
+                <div className="mt-auto pt-8 text-sm leading-6 text-muted">
                   <p>
-                    {new Intl.DateTimeFormat("fr-FR", {
+                    {new Intl.DateTimeFormat(intlLocale, {
                       weekday: "long",
                       day: "numeric",
                       month: "long",
@@ -458,7 +469,7 @@ export function EventsPreview({ data }: { data: Record<string, unknown> }) {
 
 export function AboutSection({ data }: { data: Record<string, unknown> }) {
   return (
-    <section className="section-pad bg-white">
+    <section className="section-pad bg-canvas">
       <div className="container-shell grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
         <Reveal>
           <div className="relative aspect-[4/3] max-h-[430px] overflow-hidden rounded-[1.75rem]">
@@ -473,13 +484,13 @@ export function AboutSection({ data }: { data: Record<string, unknown> }) {
         </Reveal>
         <Reveal className="flex flex-col justify-between py-8 lg:items-end lg:px-10">
           <div className="max-w-3xl">
-            <span className="eyebrow text-[#303b64]">{text(data.eyebrow)}</span>
+            <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
             <h2 className="mt-5 text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
               <EditorialHeading>{text(data.title)}</EditorialHeading>
             </h2>
           </div>
           <div className="mt-10 max-w-[558px]">
-            <p className="leading-6 text-[#566174]">{text(data.description)}</p>
+            <p className="leading-6 text-muted">{text(data.description)}</p>
             <Button asChild variant="outline" className="mt-8">
               <Link href={text(data.ctaHref)}>
                 {text(data.ctaLabel)}
@@ -493,17 +504,18 @@ export function AboutSection({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export function TestimonialsSection({ items }: { items: Testimonial[] }) {
+export async function TestimonialsSection({ items }: { items: Testimonial[] }) {
   if (!items.length) return null;
+  const t = await getTranslations("HomeSections");
   return (
-    <section className="section-pad bg-white">
-      <div className="container-shell border-y border-[#dfe7f4] py-16 text-center">
+    <section className="section-pad bg-canvas">
+      <div className="container-shell border-y border-lime py-16 text-center">
         <Reveal>
-          <span className="eyebrow text-[#303b64]">Ils parlent de nous</span>
+          <span className="eyebrow text-ink">{t("testimonialsEyebrow")}</span>
           <blockquote className="mx-auto mt-8 max-w-4xl text-[clamp(1.75rem,3vw,2.5rem)] font-normal leading-[1.35] tracking-[-0.025em]">
             “{items[0].quote}”
           </blockquote>
-          <p className="mt-6 text-sm italic text-[#566174]">
+          <p className="mt-6 text-sm italic text-muted">
             {items[0].name} · {items[0].position}, {items[0].company}
           </p>
         </Reveal>
@@ -512,19 +524,22 @@ export function TestimonialsSection({ items }: { items: Testimonial[] }) {
   );
 }
 
-export function FaqSection({ items }: { items: Faq[] }) {
+export async function FaqSection({ items }: { items: Faq[] }) {
+  const t = await getTranslations("HomeSections");
   return (
-    <section id="faq" className="section-pad bg-white">
+    <section id="faq" className="section-pad bg-canvas">
       <div className="container-shell grid gap-12 lg:grid-cols-[.75fr_1fr] lg:gap-20">
         <Reveal className="lg:sticky lg:top-32 lg:self-start">
-          <span className="eyebrow text-[#303b64]">Vos questions</span>
+          <span className="eyebrow text-ink">{t("faqEyebrow")}</span>
           <h2 className="mt-5 max-w-lg text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
-            Questions <span className="font-editorial">fréquentes</span> (FAQ)
+            {t.rich("faqTitle", {
+              em: (chunks) => <span className="font-editorial">{chunks}</span>,
+            })}
           </h2>
           <Button asChild variant="outline" className="mt-8">
             <Link href="/contact">
               <Check className="mr-3 size-4" />
-              Nous écrire
+              {t("faqWriteToUs")}
             </Link>
           </Button>
         </Reveal>

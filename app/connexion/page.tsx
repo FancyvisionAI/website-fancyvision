@@ -14,15 +14,18 @@ export default async function SignInPage({
   if (await auth()) redirect("/admin");
   const hasError = Boolean((await searchParams).error);
   return (
-    <main className="grid min-h-screen place-items-center bg-ink p-5">
+    <main className="grid min-h-screen place-items-center bg-accent p-5">
       <div className="w-full max-w-md rounded-[2rem] bg-canvas p-7 md:p-10">
-        <Link href="/" className="text-2xl font-black tracking-[-0.06em]">
+        <Link
+          href="/"
+          className="text-2xl font-black tracking-[-0.06em] text-ink"
+        >
           FancyVision<span className="text-cobalt">.</span>
         </Link>
-        <h1 className="mt-12 text-4xl font-semibold tracking-[-0.06em]">
+        <h1 className="mt-12 text-4xl font-semibold tracking-[-0.06em] text-ink">
           Espace administration
         </h1>
-        <p className="mt-3 text-sm leading-6 text-black/55">
+        <p className="text-ink/55 mt-3 text-sm leading-6">
           Connectez-vous avec votre compte autorisé.
         </p>
         {hasError && (

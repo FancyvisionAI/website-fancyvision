@@ -7,12 +7,12 @@ type Faq = { id: string; question: string; answer: string };
 
 export function FaqList({ items }: { items: Faq[] }) {
   return (
-    <Accordion.Root type="single" collapsible className="border-t border-[#dfe7f4]">
+    <Accordion.Root type="single" collapsible className="border-t border-lime">
       {items.map((item, index) => (
-        <Accordion.Item key={item.id} value={item.id} className="border-b border-[#dfe7f4]">
+        <Accordion.Item key={item.id} value={item.id} className="border-b border-lime">
           <Accordion.Header>
             <Accordion.Trigger className="group flex w-full items-center gap-5 py-6 text-left md:py-8">
-              <span className="text-xs tabular-nums text-black/40">0{index + 1}</span>
+              <span className="text-xs tabular-nums text-ink/40">0{index + 1}</span>
               <span className="flex-1 text-lg font-semibold tracking-[-0.025em] md:text-2xl">
                 {item.question}
               </span>
@@ -22,7 +22,7 @@ export function FaqList({ items }: { items: Faq[] }) {
             </Accordion.Trigger>
           </Accordion.Header>
           <Accordion.Content className="overflow-hidden data-[state=closed]:animate-none data-[state=open]:animate-none">
-            <p className="max-w-3xl pb-8 pl-10 pr-12 text-base leading-7 text-black/60 md:text-lg">
+            <p className="max-w-3xl pb-8 pl-10 pr-12 text-base leading-7 text-ink/60 md:text-lg">
               {item.answer}
             </p>
           </Accordion.Content>

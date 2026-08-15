@@ -1,14 +1,17 @@
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { getLocale, getTranslations } from "next-intl/server";
 
+import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
 
 export async function Footer() {
+  const t = await getTranslations("Footer");
+  const locale = await getLocale();
   const [menu, settings, services, trainings] = await Promise.all([
-    contentRepository.menu("FOOTER"),
+    contentRepository.menu("FOOTER", locale),
     contentRepository.settings(),
-    contentRepository.services(),
-    contentRepository.trainings(),
+    contentRepository.services(false, locale),
+    contentRepository.trainings(locale),
   ]);
   const company = settings.find((item) => item.key === "company")?.value as
     | { email?: string; phone?: string; address?: string; linkedin?: string }
@@ -38,8 +41,7 @@ export async function Footer() {
               FancyVision<span className="font-editorial text-[#a9c5ff]">.</span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">
-              Conseil, formation et intégration de l’intelligence artificielle,
-              de la sensibilisation au déploiement.
+              {t("description")}
             </p>
             <div className="mt-7 space-y-2 text-xs leading-5 text-white/65">
               <p>{company?.address}</p>
@@ -54,12 +56,12 @@ export async function Footer() {
               href="/rendez-vous"
               className="mt-7 inline-flex h-10 items-center gap-3 rounded-xl bg-white px-4 text-xs font-semibold text-[#1a203d] transition hover:-translate-y-0.5 hover:bg-[#dfe7f4]"
             >
-              Parler à un consultant <ArrowUpRight className="size-3.5" />
+              {t("talkToConsultant")} <ArrowUpRight className="size-3.5" />
             </Link>
           </div>
 
           <FooterColumn
-            title="Conseil"
+            title={t("consulting")}
             items={consulting.map((item) => ({
               id: item.id,
               label: item.title,
@@ -67,7 +69,7 @@ export async function Footer() {
             }))}
           />
           <FooterColumn
-            title="Data"
+            title={t("data")}
             items={data.map((item) => ({
               id: item.id,
               label: item.title,
@@ -75,7 +77,7 @@ export async function Footer() {
             }))}
           />
           <FooterColumn
-            title="Formation"
+            title={t("training")}
             items={[...corporate, ...privateTrainings].map((item) => ({
               id: item.id,
               label: item.title,
@@ -83,17 +85,17 @@ export async function Footer() {
             }))}
           />
           <FooterColumn
-            title="À propos"
+            title={t("about")}
             items={aboutLinks.map((item) => ({
               id: item.id,
-              label: item.url === "/a-propos" ? "À propos" : item.label,
+              label: item.url === "/a-propos" ? t("about") : item.label,
               href: item.url,
             }))}
           />
         </div>
         <div className="flex flex-col gap-4 pt-7 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} FancyVision. Tous droits réservés.</p>
-          <p>Conseil & formation en intelligence artificielle</p>
+          <p>{t("copyright", { year: new Date().getFullYear() })}</p>
+          <p>{t("tagline")}</p>
         </div>
       </div>
     </footer>

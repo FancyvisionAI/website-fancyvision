@@ -1,10 +1,27 @@
 import type { MetadataRoute } from "next";
 
+import { routing } from "@/i18n/routing";
 import { db } from "@/lib/db";
 import { absoluteUrl } from "@/lib/utils";
 
 // The sitemap reflects live CMS records and must not require a database during builds.
 export const dynamic = "force-dynamic";
+
+function localizedPath(path: string, locale: string) {
+  if (locale === routing.defaultLocale) return path;
+  return path === "/" ? `/${locale}` : `/${locale}${path}`;
+}
+
+function languageAlternates(path: string) {
+  return {
+    languages: Object.fromEntries(
+      routing.locales.map((locale) => [
+        locale,
+        absoluteUrl(localizedPath(path, locale)),
+      ]),
+    ),
+  };
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [pages, services, trainings, articles, cases] = await Promise.all([
@@ -41,26 +58,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     confidentialite: "/confidentialite",
     conditions: "/conditions",
   };
-  return [
+  const entries: Array<{ path: string; lastModified: Date }> = [
     ...pages.map((item) => ({
-      url: absoluteUrl(pagePaths[item.slug] ?? `/${item.slug}`),
+      path: pagePaths[item.slug] ?? `/${item.slug}`,
       lastModified: item.updatedAt,
     })),
     ...services.map((item) => ({
-      url: absoluteUrl(`/services/${item.slug}`),
+      path: `/services/${item.slug}`,
       lastModified: item.updatedAt,
     })),
     ...trainings.map((item) => ({
-      url: absoluteUrl(`/formations/${item.slug}`),
+      path: `/formations/${item.slug}`,
       lastModified: item.updatedAt,
     })),
     ...articles.map((item) => ({
-      url: absoluteUrl(`/blog/${item.slug}`),
+      path: `/blog/${item.slug}`,
       lastModified: item.updatedAt,
     })),
     ...cases.map((item) => ({
-      url: absoluteUrl(`/etudes-de-cas/${item.slug}`),
+      path: `/etudes-de-cas/${item.slug}`,
       lastModified: item.updatedAt,
     })),
   ];
+
+  return entries.flatMap(({ path, lastModified }) =>
+    routing.locales.map((locale) => ({
+      url: absoluteUrl(localizedPath(path, locale)),
+      lastModified,
+      alternates: languageAlternates(path),
+    })),
+  );
 }

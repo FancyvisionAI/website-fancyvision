@@ -8,13 +8,13 @@ import {
   ChevronRight,
   Loader2,
 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const weekdays = ["L", "M", "M", "J", "V", "S", "D"];
 const slots = ["09:30", "11:00", "14:00", "15:30", "17:00"];
 
 function dateKey(date: Date) {
@@ -25,6 +25,10 @@ function dateKey(date: Date) {
 }
 
 export function AppointmentForm() {
+  const t = useTranslations("AppointmentForm");
+  const locale = useLocale();
+  const intlLocale = locale === "en" ? "en-US" : "fr-FR";
+  const weekdays = t("weekdays").split(",");
   const today = useMemo(() => {
     const value = new Date();
     value.setHours(0, 0, 0, 0);
@@ -52,11 +56,11 @@ export function AppointmentForm() {
 
   return (
     <form
-      className="overflow-hidden rounded-2xl border border-[#dfe7f4] bg-white shadow-[0_22px_70px_rgba(26,32,61,.09)]"
+      className="overflow-hidden rounded-2xl border border-lime bg-canvas shadow-[0_22px_70px_rgba(26,32,61,.09)]"
       onSubmit={async (submitEvent) => {
         submitEvent.preventDefault();
         if (!selectedDate || !selectedTime) {
-          toast.error("Choisissez une date et un horaire.");
+          toast.error(t("missingSlot"));
           return;
         }
         setPending(true);
@@ -72,28 +76,28 @@ export function AppointmentForm() {
         });
         setPending(false);
         if (!response.ok) {
-          toast.error("Vérifiez les informations saisies.");
+          toast.error(t("invalid"));
           return;
         }
-        toast.success("Votre demande de rendez-vous est enregistrée.");
+        toast.success(t("success"));
         form.reset();
         setSelectedDate("");
         setSelectedTime("");
       }}
     >
       <div className="grid lg:grid-cols-[.9fr_1.1fr]">
-        <div className="border-b border-[#dfe7f4] bg-[#f4f7fb] p-5 lg:border-b-0 lg:border-r">
+        <div className="border-b border-lime bg-lime p-5 lg:border-b-0 lg:border-r">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-semibold capitalize">
-              <CalendarDays className="size-4 text-[#597dc1]" />
-              {new Intl.DateTimeFormat("fr-FR", {
+              <CalendarDays className="size-4 text-cobalt" />
+              {new Intl.DateTimeFormat(intlLocale, {
                 month: "long",
                 year: "numeric",
               }).format(cursor)}
             </div>
             <div className="flex gap-1">
               <CalendarButton
-                label="Mois précédent"
+                label={t("previousMonth")}
                 onClick={() =>
                   setCursor(
                     new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1),
@@ -103,7 +107,7 @@ export function AppointmentForm() {
                 <ChevronLeft className="size-4" />
               </CalendarButton>
               <CalendarButton
-                label="Mois suivant"
+                label={t("nextMonth")}
                 onClick={() =>
                   setCursor(
                     new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1),
@@ -117,7 +121,7 @@ export function AppointmentForm() {
 
           <div className="mt-5 grid grid-cols-7 gap-1 text-center">
             {weekdays.map((weekday, index) => (
-              <span key={`${weekday}-${index}`} className="py-1 text-[10px] font-semibold text-[#788397]">
+              <span key={`${weekday}-${index}`} className="py-1 text-[10px] font-semibold text-muted">
                 {weekday}
               </span>
             ))}
@@ -137,10 +141,10 @@ export function AppointmentForm() {
                   }}
                   className={`grid aspect-square place-items-center rounded-lg text-xs transition ${
                     selected
-                      ? "bg-[#1a203d] font-semibold text-white"
+                      ? "bg-accent font-semibold text-white"
                       : disabled
-                        ? "cursor-not-allowed text-[#b8c0cd]"
-                        : "text-[#303b64] hover:bg-white"
+                        ? "cursor-not-allowed text-muted"
+                        : "text-ink hover:bg-canvas"
                   }`}
                   aria-pressed={selected}
                 >
@@ -150,9 +154,9 @@ export function AppointmentForm() {
             })}
           </div>
 
-          <div className="mt-5 border-t border-[#dfe7f4] pt-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#788397]">
-              Horaires disponibles
+          <div className="mt-5 border-t border-lime pt-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">
+              {t("availableSlots")}
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2">
               {slots.map((slot) => (
@@ -163,8 +167,8 @@ export function AppointmentForm() {
                   onClick={() => setSelectedTime(slot)}
                   className={`h-8 rounded-lg border text-xs font-medium transition ${
                     selectedTime === slot
-                      ? "border-[#1a203d] bg-[#1a203d] text-white"
-                      : "border-[#d5dfed] bg-white text-[#303b64] hover:border-[#597dc1] disabled:cursor-not-allowed disabled:opacity-40"
+                      ? "border-accent bg-accent text-white"
+                      : "border-lime bg-canvas text-ink hover:border-cobalt disabled:cursor-not-allowed disabled:opacity-40"
                   }`}
                 >
                   {slot}
@@ -176,44 +180,48 @@ export function AppointmentForm() {
 
         <div className="p-5 sm:p-6">
           <div className="mb-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#597dc1]">
-              Appel découverte · 30 min
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-cobalt">
+              {t("discoveryCall")}
             </p>
             <h2 className="mt-2 text-2xl font-medium tracking-[-0.03em]">
-              Vos coordonnées
+              {t("yourDetails")}
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Nom">
+            <Field label={t("name")}>
               <Input name="name" required minLength={2} className="h-10 rounded-lg" />
             </Field>
-            <Field label="Email">
+            <Field label={t("email")}>
               <Input name="email" type="email" required className="h-10 rounded-lg" />
             </Field>
-            <Field label="Téléphone">
+            <Field label={t("phone")}>
               <Input name="phone" type="tel" required className="h-10 rounded-lg" />
             </Field>
-            <Field label="Entreprise">
+            <Field label={t("company")}>
               <Input name="company" className="h-10 rounded-lg" />
             </Field>
           </div>
+          {/* Valeur envoyée à l'API volontairement non traduite : identifiant métier interne, cf. Phase 2 */}
           <input name="topic" type="hidden" value="Appel découverte" />
           <input name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
-          <div className="mt-5 flex min-h-10 items-center justify-between gap-4 rounded-xl bg-[#f4f7fb] px-4 py-2 text-xs text-[#566174]">
+          <div className="mt-5 flex min-h-10 items-center justify-between gap-4 rounded-xl bg-lime px-4 py-2 text-xs text-muted">
             <span>
               {selectedDate && selectedTime
-                ? `${new Intl.DateTimeFormat("fr-FR", { dateStyle: "medium" }).format(
-                    new Date(`${selectedDate}T12:00:00`),
-                  )} à ${selectedTime}`
-                : "Sélectionnez votre créneau"}
+                ? t("slotSummary", {
+                    date: new Intl.DateTimeFormat(intlLocale, { dateStyle: "medium" }).format(
+                      new Date(`${selectedDate}T12:00:00`),
+                    ),
+                    time: selectedTime,
+                  })
+                : t("selectSlot")}
             </span>
-            {selectedDate && selectedTime && <Check className="size-4 text-[#4765b2]" />}
+            {selectedDate && selectedTime && <Check className="size-4 text-cobalt" />}
           </div>
 
           <Button className="mt-5 h-10 w-full rounded-xl text-sm" disabled={pending}>
             {pending && <Loader2 className="mr-2 size-4 animate-spin" />}
-            Confirmer le rendez-vous
+            {t("confirm")}
             <ArrowRight className="ml-3 size-4" />
           </Button>
         </div>
@@ -235,7 +243,7 @@ function CalendarButton({
     <button
       type="button"
       onClick={onClick}
-      className="grid size-8 place-items-center rounded-lg border border-[#d5dfed] bg-white text-[#303b64]"
+      className="grid size-8 place-items-center rounded-lg border border-lime bg-canvas text-ink"
       aria-label={label}
     >
       {children}

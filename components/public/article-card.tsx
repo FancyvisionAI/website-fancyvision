@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
+import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
 
 export function ArticleCard({
@@ -19,7 +19,7 @@ export function ArticleCard({
 }) {
   return (
     <Link href={`/blog/${article.slug}`} className="group">
-      <div className="relative aspect-[1.35/1] overflow-hidden rounded-[2rem] bg-ink">
+      <div className="relative aspect-[1.35/1] overflow-hidden rounded-[2rem] bg-accent">
         {article.coverImage && (
           <Image
             src={article.coverImage}
@@ -38,8 +38,8 @@ export function ArticleCard({
           <span>{article.category?.name}</span><span>·</span><span>{article.readingTime} min</span>
         </div>
         <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{article.title}</h2>
-        <p className="mt-4 line-clamp-2 leading-7 text-black/55">{article.excerpt}</p>
-        {article.publishedAt && <p className="mt-5 text-xs text-black/40">{formatDate(article.publishedAt)}</p>}
+        <p className="mt-4 line-clamp-2 leading-7 text-ink/55">{article.excerpt}</p>
+        {article.publishedAt && <p className="mt-5 text-xs text-ink/40">{formatDate(article.publishedAt)}</p>}
       </div>
     </Link>
   );

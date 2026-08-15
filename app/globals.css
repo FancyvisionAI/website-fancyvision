@@ -8,10 +8,32 @@
   --font-display: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: "Cascadia Mono", Consolas, monospace;
+
+  --color-ink: #04071b;
+  --color-canvas: #ffffff;
+  --color-accent: #04071b;
+  --color-lime: #dfe7f4;
+  --color-cobalt: #4765b2;
+  --color-muted: #566174;
+  --color-border: rgba(23, 23, 20, 0.14);
+  --color-selection-bg: #c3d5eb;
+  --color-selection-fg: #04071b;
+}
+
+.dark {
+  color-scheme: dark;
+  --color-ink: #f4f7fb;
+  --color-canvas: #070b1a;
+  --color-lime: #172442;
+  --color-cobalt: #91abd6;
+  --color-muted: #9db2d6;
+  --color-border: rgba(244, 247, 251, 0.14);
+  --color-selection-bg: #172442;
+  --color-selection-fg: #f4f7fb;
 }
 
 * {
-  border-color: rgba(23, 23, 20, 0.14);
+  border-color: var(--color-border);
 }
 
 html {
@@ -20,15 +42,18 @@ html {
 
 body {
   margin: 0;
-  background: #fff;
-  color: #04071b;
+  background: var(--color-canvas);
+  color: var(--color-ink);
   font-family: var(--font-manrope);
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 ::selection {
-  background: #c3d5eb;
-  color: #04071b;
+  background: var(--color-selection-bg);
+  color: var(--color-selection-fg);
 }
 
 .container-shell {

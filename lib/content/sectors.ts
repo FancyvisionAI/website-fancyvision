@@ -1,10 +1,10 @@
 export const sectors = [
-  { name: "Finance", href: "/expertises/ia-finance", available: true },
-  { name: "Droit", href: "/expertises/ia-droit", available: true },
-  { name: "Santé", available: false },
-  { name: "Immobilier", available: false },
-  { name: "Collectivités / Administrations publiques", available: false },
-  { name: "Logement social", available: false },
-  { name: "Industrie et agroalimentaire", available: false },
-  { name: "Bâtiment et travaux publics", available: false },
+  { key: "finance", href: "/expertises/ia-finance", available: true },
+  { key: "law", href: "/expertises/ia-droit", available: true },
+  { key: "health", available: false },
+  { key: "realEstate", available: false },
+  { key: "publicSector", available: false },
+  { key: "socialHousing", available: false },
+  { key: "industry", available: false },
+  { key: "construction", available: false },
 ] as const;

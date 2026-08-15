@@ -1,13 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { Minus, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import type {
   NavigationService,
   NavigationTraining,
 } from "@/components/public/header";
+import { Link } from "@/i18n/navigation";
 import { sectors } from "@/lib/content/sectors";
 
 type Item = { id: string; label: string; url: string };
@@ -22,6 +23,7 @@ export function DesktopNav({
   services: NavigationService[];
   trainings: NavigationTraining[];
 }) {
+  const t = useTranslations("DesktopNav");
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -51,14 +53,14 @@ export function DesktopNav({
     <div ref={rootRef} className="hidden lg:block">
       <nav className="flex items-center justify-center gap-6 xl:gap-8">
         <MenuButton
-          label="Nos services"
+          label={t("services")}
           open={openMenu === "services"}
           onClick={() =>
             setOpenMenu((current) => (current === "services" ? null : "services"))
           }
         />
         <MenuButton
-          label="Secteurs"
+          label={t("sectors")}
           open={openMenu === "sectors"}
           onClick={() =>
             setOpenMenu((current) => (current === "sectors" ? null : "sectors"))
@@ -79,19 +81,19 @@ export function DesktopNav({
       {openMenu === "services" && (
         <div className="absolute inset-x-0 top-full border-t border-white/10 bg-[#11162d] text-white shadow-[0_24px_65px_rgba(4,7,27,.28)]">
           <div className="container-shell grid grid-cols-4 border-l border-white/15">
-            <CompactColumn title="Conseil" items={consulting} prefix="/services" />
-            <CompactColumn title="Data" items={data} prefix="/services" />
+            <CompactColumn title={t("consulting")} items={consulting} prefix="/services" />
+            <CompactColumn title={t("data")} items={data} prefix="/services" />
             <CompactColumn
-              title="Formation en entreprise"
+              title={t("corporateTraining")}
               items={corporate}
               prefix="/formations"
-              footer={{ label: "Toutes nos formations en entreprise", href: "/formations" }}
+              footer={{ label: t("allCorporateTrainings"), href: "/formations" }}
             />
             <CompactColumn
-              title="Formations pour particuliers"
+              title={t("individualTraining")}
               items={privateTrainings}
               prefix="/formations"
-              footer={{ label: "Toutes nos formations pour particuliers", href: "/formations" }}
+              footer={{ label: t("allIndividualTrainings"), href: "/formations" }}
             />
           </div>
         </div>
@@ -100,7 +102,7 @@ export function DesktopNav({
       {openMenu === "sectors" && (
         <div className="absolute inset-x-0 top-full border-t border-white/10 bg-gradient-to-br from-[#071027] via-[#101b3b] to-[#263b68] text-white shadow-[0_24px_65px_rgba(4,7,27,.28)]">
           <div className="container-shell grid min-h-[20rem] grid-cols-3 border-l border-white/15">
-            <SectorColumn title="Nos secteurs d’expertise" items={sectors.slice(0, 3)} />
+            <SectorColumn title={t("ourSectors")} items={sectors.slice(0, 3)} />
             <SectorColumn items={sectors.slice(3, 6)} />
             <SectorColumn items={sectors.slice(6)} />
           </div>
@@ -178,10 +180,12 @@ function SectorColumn({
 }: {
   title?: string;
   items: ReadonlyArray<
-    | { readonly name: string; readonly href: string; readonly available: true }
-    | { readonly name: string; readonly available: false }
+    | { readonly key: string; readonly href: string; readonly available: true }
+    | { readonly key: string; readonly available: false }
   >;
 }) {
+  const t = useTranslations("DesktopNav");
+  const tSectors = useTranslations("Sectors");
   return (
     <section className="border-r border-white/15 px-8 py-10">
       {title && (
@@ -193,17 +197,17 @@ function SectorColumn({
         {items.map((sector) =>
           sector.available ? (
             <Link
-              key={sector.name}
+              key={sector.key}
               href={sector.href}
               className="block w-fit text-base font-semibold transition hover:translate-x-1 hover:text-[#a9c5ff]"
             >
-              {sector.name}
+              {tSectors(sector.key)}
             </Link>
           ) : (
-            <div key={sector.name} className="flex flex-wrap items-center gap-3 text-base text-white/70">
-              <span>{sector.name}</span>
+            <div key={sector.key} className="flex flex-wrap items-center gap-3 text-base text-white/70">
+              <span>{tSectors(sector.key)}</span>
               <span className="rounded-full bg-white/85 px-3 py-1 text-[11px] font-medium text-[#263b68]">
-                Coming soon
+                {t("comingSoon")}
               </span>
             </div>
           ),

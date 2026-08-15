@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/public/reveal";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 export function PageHero({
   eyebrow,

@@ -1,0 +1,283 @@
+{
+  "Header": {
+    "homeAriaLabel": "FancyVision, accueil",
+    "bookAppointment": "Prendre rendez-vous"
+  },
+  "LocaleSwitcher": {
+    "ariaLabel": "Changer de langue"
+  },
+  "DesktopNav": {
+    "services": "Nos services",
+    "sectors": "Secteurs",
+    "consulting": "Conseil",
+    "data": "Data",
+    "corporateTraining": "Formation en entreprise",
+    "individualTraining": "Formations pour particuliers",
+    "allCorporateTrainings": "Toutes nos formations en entreprise",
+    "allIndividualTrainings": "Toutes nos formations pour particuliers",
+    "ourSectors": "Nos secteurs d’expertise",
+    "comingSoon": "Coming soon"
+  },
+  "MobileNav": {
+    "navigationAriaLabel": "Navigation principale",
+    "closeMenu": "Fermer le menu",
+    "services": "Nos services",
+    "consulting": "Conseil",
+    "data": "Data",
+    "corporateTraining": "Formation en entreprise",
+    "individualTraining": "Formation particuliers",
+    "sectors": "Secteurs",
+    "ourSectors": "Nos secteurs d’expertise",
+    "comingSoon": "Coming soon",
+    "search": "Rechercher",
+    "bookAppointment": "Prendre rendez-vous",
+    "openMenu": "Ouvrir le menu"
+  },
+  "Sectors": {
+    "finance": "Finance",
+    "law": "Droit",
+    "health": "Santé",
+    "realEstate": "Immobilier",
+    "publicSector": "Collectivités / Administrations publiques",
+    "socialHousing": "Logement social",
+    "industry": "Industrie et agroalimentaire",
+    "construction": "Bâtiment et travaux publics"
+  },
+  "Footer": {
+    "description": "Conseil, formation et intégration de l’intelligence artificielle, de la sensibilisation au déploiement.",
+    "talkToConsultant": "Parler à un consultant",
+    "consulting": "Conseil",
+    "data": "Data",
+    "training": "Formation",
+    "about": "À propos",
+    "copyright": "© {year} FancyVision. Tous droits réservés.",
+    "tagline": "Conseil & formation en intelligence artificielle"
+  },
+  "Newsletter": {
+    "eyebrow": "Newsletter",
+    "heading": "La newsletter sur l’<em>IA</em>, suivie par les décideurs.",
+    "success": "Bienvenue dans la newsletter FancyVision.",
+    "error": "Impossible de vous inscrire pour le moment.",
+    "emailPlaceholder": "votre@email.fr",
+    "subscribe": "S’inscrire",
+    "helper": "Un décryptage utile chaque semaine. Désinscription en un clic."
+  },
+  "CookieBanner": {
+    "learnMore": "En savoir plus",
+    "essentialOnly": "Essentiels",
+    "acceptAll": "Tout accepter"
+  },
+  "ContactForm": {
+    "error": "Votre message n’a pas pu être envoyé.",
+    "success": "Merci. Notre équipe vous répond sous un jour ouvré.",
+    "name": "Nom",
+    "namePlaceholder": "Marie Dupont",
+    "email": "Email",
+    "emailPlaceholder": "marie@entreprise.fr",
+    "phone": "Téléphone",
+    "phonePlaceholder": "+33 6…",
+    "company": "Entreprise",
+    "companyPlaceholder": "Votre organisation",
+    "subject": "Objet",
+    "subjectPlaceholder": "Audit, formation, développement…",
+    "message": "Votre message",
+    "messagePlaceholder": "Parlez-nous de vos enjeux, de vos équipes et de vos objectifs…",
+    "submit": "Envoyer le message"
+  },
+  "EventRegistrationForm": {
+    "register": "S’inscrire",
+    "error": "Impossible de vous inscrire.",
+    "success": "Inscription confirmée pour « {eventTitle} ».",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "submit": "Valider"
+  },
+  "AppointmentForm": {
+    "weekdays": "L,M,M,J,V,S,D",
+    "missingSlot": "Choisissez une date et un horaire.",
+    "invalid": "Vérifiez les informations saisies.",
+    "success": "Votre demande de rendez-vous est enregistrée.",
+    "previousMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "availableSlots": "Horaires disponibles",
+    "discoveryCall": "Appel découverte · 30 min",
+    "yourDetails": "Vos coordonnées",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "company": "Entreprise",
+    "slotSummary": "{date} à {time}",
+    "selectSlot": "Sélectionnez votre créneau",
+    "confirm": "Confirmer le rendez-vous"
+  },
+  "NotFound": {
+    "eyebrow": "Erreur 404",
+    "title": "Oups.",
+    "description": "Cette page n’existe plus ou a changé d’adresse.",
+    "backHome": "Retour à l’accueil"
+  },
+  "LegalPage": {
+    "eyebrow": "Informations"
+  },
+  "HomeSections": {
+    "heroPrimaryCta": "Échangeons sur votre projet",
+    "heroSecondaryCta": "Voir les prochaines sessions",
+    "servicesImageAlt": "Consultants FancyVision en atelier",
+    "ctaLabel": "Échanger avec nous",
+    "step": "Étape 0{number}",
+    "casesEyebrow": "Études de cas",
+    "casesTitle": "Les projets <em>IA</em> déployés chez nos clients",
+    "casesViewAll": "Voir toutes nos études de cas",
+    "teamSize": "{count, plural, one {# collaborateur} other {# collaborateurs}}",
+    "eventsViewAll": "Voir tout l’agenda",
+    "testimonialsEyebrow": "Ils parlent de nous",
+    "faqEyebrow": "Vos questions",
+    "faqTitle": "Questions <em>fréquentes</em> (FAQ)",
+    "faqWriteToUs": "Nous écrire"
+  },
+  "Pages": {
+    "appointment": {
+      "eyebrow": "Rendez-vous",
+      "title": "Parlons de votre projet.",
+      "videoCall": "Visioconférence · 30 minutes",
+      "noCommitment": "Sans engagement"
+    },
+    "about": {
+      "metaTitle": "Le cabinet",
+      "metaDescription": "Découvrez l’équipe et la mission de FancyVision.",
+      "eyebrow": "Le cabinet",
+      "joinUs": "Nous rejoindre",
+      "missionEyebrow": "Notre mission",
+      "missionText": "Rendre l’intelligence artificielle accessible, maîtrisée et performante pour chaque professionnel.",
+      "teamEyebrow": "Nos équipes",
+      "teamHeading": "Des experts engagés sur le terrain."
+    },
+    "blogCategory": {
+      "eyebrow": "Catégorie",
+      "articleCount": "{count, plural, =0 {Aucun article à découvrir.} one {# article à découvrir.} other {# articles à découvrir.}}"
+    },
+    "blog": {
+      "metaTitle": "Blog IA",
+      "metaDescription": "Guides, analyses et opinions sur l’intelligence artificielle générative.",
+      "eyebrow": "Le média"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "firstContactEyebrow": "Un premier échange",
+      "firstContactText": "Nous répondons sous un jour ouvré et vous orientons vers la bonne expertise dès le premier contact."
+    },
+    "caseStudies": {
+      "metaTitle": "Études de cas",
+      "metaDescription": "Des transformations IA concrètes menées avec FancyVision.",
+      "eyebrow": "Cas clients",
+      "teamSize": "{count, plural, one {# collaborateur} other {# collaborateurs}}"
+    },
+    "expertise": {
+      "eyebrow": "Secteur d’expertise",
+      "description": "Des cas d’usage ciblés, des outils sécurisés et une adoption adaptée aux exigences du métier.",
+      "cta": "Parler de votre projet",
+      "useCasesEyebrow": "Cas d’usage",
+      "useCasesTitle": "Des applications concrètes",
+      "caseDescription": "Des méthodes conçues autour des données, responsabilités et contraintes du métier.",
+      "financeTitle": "L’IA pour la finance",
+      "financeCase1": "Analyse documentaire",
+      "financeCase2": "Reporting augmenté",
+      "financeCase3": "Préparation client",
+      "financeCase4": "Conformité",
+      "lawTitle": "L’IA pour le droit",
+      "lawCase1": "Veille juridique",
+      "lawCase2": "Synthèse de dossiers",
+      "lawCase3": "Rédaction assistée",
+      "lawCase4": "Recherche documentaire"
+    },
+    "training": {
+      "metaTitle": "Formations en intelligence artificielle",
+      "metaDescription": "Formations IA pour entreprises et particuliers, pratiques et orientées résultats.",
+      "eyebrow": "Organisme de formation",
+      "cta": "Construire votre parcours"
+    },
+    "trainingLanding": {
+      "eyebrow": "Formation IA partout en France",
+      "cta": "Parler de votre besoin",
+      "programsEyebrow": "Programmes disponibles",
+      "programsTitle": "Une formation pratique, adaptée à votre équipe.",
+      "programsDescription": "Sur site ou à distance, chaque parcours associe démonstrations, exercices métier et ressources directement réutilisables."
+    },
+    "trainingDetail": {
+      "cta": "Demander le programme",
+      "duration": "Durée",
+      "custom": "Sur mesure",
+      "audience": "Public",
+      "level": "Niveau",
+      "objectives": "Objectifs",
+      "curriculum": "Le programme",
+      "modules": "Modules",
+      "designTraining": "Concevoir votre formation"
+    },
+    "trainingCity": {
+      "eyebrow": "Formation à {city}",
+      "title": "Formation IA et ChatGPT à {city}",
+      "description": "Développez des usages pratiques de l’intelligence artificielle avec une formation adaptée à votre métier, sur place ou à distance.",
+      "cta": "Demander un programme",
+      "practicalTitle": "Une pédagogie pratique",
+      "practicalDescription": "Des exercices construits autour de situations professionnelles réelles.",
+      "onsiteTitle": "Sur place ou à distance",
+      "onsiteDescription": "Des sessions organisées à {city}, dans vos locaux, ou en visioconférence.",
+      "adaptedTitle": "Un programme adapté",
+      "adaptedDescription": "Le niveau, les outils et les cas d’usage sont ajustés à vos objectifs.",
+      "organize": "Organiser une formation à {city}"
+    },
+    "search": {
+      "eyebrow": "Recherche globale",
+      "title": "Que cherchez-vous ?",
+      "description": "Services, formations, articles, FAQ et études de cas.",
+      "placeholder": "Ex. formation ChatGPT, audit, sécurité…",
+      "resultCount": "{count, plural, =0 {Aucun résultat} one {# résultat} other {# résultats}} pour « {query} »"
+    },
+    "services": {
+      "metaTitle": "Conseil en intelligence artificielle",
+      "metaDescription": "Audit, conduite du changement, développement et gouvernance IA avec FancyVision.",
+      "eyebrow": "Cabinet de conseil",
+      "cta": "Parler de votre projet",
+      "consultingEyebrow": "Conseil",
+      "consultingTitle": "Nos services de conseil en IA",
+      "consultingDescription": "De l’audit au déploiement, nous structurons vos projets, vos usages et l’adoption de l’intelligence artificielle dans la durée.",
+      "dataEyebrow": "Data",
+      "dataTitle": "Des données fiables, utiles et activables",
+      "dataDescription": "De la stratégie à la Data Science, FancyVision construit les fondations et les produits qui transforment vos données en décisions."
+    },
+    "serviceDetail": {
+      "cta": "Échanger avec un consultant",
+      "whatYouGet": "Ce que vous obtenez",
+      "value1": "Diagnostic actionnable",
+      "value2": "Livrables sur mesure",
+      "value3": "Mesure des résultats",
+      "value4": "Transfert de compétences",
+      "support": "L’accompagnement",
+      "startDiagnostic": "Démarrer un diagnostic"
+    },
+    "events": {
+      "metaTitle": "Événements IA",
+      "metaDescription": "Découvrez les formations, ateliers et rencontres FancyVision et inscrivez-vous en ligne.",
+      "title": "Événements",
+      "organizeEvent": "Organiser un événement",
+      "upcoming": "À venir",
+      "past": "Passés",
+      "clearFilters": "Effacer",
+      "sessionCount": "{count, plural, one {# session} other {# sessions}}",
+      "parisTime": "Heure de Paris",
+      "hostedBy": "Par {host}",
+      "spotsRemaining": "{count, plural, one {# place restante} other {# places restantes}}",
+      "noEvents": "Aucun événement dans cette période.",
+      "questionTitle": "Une question avant de vous inscrire ?",
+      "questionText": "Chaque inscription est enregistrée et notre équipe vous adresse les informations de connexion.",
+      "contactTeam": "Contacter l’équipe →",
+      "previousMonth": "Mois précédent",
+      "resetCalendar": "Revenir au calendrier initial",
+      "nextMonth": "Mois suivant",
+      "filterDay": "Filtrer les événements du {day}",
+      "weekdays": "D,L,M,M,J,V,S"
+    }
+  }
+}

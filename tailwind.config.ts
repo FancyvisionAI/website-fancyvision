@@ -10,11 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#04071b",
-        canvas: "#ffffff",
-        lime: "#dfe7f4",
-        cobalt: "#4765b2",
-        muted: "#566174",
+        ink: "var(--color-ink)",
+        canvas: "var(--color-canvas)",
+        accent: "var(--color-accent)",
+        lime: "var(--color-lime)",
+        cobalt: "var(--color-cobalt)",
+        muted: "var(--color-muted)",
       },
       borderRadius: {
         "4xl": "2rem",
