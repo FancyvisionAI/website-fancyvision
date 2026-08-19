@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { PageHero } from "@/components/public/page-hero";
 import { RichContent } from "@/components/public/rich-content";
 import { contentRepository } from "@/lib/repositories/content";
-import { formatDate } from "@/lib/utils";
+import { formatDate, languageAlternates, localizedPath } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -16,11 +16,13 @@ export async function generateMetadata({
   const locale = await getLocale();
   const article = await contentRepository.article((await params).slug, locale);
   if (!article) return {};
+  const path = `/blog/${article.slug}`;
   return {
     title: article.seo?.title ?? article.title,
     description: article.seo?.description ?? article.excerpt,
     alternates: {
-      canonical: article.seo?.canonical ?? `/blog/${article.slug}`,
+      canonical: article.seo?.canonical ?? localizedPath(path, locale),
+      languages: languageAlternates(path),
     },
     openGraph: {
       type: "article",
@@ -35,20 +37,27 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const locale = await getLocale();
+  const t = await getTranslations("Pages.blog");
+  const tCategories = await getTranslations("Categories");
   const article = await contentRepository.article((await params).slug, locale);
   if (!article) notFound();
+  const categoryLabel = article.category?.slug
+    ? tCategories.has(article.category.slug)
+      ? tCategories(article.category.slug)
+      : article.category.name
+    : undefined;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: article.title,
     datePublished: article.publishedAt?.toISOString(),
-    author: { "@type": "Person", name: article.author?.name ?? "FancyVision" },
-    publisher: { "@type": "Organization", name: "FancyVision" },
+    author: { "@type": "Person", name: article.author?.name ?? "Sapiens IA" },
+    publisher: { "@type": "Organization", name: "Sapiens IA" },
   };
   return (
     <>
       <PageHero
-        eyebrow={article.category?.name}
+        eyebrow={categoryLabel}
         title={article.title}
         description={article.excerpt}
       />
@@ -56,12 +65,12 @@ export default async function ArticlePage({
         <div className="container-shell">
           <div className="text-ink/45 flex flex-wrap gap-4 text-xs font-semibold uppercase tracking-[0.1em]">
             {article.publishedAt && (
-              <span>{formatDate(article.publishedAt)}</span>
+              <span>{formatDate(article.publishedAt, locale)}</span>
             )}
             <span>·</span>
-            <span>{article.readingTime} minutes de lecture</span>
+            <span>{t("readingTime", { count: article.readingTime })}</span>
             <span>·</span>
-            <span>{article.author?.name ?? "FancyVision"}</span>
+            <span>{article.author?.name ?? "Sapiens IA"}</span>
           </div>
           {article.coverImage && (
             <div className="relative mt-10 aspect-[2/1] overflow-hidden rounded-[2rem]">

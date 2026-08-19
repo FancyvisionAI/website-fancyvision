@@ -16,12 +16,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function TrainingPage() {
   const t = await getTranslations("Pages.training");
+  const tCategories = await getTranslations("Categories");
   const locale = await getLocale();
-  const [page, trainings] = await Promise.all([
+  const [page, enterprise, individual] = await Promise.all([
     contentRepository.page("formation", locale),
-    contentRepository.trainings(locale),
+    contentRepository.trainingsByCategory("entreprise", locale),
+    contentRepository.trainingsByCategory("particuliers", locale),
   ]);
   if (!page) notFound();
+
   return (
     <>
       <PageHero
@@ -31,18 +34,60 @@ export default async function TrainingPage() {
         cta={{ label: t("cta"), href: "/rendez-vous" }}
       />
       <section className="section-pad bg-canvas pt-0">
-        <div className="container-shell grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {trainings.map((item, index) => (
-            <ContentCard
-              key={item.id}
-              href={`/formations/${item.slug}`}
-              index={index}
-              eyebrow={item.category?.name}
-              title={item.title}
-              description={item.excerpt}
-              meta={item.duration}
-            />
-          ))}
+        <div className="container-shell">
+          <div className="grid gap-10 border-b border-lime pb-12 lg:grid-cols-[.55fr_1fr]">
+            <span className="eyebrow text-ink">{t("enterpriseEyebrow")}</span>
+            <div>
+              <h2 className="text-[clamp(2.4rem,4vw,3.25rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+                {t("enterpriseTitle")}
+              </h2>
+              <p className="mt-5 max-w-2xl leading-7 text-muted">
+                {t("enterpriseDescription")}
+              </p>
+            </div>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {enterprise.map((item, index) => (
+              <ContentCard
+                key={item.id}
+                href={`/formations/${item.slug}`}
+                index={index}
+                eyebrow={tCategories("entreprise")}
+                title={item.title}
+                description={item.excerpt}
+                meta={item.duration ?? t("toBeConfirmed")}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad bg-lime">
+        <div className="container-shell">
+          <div className="grid gap-10 border-b border-lime pb-12 lg:grid-cols-[.55fr_1fr]">
+            <span className="eyebrow text-ink">{t("individualEyebrow")}</span>
+            <div>
+              <h2 className="text-[clamp(2.4rem,4vw,3.25rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+                {t("individualTitle")}
+              </h2>
+              <p className="mt-5 max-w-2xl leading-7 text-muted">
+                {t("individualDescription")}
+              </p>
+            </div>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {individual.map((item, index) => (
+              <ContentCard
+                key={item.id}
+                href={`/formations/${item.slug}`}
+                index={index}
+                eyebrow={tCategories("particuliers")}
+                title={item.title}
+                description={item.excerpt}
+                meta={item.duration ?? t("toBeConfirmed")}
+              />
+            ))}
+          </div>
         </div>
       </section>
     </>

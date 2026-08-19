@@ -5,14 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-control text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-accent text-white hover:bg-[#303b64]",
-        accent: "bg-canvas text-ink hover:bg-lime",
-        outline: "border border-lime bg-canvas text-ink hover:bg-[#f1f5fa]",
-        ghost: "text-ink hover:bg-black/5",
+        default: "bg-accent text-white hover:opacity-90",
+        // Réservé aux fonds toujours sombres (.reference-hero, bg-accent :
+        // bandeau cookies) quel que soit le thème du site — bg-canvas/text-ink
+        // (variables de thème) donneraient un contraste quasi nul en Dark
+        // Mode puisque ces fonds ne changent jamais. Blanc constant à la
+        // place, cohérent avec le traitement déjà appliqué au footer.
+        accent: "bg-white text-accent hover:bg-slate-100",
+        outline: "border border-lime bg-canvas text-ink hover:bg-lime",
+        ghost: "text-ink hover:bg-lime",
       },
       size: {
         default: "h-12 px-6",

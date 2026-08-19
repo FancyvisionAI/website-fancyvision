@@ -24,7 +24,17 @@ function dateKey(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
-export function AppointmentForm() {
+const ORGANIZATION_SIZES = [
+  "sizeIndividual",
+  "sizeSme",
+  "sizeLarge",
+] as const;
+
+export function AppointmentForm({
+  sectorOptions,
+}: {
+  sectorOptions: string[];
+}) {
   const t = useTranslations("AppointmentForm");
   const locale = useLocale();
   const intlLocale = locale === "en" ? "en-US" : "fr-FR";
@@ -66,6 +76,11 @@ export function AppointmentForm() {
         setPending(true);
         const form = submitEvent.currentTarget;
         const values = Object.fromEntries(new FormData(form));
+        const firstName = String(values.firstName ?? "").trim();
+        const lastName = String(values.lastName ?? "").trim();
+        values.name = `${firstName} ${lastName}`.trim();
+        delete values.firstName;
+        delete values.lastName;
         values.preferredDate = new Date(
           `${selectedDate}T${selectedTime}:00`,
         ).toISOString();
@@ -188,8 +203,11 @@ export function AppointmentForm() {
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label={t("name")}>
-              <Input name="name" required minLength={2} className="h-10 rounded-lg" />
+            <Field label={t("firstName")}>
+              <Input name="firstName" required minLength={2} className="h-10 rounded-lg" />
+            </Field>
+            <Field label={t("lastName")}>
+              <Input name="lastName" required minLength={2} className="h-10 rounded-lg" />
             </Field>
             <Field label={t("email")}>
               <Input name="email" type="email" required className="h-10 rounded-lg" />
@@ -199,6 +217,45 @@ export function AppointmentForm() {
             </Field>
             <Field label={t("company")}>
               <Input name="company" className="h-10 rounded-lg" />
+            </Field>
+            <Field label={t("sector")}>
+              <select
+                name="sector"
+                defaultValue=""
+                className="border-ink/15 bg-canvas/70 focus:ring-cobalt/10 flex h-10 w-full rounded-lg border px-4 text-sm outline-none transition focus:border-cobalt focus:ring-2"
+              >
+                <option value="" disabled>
+                  {t("sectorPlaceholder")}
+                </option>
+                {sectorOptions.map((sector) => (
+                  <option key={sector} value={sector}>
+                    {sector}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label={t("organizationSize")}>
+              <select
+                name="organizationSize"
+                defaultValue=""
+                className="border-ink/15 bg-canvas/70 focus:ring-cobalt/10 flex h-10 w-full rounded-lg border px-4 text-sm outline-none transition focus:border-cobalt focus:ring-2"
+              >
+                <option value="" disabled>
+                  {t("organizationSizePlaceholder")}
+                </option>
+                {ORGANIZATION_SIZES.map((key) => (
+                  <option key={key} value={t(key)}>
+                    {t(key)}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label={t("message")} className="sm:col-span-2">
+              <textarea
+                name="message"
+                rows={3}
+                className="border-ink/15 bg-canvas/70 placeholder:text-ink/40 focus:ring-cobalt/10 w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition focus:border-cobalt focus:ring-2"
+              />
             </Field>
           </div>
           {/* Valeur envoyée à l'API volontairement non traduite : identifiant métier interne, cf. Phase 2 */}
@@ -251,6 +308,19 @@ function CalendarButton({
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <label className="grid gap-1.5 text-xs font-semibold">{label}{children}</label>;
+function Field({
+  label,
+  children,
+  className = "",
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <label className={`grid gap-1.5 text-xs font-semibold ${className}`}>
+      {label}
+      {children}
+    </label>
+  );
 }

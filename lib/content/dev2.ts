@@ -29,8 +29,7 @@ export const dev2Services = [
     category: "conseil",
     slug: "conduite-du-changement",
     title: "Conduite du changement",
-    headline:
-      "Conduite du changement IA : installez une dynamique durable",
+    headline: "Conduite du changement IA : installez une dynamique durable",
     description:
       "Gouvernance, ambassadeurs, veille et mesure des usages pour faire progresser l’adoption dans la durée.",
     image: dev2Assets.change,
@@ -233,25 +232,85 @@ export const dev2ArticleCategories = [
 ] as const;
 
 export const dev2Articles = [
-  ["analyse-pdf-notebooklm", "Analyser un PDF avec NotebookLM", "Guide pratiques"],
-  ["claude-mindmap-projet", "Créer une mindmap de projet avec Claude", "Claude"],
-  ["comprendre-ia-definitions", "Comprendre l’IA : les définitions essentielles", "Études et analyses"],
-  ["comptes-rendus-reunion-ia", "Automatiser ses comptes rendus de réunion avec l’IA", "Productivité"],
-  ["creer-images-reseaux-sociaux-chatgpt", "Créer des images avec ChatGPT", "ChatGPT"],
-  ["ecrire-emails-chatgpt", "Mieux écrire ses e-mails avec ChatGPT", "Productivité"],
-  ["financement-formation-ia", "Comment financer une formation en IA ?", "Guide pratiques"],
-  ["formation-ia-pme", "Pourquoi former les équipes d’une PME à l’IA ?", "Guide pratiques"],
-  ["ia-consommation-energetique", "IA et consommation énergétique", "Études et analyses"],
+  [
+    "analyse-pdf-notebooklm",
+    "Analyser un PDF avec NotebookLM",
+    "Guide pratiques",
+  ],
+  [
+    "claude-mindmap-projet",
+    "Créer une mindmap de projet avec Claude",
+    "Claude",
+  ],
+  [
+    "comprendre-ia-definitions",
+    "Comprendre l’IA : les définitions essentielles",
+    "Études et analyses",
+  ],
+  [
+    "comptes-rendus-reunion-ia",
+    "Automatiser ses comptes rendus de réunion avec l’IA",
+    "Productivité",
+  ],
+  [
+    "creer-images-reseaux-sociaux-chatgpt",
+    "Créer des images avec ChatGPT",
+    "ChatGPT",
+  ],
+  [
+    "ecrire-emails-chatgpt",
+    "Mieux écrire ses e-mails avec ChatGPT",
+    "Productivité",
+  ],
+  [
+    "financement-formation-ia",
+    "Comment financer une formation en IA ?",
+    "Guide pratiques",
+  ],
+  [
+    "formation-ia-pme",
+    "Pourquoi former les équipes d’une PME à l’IA ?",
+    "Guide pratiques",
+  ],
+  [
+    "ia-consommation-energetique",
+    "IA et consommation énergétique",
+    "Études et analyses",
+  ],
   ["ia-drh", "L’IA au service des ressources humaines", "Actualité"],
-  ["ia-la-plus-securisee", "Quelle IA choisir pour protéger ses données ?", "Études et analyses"],
-  ["ia-marche-emploi-france", "L’IA et le marché de l’emploi en France", "Études et analyses"],
+  [
+    "ia-la-plus-securisee",
+    "Quelle IA choisir pour protéger ses données ?",
+    "Études et analyses",
+  ],
+  [
+    "ia-marche-emploi-france",
+    "L’IA et le marché de l’emploi en France",
+    "Études et analyses",
+  ],
   ["ia-securite-chatgpt-donnees", "ChatGPT et sécurité des données", "ChatGPT"],
-  ["introduction-intelligence-artificielle-chatgpt", "Introduction à l’intelligence artificielle", "ChatGPT"],
+  [
+    "introduction-intelligence-artificielle-chatgpt",
+    "Introduction à l’intelligence artificielle",
+    "ChatGPT",
+  ],
   ["peur-mefiance-ia", "Transformer la méfiance en curiosité", "Opinions"],
-  ["risques-ia-entreprise-incidents", "Prévenir les risques de l’IA en entreprise", "Études et analyses"],
-  ["service-client-chatbot-ia", "Améliorer le service client avec les chatbots", "Productivité"],
+  [
+    "risques-ia-entreprise-incidents",
+    "Prévenir les risques de l’IA en entreprise",
+    "Études et analyses",
+  ],
+  [
+    "service-client-chatbot-ia",
+    "Améliorer le service client avec les chatbots",
+    "Productivité",
+  ],
   ["tribune-du-prompt-au-contexte", "Du prompt au contexte", "Opinions"],
-  ["veille-juridique-notaires", "Faciliter la veille juridique avec l’IA", "Guide pratiques"],
+  [
+    "veille-juridique-notaires",
+    "Faciliter la veille juridique avec l’IA",
+    "Guide pratiques",
+  ],
 ] as const;
 
 export const dev2Faq = [

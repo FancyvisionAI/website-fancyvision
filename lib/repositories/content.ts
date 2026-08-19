@@ -65,6 +65,21 @@ export const contentRepository = {
       }),
     );
   },
+  servicesByCategory: cache(
+    (categorySlug: string, locale: string = routing.defaultLocale) => {
+      return findLocalizedList(locale, (loc) =>
+        db.service.findMany({
+          where: {
+            locale: loc,
+            status: ContentStatus.PUBLISHED,
+            category: { slug: categorySlug },
+          },
+          include: { category: true, seo: true },
+          orderBy: [{ order: "asc" }, { title: "asc" }],
+        }),
+      );
+    },
+  ),
   trainings: cache((locale: string = routing.defaultLocale) => {
     return findLocalizedList(locale, (loc) =>
       db.training.findMany({
@@ -82,6 +97,21 @@ export const contentRepository = {
       }),
     );
   },
+  trainingsByCategory: cache(
+    (categorySlug: string, locale: string = routing.defaultLocale) => {
+      return findLocalizedList(locale, (loc) =>
+        db.training.findMany({
+          where: {
+            locale: loc,
+            status: ContentStatus.PUBLISHED,
+            category: { slug: categorySlug },
+          },
+          include: { category: true, seo: true },
+          orderBy: [{ order: "asc" }, { title: "asc" }],
+        }),
+      );
+    },
+  ),
   articles(options?: {
     category?: string;
     query?: string;

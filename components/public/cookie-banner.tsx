@@ -23,10 +23,10 @@ export function CookieBanner({ text }: { text: string }) {
         {text} <Link href="/confidentialite" className="text-lime underline">{t("learnMore")}</Link>
       </p>
       <div className="mt-4 flex gap-2 md:mt-0">
-        <Button size="sm" variant="ghost" className="text-white hover:bg-white/10 hover:text-white" onClick={() => choose("essential")}>
+        <Button size="sm" variant="ghost" className="h-11 text-white hover:bg-white/10 hover:text-white" onClick={() => choose("essential")}>
           {t("essentialOnly")}
         </Button>
-        <Button size="sm" variant="accent" onClick={() => choose("all")}>{t("acceptAll")}</Button>
+        <Button size="sm" variant="accent" className="h-11" onClick={() => choose("all")}>{t("acceptAll")}</Button>
       </div>
     </aside>
   );

@@ -18,16 +18,27 @@ export async function POST(request: Request) {
     );
   const payload = { ...parsed.data };
   delete payload.website;
-  const { preferredDate, ...data } = payload;
+  const { preferredDate, sector, organizationSize, message, ...data } = payload;
+  // Le modèle Appointment n'a pas de colonne dédiée pour ces champs
+  // (formulaire Audit gratuit) : on les intègre au message plutôt que
+  // d'ajouter une migration Prisma pour cette phase.
+  const composedMessage = [
+    sector ? `Secteur d'activité : ${sector}` : null,
+    organizationSize ? `Taille de l'organisation : ${organizationSize}` : null,
+    message ? message : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
   const appointment = await db.appointment.create({
     data: {
       ...data,
+      message: composedMessage || null,
       preferredDate: preferredDate ? new Date(preferredDate) : null,
     },
   });
   await notifyTeam(
     `Nouvelle demande de rendez-vous — ${data.name}`,
-    `${data.name} (${data.email})\nSujet : ${data.topic}\nDate souhaitée : ${preferredDate || "non précisée"}`,
+    `${data.name} (${data.email})\nSujet : ${data.topic}\nDate souhaitée : ${preferredDate || "non précisée"}${composedMessage ? `\n\n${composedMessage}` : ""}`,
   ).catch(() => undefined);
   return NextResponse.json({ id: appointment.id }, { status: 201 });
 }

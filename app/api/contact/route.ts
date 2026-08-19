@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     data: { ...data, metadata: { ip } },
   });
   await notifyTeam(
-    `Nouveau contact FancyVision — ${data.name}`,
+    `Nouveau contact Sapiens IA — ${data.name}`,
     `${data.name} (${data.email})\n${data.company ?? ""}\n\n${data.message}`,
   ).catch(() => undefined);
   return NextResponse.json({ id: contact.id }, { status: 201 });

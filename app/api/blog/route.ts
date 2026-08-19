@@ -7,7 +7,8 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const slug = searchParams.get("slug");
     const category = searchParams.get("category") || undefined;
-    const query = searchParams.get("q") || searchParams.get("query") || undefined;
+    const query =
+      searchParams.get("q") || searchParams.get("query") || undefined;
     const takeParam = searchParams.get("take");
     const take = takeParam ? parseInt(takeParam, 10) : undefined;
 

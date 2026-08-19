@@ -43,7 +43,7 @@ async function main() {
     update: {},
     create: {
       name: "Administrateur",
-      description: "Accès complet à FancyVision",
+      description: "Accès complet à Sapiens IA",
     },
   });
 
@@ -69,7 +69,7 @@ async function main() {
       ...(configuredAdminPassword ? { passwordHash: adminPasswordHash } : {}),
     },
     create: {
-      name: "Admin FancyVision",
+      name: "Admin Sapiens IA",
       email: "admin@fancyvision.fr",
       passwordHash: adminPasswordHash,
       roleId: role.id,
@@ -357,7 +357,7 @@ async function main() {
       eyebrow: "Conseil · Formation · Déploiement",
       headline: "L’IA utile, adoptée par vos équipes.",
       description:
-        "FancyVision aide les organisations et les professionnels à transformer l’intelligence artificielle en résultats concrets.",
+        "Sapiens IA aide les organisations et les professionnels à transformer l’intelligence artificielle en résultats concrets.",
       status: ContentStatus.PUBLISHED,
       publishedAt: new Date(),
     },
@@ -458,7 +458,7 @@ async function main() {
         type: "advantages",
         order: 6,
         data: {
-          eyebrow: "Pourquoi FancyVision",
+          eyebrow: "Pourquoi Sapiens IA",
           title: "Une double expertise qui produit des résultats.",
           items: [
             {
@@ -558,7 +558,7 @@ async function main() {
     },
     {
       slug: "a-propos",
-      title: "À propos de FancyVision",
+      title: "À propos de Sapiens IA",
       headline: "Nous mettons l’humain au centre de l’IA.",
       description:
         "Un collectif de consultants, formateurs et builders réuni autour d’une conviction : la technologie n’a d’impact que lorsqu’elle est vraiment adoptée.",
@@ -572,7 +572,7 @@ async function main() {
     },
     {
       slug: "blog",
-      title: "Le blog FancyVision",
+      title: "Le blog Sapiens IA",
       headline: "Actualités, opinions et méthodes.",
       description:
         "Des analyses de fond et des guides pratiques pour comprendre et exploiter l’IA au travail.",
@@ -602,18 +602,18 @@ async function main() {
       slug: "mentions-legales",
       title: "Mentions légales",
       description:
-        "Informations relatives à l’éditeur et à l’hébergement du site FancyVision.",
+        "Informations relatives à l’éditeur et à l’hébergement du site Sapiens IA.",
       paragraphs: [
-        "Éditeur : FancyVision, société de conseil et de formation en intelligence artificielle. Siège social : 24 rue du Sentier, 75002 Paris. Contact : bonjour@fancyvision.fr.",
+        "Éditeur : Sapiens IA, société de conseil et de formation en intelligence artificielle. Siège social : 24 rue du Sentier, 75002 Paris. Contact : bonjour@fancyvision.fr.",
         "Le site est hébergé par Vercel Inc. Les contenus, marques, illustrations et éléments graphiques sont protégés. Toute reproduction non autorisée est interdite.",
-        "FancyVision s’efforce de fournir des informations exactes et à jour, sans pouvoir garantir l’absence complète d’erreurs.",
+        "Sapiens IA s’efforce de fournir des informations exactes et à jour, sans pouvoir garantir l’absence complète d’erreurs.",
       ],
     },
     {
       slug: "confidentialite",
       title: "Politique de confidentialité",
       description:
-        "Comment FancyVision collecte, utilise et protège vos données personnelles.",
+        "Comment Sapiens IA collecte, utilise et protège vos données personnelles.",
       paragraphs: [
         "Les données transmises via les formulaires sont utilisées uniquement pour répondre à votre demande, gérer un rendez-vous ou vous adresser la newsletter demandée.",
         "La base légale dépend du service concerné : consentement, mesures précontractuelles ou intérêt légitime. Les données ne sont pas revendues.",
@@ -624,11 +624,11 @@ async function main() {
       slug: "conditions",
       title: "Conditions d’utilisation",
       description:
-        "Les règles d’accès et d’utilisation des services numériques FancyVision.",
+        "Les règles d’accès et d’utilisation des services numériques Sapiens IA.",
       paragraphs: [
         "L’accès au site implique l’acceptation des présentes conditions. Les informations publiées ont une vocation générale et ne constituent pas un conseil juridique ou financier.",
         "L’utilisateur s’engage à ne pas perturber le fonctionnement du site, détourner ses formulaires ou tenter d’accéder à des espaces protégés.",
-        "FancyVision peut faire évoluer le site et ces conditions à tout moment. Le droit français est applicable.",
+        "Sapiens IA peut faire évoluer le site et ces conditions à tout moment. Le droit français est applicable.",
       ],
     },
   ];
@@ -673,7 +673,7 @@ async function main() {
     [
       "company",
       {
-        name: "FancyVision",
+        name: "Sapiens IA",
         email: "bonjour@fancyvision.fr",
         phone: "+33 1 84 80 20 26",
         address: "24 rue du Sentier, 75002 Paris",
@@ -684,7 +684,7 @@ async function main() {
     [
       "site",
       {
-        logo: "FancyVision",
+        logo: "Sapiens IA",
         tagline: "L’IA utile, adoptée par vos équipes.",
         defaultOgImage: "/images/fancyvision-ai-strategy.webp",
       },
@@ -755,7 +755,7 @@ async function main() {
     ],
   });
 
-  console.info("FancyVision seed terminé.");
+  console.info("Sapiens IA seed terminé.");
   await seedDev2Content(prisma, admin.id);
   console.info("Compte administrateur initialisé: admin@fancyvision.fr");
 }

@@ -17,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ServicesPage() {
   const t = await getTranslations("Pages.services");
+  const tCategories = await getTranslations("Categories");
   const locale = await getLocale();
   const [page, services, faqs] = await Promise.all([
     contentRepository.page("services", locale),
@@ -57,7 +58,7 @@ export default async function ServicesPage() {
                 key={item.id}
                 href={`/services/${item.slug}`}
                 index={index}
-                eyebrow={item.category?.name}
+                eyebrow={tCategories("conseil")}
                 title={item.title}
                 description={item.excerpt}
               />
@@ -85,7 +86,7 @@ export default async function ServicesPage() {
                 key={item.id}
                 href={`/services/${item.slug}`}
                 index={index}
-                eyebrow={item.category?.name}
+                eyebrow={tCategories("data")}
                 title={item.title}
                 description={item.excerpt}
               />

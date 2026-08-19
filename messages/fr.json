@@ -1,14 +1,39 @@
 {
+  "Categories": {
+    "conseil": "Conseil",
+    "data": "Data",
+    "agents-ia": "Agents IA",
+    "secteurs": "Secteurs",
+    "entreprise": "Grandes entreprises et PME",
+    "particuliers": "Particuliers, TPE et professions libérales",
+    "guides-pratiques": "Guides pratiques",
+    "guide-pratiques": "Guide pratiques",
+    "etudes-analyses": "Études & analyses",
+    "etudes-et-analyses": "Études et analyses",
+    "actualite": "Actualité",
+    "chatgpt": "ChatGPT",
+    "claude": "Claude",
+    "opinions": "Opinions",
+    "productivite": "Productivité"
+  },
   "Header": {
-    "homeAriaLabel": "FancyVision, accueil",
-    "bookAppointment": "Prendre rendez-vous"
+    "homeAriaLabel": "Sapiens IA, accueil",
+    "bookAppointment": "Audit gratuit",
+    "trainingNavLabel": "Formation"
   },
   "LocaleSwitcher": {
     "ariaLabel": "Changer de langue"
   },
+  "ThemeToggle": {
+    "switchToDark": "Passer en thème sombre",
+    "switchToLight": "Passer en thème clair"
+  },
   "DesktopNav": {
     "services": "Nos services",
     "sectors": "Secteurs",
+    "solutionsAi": "Solutions IA",
+    "blog": "Blog",
+    "contact": "Contact",
     "consulting": "Conseil",
     "data": "Data",
     "corporateTraining": "Formation en entreprise",
@@ -27,10 +52,13 @@
     "corporateTraining": "Formation en entreprise",
     "individualTraining": "Formation particuliers",
     "sectors": "Secteurs",
+    "solutionsAi": "Solutions IA",
+    "blog": "Blog",
+    "contact": "Contact",
     "ourSectors": "Nos secteurs d’expertise",
     "comingSoon": "Coming soon",
     "search": "Rechercher",
-    "bookAppointment": "Prendre rendez-vous",
+    "bookAppointment": "Audit gratuit",
     "openMenu": "Ouvrir le menu"
   },
   "Sectors": {
@@ -50,13 +78,20 @@
     "data": "Data",
     "training": "Formation",
     "about": "À propos",
-    "copyright": "© {year} FancyVision. Tous droits réservés.",
+    "discover": "Découvrir",
+    "solutionsAi": "Solutions IA",
+    "sectors": "Secteurs",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "legal": "Mentions légales",
+    "copyright": "© {year} Sapiens IA. Tous droits réservés.",
     "tagline": "Conseil & formation en intelligence artificielle"
   },
   "Newsletter": {
     "eyebrow": "Newsletter",
     "heading": "La newsletter sur l’<em>IA</em>, suivie par les décideurs.",
-    "success": "Bienvenue dans la newsletter FancyVision.",
+    "success": "Bienvenue dans la newsletter Sapiens IA.",
     "error": "Impossible de vous inscrire pour le moment.",
     "emailPlaceholder": "votre@email.fr",
     "subscribe": "S’inscrire",
@@ -104,9 +139,19 @@
     "discoveryCall": "Appel découverte · 30 min",
     "yourDetails": "Vos coordonnées",
     "name": "Nom",
-    "email": "Email",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "E-mail professionnel",
     "phone": "Téléphone",
-    "company": "Entreprise",
+    "company": "Entreprise / Activité",
+    "sector": "Secteur d’activité",
+    "sectorPlaceholder": "Sélectionnez votre secteur",
+    "organizationSize": "Taille de l’organisation",
+    "organizationSizePlaceholder": "Sélectionnez une taille",
+    "sizeIndividual": "Particulier / TPE",
+    "sizeSme": "PME",
+    "sizeLarge": "Grande entreprise",
+    "message": "Message (facultatif)",
     "slotSummary": "{date} à {time}",
     "selectSlot": "Sélectionnez votre créneau",
     "confirm": "Confirmer le rendez-vous"
@@ -121,10 +166,10 @@
     "eyebrow": "Informations"
   },
   "HomeSections": {
-    "heroPrimaryCta": "Échangeons sur votre projet",
+    "heroPrimaryCta": "Audit gratuit",
     "heroSecondaryCta": "Voir les prochaines sessions",
-    "servicesImageAlt": "Consultants FancyVision en atelier",
-    "ctaLabel": "Échanger avec nous",
+    "servicesImageAlt": "Consultants Sapiens IA en atelier",
+    "ctaLabel": "Demander mon audit gratuit",
     "step": "Étape 0{number}",
     "casesEyebrow": "Études de cas",
     "casesTitle": "Les projets <em>IA</em> déployés chez nos clients",
@@ -132,20 +177,41 @@
     "teamSize": "{count, plural, one {# collaborateur} other {# collaborateurs}}",
     "eventsViewAll": "Voir tout l’agenda",
     "testimonialsEyebrow": "Ils parlent de nous",
+    "comingSoon": "Bientôt disponible",
+    "solutionsAiEyebrow": "Solutions & agents IA",
+    "solutionsAiTitle": "Des agents IA prêts à l’emploi, pour chaque fonction",
+    "solutionsAiDescription": "Une bibliothèque d’agents IA sur mesure, conçus pour automatiser les tâches à faible valeur ajoutée et augmenter vos équipes au quotidien.",
+    "solutionsAiViewAll": "Voir tous nos agents IA",
+    "sectorsEyebrow": "Secteurs d’activité",
+    "sectorsTitle": "Des solutions pensées pour votre secteur",
+    "sectorsDescription": "Des cas d’usage IA adaptés aux enjeux réels de votre métier.",
+    "sectorsViewAll": "Voir tous nos secteurs",
+    "trainingsEyebrow": "Formations IA",
+    "trainingsTitle": "Montez en compétences, à votre rythme et à votre niveau",
+    "trainingsDescription": "Des formations pratiques, déclinables selon trois niveaux (Sensibilisation, Approfondissement, Expertise), pour les entreprises comme pour les indépendants.",
+    "trainingsViewAll": "Voir toutes les formations",
+    "trainingsEnterprise": "Entreprises & PME",
+    "trainingsIndividual": "Particuliers, TPE & indépendants",
+    "blogEyebrow": "Blog",
+    "blogTitle": "Nos derniers articles",
+    "blogViewAll": "Voir tous les articles",
     "faqEyebrow": "Vos questions",
     "faqTitle": "Questions <em>fréquentes</em> (FAQ)",
-    "faqWriteToUs": "Nous écrire"
+    "faqWriteToUs": "Nous écrire",
+    "faqViewAll": "Voir toutes les questions"
   },
   "Pages": {
     "appointment": {
-      "eyebrow": "Rendez-vous",
-      "title": "Parlons de votre projet.",
+      "eyebrow": "Audit gratuit",
+      "title": "Demander mon Audit IA gratuit",
+      "leadText": "Découvrez en 60 minutes où l’IA peut faire la différence dans votre activité. Échangez gratuitement et sans engagement avec un consultant Sapiens IA. Nous identifions avec vous 2 à 3 cas d’usage prioritaires, adaptés à votre métier et à votre secteur, et nous vous indiquons la marche à suivre concrète pour démarrer.",
+      "reassurance": "Sans engagement · Réponse sous 48h · Échange confidentiel",
       "videoCall": "Visioconférence · 30 minutes",
       "noCommitment": "Sans engagement"
     },
     "about": {
       "metaTitle": "Le cabinet",
-      "metaDescription": "Découvrez l’équipe et la mission de FancyVision.",
+      "metaDescription": "Découvrez l’équipe et la mission de Sapiens IA.",
       "eyebrow": "Le cabinet",
       "joinUs": "Nous rejoindre",
       "missionEyebrow": "Notre mission",
@@ -158,18 +224,27 @@
       "articleCount": "{count, plural, =0 {Aucun article à découvrir.} one {# article à découvrir.} other {# articles à découvrir.}}"
     },
     "blog": {
-      "metaTitle": "Blog IA",
-      "metaDescription": "Guides, analyses et opinions sur l’intelligence artificielle générative.",
-      "eyebrow": "Le média"
+      "metaTitle": "Le blog Sapiens IA",
+      "metaDescription": "L’intelligence artificielle et la donnée au Maroc : décryptages, cas d’usage et retours d’expérience.",
+      "eyebrow": "Le blog",
+      "readingTime": "{count, plural, one {# minute de lecture} other {# minutes de lecture}}"
     },
     "contact": {
       "eyebrow": "Contact",
       "firstContactEyebrow": "Un premier échange",
       "firstContactText": "Nous répondons sous un jour ouvré et vous orientons vers la bonne expertise dès le premier contact."
     },
+    "faq": {
+      "metaTitle": "Questions fréquentes",
+      "metaDescription": "Toutes les réponses à vos questions sur l’audit IA, nos solutions et nos formations Sapiens IA.",
+      "eyebrow": "Vos questions",
+      "title": "Questions fréquentes",
+      "description": "Toutes les réponses à vos questions sur l’audit IA, nos solutions, nos formations et la confidentialité de vos données.",
+      "cta": "Demander mon Audit IA gratuit"
+    },
     "caseStudies": {
       "metaTitle": "Études de cas",
-      "metaDescription": "Des transformations IA concrètes menées avec FancyVision.",
+      "metaDescription": "Des transformations IA concrètes menées avec Sapiens IA.",
       "eyebrow": "Cas clients",
       "teamSize": "{count, plural, one {# collaborateur} other {# collaborateurs}}"
     },
@@ -195,7 +270,14 @@
       "metaTitle": "Formations en intelligence artificielle",
       "metaDescription": "Formations IA pour entreprises et particuliers, pratiques et orientées résultats.",
       "eyebrow": "Organisme de formation",
-      "cta": "Construire votre parcours"
+      "cta": "Construire votre parcours",
+      "enterpriseEyebrow": "Entreprises & PME",
+      "enterpriseTitle": "Formations pour les grandes entreprises et PME",
+      "enterpriseDescription": "Des parcours conçus pour les équipes et dirigeants qui veulent piloter, déployer et sécuriser l’intelligence artificielle dans leur organisation.",
+      "individualEyebrow": "Particuliers, TPE & professions libérales",
+      "individualTitle": "Formations pour les particuliers, TPE et professions libérales",
+      "individualDescription": "Des parcours adaptés aux indépendants, artisans, commerçants et professions libérales pour intégrer l’IA à leur activité au quotidien.",
+      "toBeConfirmed": "À valider"
     },
     "trainingLanding": {
       "eyebrow": "Formation IA partout en France",
@@ -213,7 +295,13 @@
       "objectives": "Objectifs",
       "curriculum": "Le programme",
       "modules": "Modules",
-      "designTraining": "Concevoir votre formation"
+      "designTraining": "Concevoir votre formation",
+      "toBeConfirmed": "À valider",
+      "toBeConfirmedBanner": "Le détail de cette formation (objectifs, programme, prérequis, durée, livrables) est en cours de validation avec Sapiens IA.",
+      "levelBeginner": "Sensibilisation",
+      "levelIntermediate": "Approfondissement",
+      "levelAdvanced": "Expertise",
+      "levelAllLevels": "Sensibilisation, Approfondissement, Expertise"
     },
     "trainingCity": {
       "eyebrow": "Formation à {city}",
@@ -237,15 +325,15 @@
     },
     "services": {
       "metaTitle": "Conseil en intelligence artificielle",
-      "metaDescription": "Audit, conduite du changement, développement et gouvernance IA avec FancyVision.",
+      "metaDescription": "Audit, conduite du changement, développement et gouvernance IA avec Sapiens IA.",
       "eyebrow": "Cabinet de conseil",
       "cta": "Parler de votre projet",
       "consultingEyebrow": "Conseil",
-      "consultingTitle": "Nos services de conseil en IA",
-      "consultingDescription": "De l’audit au déploiement, nous structurons vos projets, vos usages et l’adoption de l’intelligence artificielle dans la durée.",
+      "consultingTitle": "Conseil IA — Passez de l’intention à l’impact",
+      "consultingDescription": "Sapiens IA vous accompagne à chaque étape de votre transformation par l’intelligence artificielle : identifier les bons cas d’usage, développer des solutions sur-mesure, ancrer durablement les nouveaux usages dans l’organisation et piloter sereinement les outils et licences IA. Notre promesse : la simplicité, avec des solutions pertinentes et mesurables plutôt que des projets IT lourds et incertains.",
       "dataEyebrow": "Data",
-      "dataTitle": "Des données fiables, utiles et activables",
-      "dataDescription": "De la stratégie à la Data Science, FancyVision construit les fondations et les produits qui transforment vos données en décisions."
+      "dataTitle": "Conseil Data IA — La donnée, fondation de votre transformation IA",
+      "dataDescription": "Avant l’IA, il y a la donnée. Sapiens IA aide les organisations à structurer, gouverner et valoriser leur patrimoine de données pour en faire le socle solide de leurs projets d’intelligence artificielle. Cette offre est complémentaire de notre offre Conseil IA : là où le Conseil IA identifie et déploie des cas d’usage IA, le Conseil Data IA sécurise et prépare la donnée qui alimente ces cas d’usage."
     },
     "serviceDetail": {
       "cta": "Échanger avec un consultant",
@@ -257,9 +345,36 @@
       "support": "L’accompagnement",
       "startDiagnostic": "Démarrer un diagnostic"
     },
+    "solutionsIa": {
+      "metaTitle": "Nos solutions et agents IA",
+      "metaDescription": "Découvrez la gamme d’agents IA Sapiens IA : hôtellerie, call center, marketing, commercial, RH, juridique, media, finance et direction.",
+      "eyebrow": "Solutions & agents IA",
+      "title": "Nos solutions et agents IA",
+      "description": "Des agents IA sur mesure, conçus pour automatiser les tâches à faible valeur ajoutée et augmenter la performance de chaque équipe, fonction par fonction.",
+      "cta": "Parler de votre projet",
+      "libraryTitle": "Bibliothèque de 50 systèmes IA",
+      "libraryDescription": "Une bibliothèque élargie de systèmes IA, au-delà de nos 9 agents phares, est en cours de constitution. Son contenu détaillé sera publié après validation.",
+      "libraryBadge": "À valider"
+    },
+    "solutionsIaDetail": {
+      "eyebrow": "Agent IA",
+      "cta": "Discuter de ce cas d’usage"
+    },
+    "secteurs": {
+      "metaTitle": "Nos solutions par secteur d’activité",
+      "metaDescription": "Des cas d’usage IA adaptés aux enjeux réels de chaque secteur : hôtellerie, banques, assurances, immobilier, industrie et plus encore.",
+      "eyebrow": "Secteurs d’activité",
+      "title": "Nos solutions par secteur d’activité",
+      "description": "Des cas d’usage IA pensés pour les enjeux concrets de votre métier, secteur par secteur.",
+      "cta": "Parler de votre projet"
+    },
+    "secteurDetail": {
+      "eyebrow": "Secteur",
+      "cta": "Discuter de votre secteur"
+    },
     "events": {
       "metaTitle": "Événements IA",
-      "metaDescription": "Découvrez les formations, ateliers et rencontres FancyVision et inscrivez-vous en ligne.",
+      "metaDescription": "Découvrez les formations, ateliers et rencontres Sapiens IA et inscrivez-vous en ligne.",
       "title": "Événements",
       "organizeEvent": "Organiser un événement",
       "upcoming": "À venir",

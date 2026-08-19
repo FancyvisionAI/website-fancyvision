@@ -17,6 +17,8 @@ export const appointmentSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(200),
   phone: z.string().trim().max(40).optional(),
   company: z.string().trim().max(150).optional(),
+  sector: z.string().trim().max(120).optional(),
+  organizationSize: z.string().trim().max(60).optional(),
   topic: z.string().trim().min(2).max(160),
   preferredDate: z.string().datetime().optional().or(z.literal("")),
   message: z.string().trim().max(3000).optional(),
@@ -34,6 +36,10 @@ export const eventRegistrationSchema = z.object({
   phone: z.string().trim().max(40).optional(),
   company: z.string().trim().max(150).optional(),
   message: z.string().trim().max(1000).optional(),
+  // Envoyée par le client (useLocale()) pour permettre à l'API — hors du
+  // routing next-intl car sous /api — de répondre une erreur dans la bonne
+  // langue. Purement indicative, jamais persistée.
+  locale: z.enum(["fr", "en"]).optional(),
   website: honeypot,
 });
 

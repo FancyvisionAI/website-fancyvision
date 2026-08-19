@@ -9,7 +9,10 @@ export async function GET(request: Request) {
 
     if (!q || q.trim().length < 2) {
       return NextResponse.json(
-        { error: "Le paramètre de recherche 'q' doit contenir au moins 2 caractères." },
+        {
+          error:
+            "Le paramètre de recherche 'q' doit contenir au moins 2 caractères.",
+        },
         { status: 400 },
       );
     }

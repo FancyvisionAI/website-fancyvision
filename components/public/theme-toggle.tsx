@@ -1,27 +1,27 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
+  const t = useTranslations("ThemeToggle");
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
+  const isDark = mounted && resolvedTheme === "dark";
+
   return (
     <button
       type="button"
-      className="grid size-9 shrink-0 place-items-center rounded-xl border border-lime text-ink transition hover:bg-lime"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      aria-label="Basculer le thème clair/sombre"
+      className="focus-visible:ring-cobalt focus-visible:ring-offset-canvas grid size-11 shrink-0 place-items-center rounded-control border border-border text-ink transition hover:bg-lime focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={isDark ? t("switchToLight") : t("switchToDark")}
     >
-      {mounted && resolvedTheme === "dark" ? (
-        <Sun className="size-4" />
-      ) : (
-        <Moon className="size-4" />
-      )}
+      {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
     </button>
   );
 }

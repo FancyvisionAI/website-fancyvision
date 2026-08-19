@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 import { DesktopNav } from "@/components/public/desktop-nav";
 import { LocaleSwitcher } from "@/components/public/locale-switcher";
@@ -24,20 +25,33 @@ export type NavigationTraining = {
   categorySlug: string;
 };
 
+export type NavigationSector = {
+  id: string;
+  title: string;
+  slug: string;
+};
+
 export async function Header() {
   const t = await getTranslations("Header");
   const locale = await getLocale();
-  const [menu, services, trainings] = await Promise.all([
+  const [menu, services, trainings, sectorServices] = await Promise.all([
     contentRepository.menu("HEADER", locale),
     contentRepository.services(false, locale),
     contentRepository.trainings(locale),
+    contentRepository.servicesByCategory("secteurs", locale),
   ]);
+  // Nav desktop/mobile suit la structure officielle (M. Bassit) : seuls les
+  // items explicitement listés (Formations) sont repris du menu CMS ;
+  // Solutions IA / Secteurs / Blog / Contact sont ajoutés directement dans
+  // DesktopNav/MobileNav.
+  // Le label CMS (Menu.items, non localisé) est ignoré au profit de la
+  // traduction next-intl pour que la version EN affiche "Training" sans
+  // modifier la donnée Menu FR en base.
   const items = (menu?.items ?? [])
-    .filter((item) => item.url !== "/services" && item.url !== "/formations")
-    .filter((item) => !item.label.toLowerCase().includes("blog"))
+    .filter((item) => item.url === "/formations")
     .map((item) => ({
       id: item.id,
-      label: item.url === "/a-propos" ? "À propos" : item.label,
+      label: t("trainingNavLabel"),
       url: item.url,
     }));
   const navigationServices: NavigationService[] = services.map((item) => ({
@@ -54,27 +68,41 @@ export async function Header() {
     excerpt: item.excerpt,
     categorySlug: item.category?.slug ?? "entreprise",
   }));
+  const navigationSectors: NavigationSector[] = sectorServices.map((item) => ({
+    id: item.id,
+    title: item.title,
+    slug: item.slug,
+  }));
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-lime bg-canvas/95 text-ink shadow-[0_8px_30px_rgba(26,32,61,.05)] backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-canvas text-ink shadow-[0_1px_2px_rgba(16,27,51,.05)]">
       <div className="container-shell flex h-[4.875rem] items-center justify-between gap-5">
         <Link
           href="/"
-          className="shrink-0 text-xl font-semibold tracking-[-0.04em]"
+          className="focus-visible:ring-cobalt focus-visible:ring-offset-canvas flex shrink-0 items-center gap-2.5 rounded-control text-xl font-display font-semibold tracking-[-0.03em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
           aria-label={t("homeAriaLabel")}
         >
-          FancyVision<span className="font-editorial text-cobalt">.</span>
+          <Image
+            src="/images/sapiens-ia-logo.png"
+            alt=""
+            width={36}
+            height={36}
+            className="size-9 shrink-0"
+            priority
+          />
+          Sapiens IA<span className="text-cobalt">.</span>
         </Link>
 
         <DesktopNav
           items={items}
           services={navigationServices}
           trainings={navigationTrainings}
+          sectors={navigationSectors}
         />
 
         <Link
           href="/rendez-vous"
-          className="group hidden h-9 shrink-0 items-center gap-3 rounded-xl bg-gradient-to-br from-[#1a203d] to-[#4765b2] px-3.5 text-[11px] font-semibold text-white shadow-[0_8px_18px_rgba(26,32,61,.14)] transition hover:-translate-y-0.5 hover:shadow-[0_11px_22px_rgba(26,32,61,.2)] lg:flex"
+          className="focus-visible:ring-cobalt focus-visible:ring-offset-canvas group hidden h-11 shrink-0 items-center gap-3 rounded-control bg-ink px-4 text-xs font-semibold text-canvas shadow-[0_1px_2px_rgba(16,27,51,.08)] transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 lg:flex"
         >
           {t("bookAppointment")}
           <ArrowRight className="size-3 transition group-hover:translate-x-0.5" />
@@ -88,6 +116,7 @@ export async function Header() {
           items={items}
           services={navigationServices}
           trainings={navigationTrainings}
+          sectors={navigationSectors}
         />
       </div>
     </header>

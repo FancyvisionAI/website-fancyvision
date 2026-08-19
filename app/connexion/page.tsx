@@ -20,7 +20,7 @@ export default async function SignInPage({
           href="/"
           className="text-2xl font-black tracking-[-0.06em] text-ink"
         >
-          FancyVision<span className="text-cobalt">.</span>
+          Sapiens IA<span className="text-cobalt">.</span>
         </Link>
         <h1 className="mt-12 text-4xl font-semibold tracking-[-0.06em] text-ink">
           Espace administration

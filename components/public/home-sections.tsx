@@ -1,14 +1,23 @@
-import type { CaseStudy, Faq, Section, Service, Testimonial } from "@prisma/client";
+import type { Article, CaseStudy, Faq, Section, Service, Testimonial, Training } from "@prisma/client";
 import { ArrowRight, ArrowUpRight, Check, MoveRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 
+import { ArticleCard } from "@/components/public/article-card";
 import { FaqList } from "@/components/public/faq-list";
 import { Reveal } from "@/components/public/reveal";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
 type HomeService = Service & {
+  category?: { slug: string; name: string } | null;
+};
+
+type HomeArticle = Article & {
+  category: { name: string; slug: string } | null;
+};
+
+type HomeTraining = Training & {
   category?: { slug: string; name: string } | null;
 };
 
@@ -24,11 +33,16 @@ function EditorialHeading({
   children: string;
   className?: string;
 }) {
-  const words = children.split(/(conseil|formation en IA|formation|IA|résultats|équipes|impact)/gi);
+  // FR + EN : le contenu CMS (Section.title) peut être français (fallback
+  // volontaire) ou anglais (une fois traduit) — les deux jeux de mots
+  // doivent déclencher la mise en emphase éditoriale.
+  const emphasisPattern =
+    /(conseil|consulting|formation en IA|formation|training|IA|AI|résultats|results|équipes|teams|impact)/gi;
+  const words = children.split(emphasisPattern);
   return (
     <span className={className}>
       {words.map((word, index) =>
-        /^(conseil|formation en IA|formation|IA|résultats|équipes|impact)$/i.test(word) ? (
+        /^(conseil|consulting|formation en IA|formation|training|IA|AI|résultats|results|équipes|teams|impact)$/i.test(word) ? (
           <em key={`${word}-${index}`} className="font-editorial">
             {word}
           </em>
@@ -48,7 +62,7 @@ export async function HeroSection({ data }: { data: Record<string, unknown> }) {
     <section className="reference-hero relative flex min-h-[75svh] items-center overflow-hidden pb-16 pt-28 text-white">
       <div className="container-shell relative z-10 flex flex-col items-center text-center">
         <Reveal className="flex w-full flex-col items-center">
-          <h1 className="max-w-[950px] text-[clamp(2.75rem,5vw,4rem)] font-normal leading-[1.2] tracking-[-0.025em]">
+          <h1 className="font-display max-w-[950px] text-[clamp(2.75rem,5vw,4rem)] font-normal leading-[1.2] tracking-[-0.025em]">
             <EditorialHeading>{firstLine || title}</EditorialHeading>
             {remaining.length > 0 && (
               <>
@@ -96,7 +110,7 @@ export function LogosSection({ data }: { data: Record<string, unknown> }) {
           {logos.map((logo) => (
             <span
               key={logo}
-              className="grid h-20 place-items-center border-b border-r border-lime px-3 text-sm font-semibold tracking-[-0.02em] text-[#6d798c]"
+              className="grid h-20 place-items-center border-b border-r border-lime px-3 text-sm font-semibold tracking-[-0.02em] text-muted"
             >
               {logo}
             </span>
@@ -125,7 +139,7 @@ export async function ServicesSection({
         <Reveal className="flex min-h-64 flex-col justify-between border-b border-r border-lime p-7 lg:min-h-full lg:p-9">
           <div>
             <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
-            <h2 className="mt-5 max-w-sm text-4xl font-normal leading-[1.18] tracking-[-0.025em]">
+            <h2 className="font-display mt-5 max-w-sm text-4xl font-normal leading-[1.18] tracking-[-0.025em]">
               <EditorialHeading>{text(data.title).replace("\n", " ")}</EditorialHeading>
             </h2>
             {text(data.description) && (
@@ -149,10 +163,10 @@ export async function ServicesSection({
             <Reveal key={service.id} delay={index * 0.05} className="h-full">
               <Link
                 href={`/services/${service.slug}`}
-                className="group flex h-full min-h-48 items-center gap-5 border-b border-r border-lime p-6 transition hover:bg-[#f1f5fa] lg:p-8"
+                className="group flex h-full min-h-48 items-center gap-5 border-b border-r border-lime p-6 transition hover:bg-lime/40 lg:p-8"
               >
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-xl font-medium tracking-[-0.025em] text-ink">
+                  <h3 className="font-display text-xl font-medium tracking-[-0.025em] text-ink">
                     {service.title}
                   </h3>
                   <p className="mt-3 line-clamp-4 text-sm leading-6 text-muted">
@@ -171,6 +185,193 @@ export async function ServicesSection({
   );
 }
 
+// Sélection éditoriale d'agents IA (données réelles, catégorie "agents-ia").
+// Mise en page volontairement non-uniforme : une carte mise en avant +
+// une pile de cartes compactes, plutôt qu'une grille régulière.
+export async function SolutionsAiSection({ agents }: { agents: HomeService[] }) {
+  if (!agents.length) return null;
+  const t = await getTranslations("HomeSections");
+  const tCategories = await getTranslations("Categories");
+  const [featured, ...rest] = agents;
+  return (
+    <section id="solutions-ia" className="section-pad bg-canvas">
+      <div className="container-shell">
+        <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <span className="eyebrow text-cobalt">{t("solutionsAiEyebrow")}</span>
+            <h2 className="font-display mt-5 text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+              {t("solutionsAiTitle")}
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-6 text-muted">
+              {t("solutionsAiDescription")}
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/solutions-ia">
+              {t("solutionsAiViewAll")}
+              <ArrowRight className="ml-5 size-4" />
+            </Link>
+          </Button>
+        </Reveal>
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+          <Link
+            href={`/solutions-ia/${featured.slug}`}
+            className="group flex min-h-[340px] flex-col justify-between rounded-card border border-border bg-accent p-8 text-white transition hover:-translate-y-1 hover:shadow-card md:p-10"
+          >
+            <span className="eyebrow text-white/70">{tCategories("agents-ia")}</span>
+            <div>
+              <h3 className="font-display mt-5 text-3xl font-medium leading-[1.2] tracking-[-0.025em] md:text-4xl">
+                {featured.title}
+              </h3>
+              <p className="mt-5 max-w-md leading-7 text-white/75">{featured.excerpt}</p>
+            </div>
+            <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold">
+              {t("solutionsAiViewAll")}
+              <ArrowUpRight className="size-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </span>
+          </Link>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            {rest.map((agent) => (
+              <Link
+                key={agent.id}
+                href={`/solutions-ia/${agent.slug}`}
+                className="group flex flex-col justify-between rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+              >
+                <h3 className="font-display text-xl font-medium tracking-[-0.02em] text-ink">
+                  {agent.title}
+                </h3>
+                <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted">{agent.excerpt}</p>
+                <ArrowUpRight className="mt-4 size-4 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Sélection éditoriale de secteurs (données réelles, catégorie "secteurs").
+export async function SectorsSection({ items }: { items: HomeService[] }) {
+  if (!items.length) return null;
+  const t = await getTranslations("HomeSections");
+  return (
+    <section id="secteurs" className="section-pad bg-lime">
+      <div className="container-shell">
+        <Reveal className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <span className="eyebrow text-ink">{t("sectorsEyebrow")}</span>
+            <h2 className="font-display mt-5 text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+              {t("sectorsTitle")}
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-6 text-muted">
+              {t("sectorsDescription")}
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/solutions-par-secteur">
+              {t("sectorsViewAll")}
+              <ArrowRight className="ml-5 size-4" />
+            </Link>
+          </Button>
+        </Reveal>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((sector) => (
+            <Link
+              key={sector.id}
+              href={`/solutions-par-secteur/${sector.slug}`}
+              className="group flex min-h-40 flex-col justify-between rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+            >
+              <span className="text-lg font-medium text-ink">{sector.title}</span>
+              <div className="mt-3 flex items-end justify-between gap-3">
+                <p className="line-clamp-2 text-sm leading-6 text-muted">{sector.excerpt}</p>
+                <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Sélection éditoriale de formations (données réelles, catégories
+// "entreprise" / "particuliers"), séparant clairement les deux cibles
+// plutôt qu'une grille uniforme.
+export async function TrainingsSection({
+  enterprise,
+  individual,
+}: {
+  enterprise: HomeTraining[];
+  individual: HomeTraining[];
+}) {
+  if (!enterprise.length && !individual.length) return null;
+  const t = await getTranslations("HomeSections");
+  return (
+    <section id="formations" className="section-pad bg-canvas">
+      <div className="container-shell">
+        <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <span className="eyebrow text-cobalt">{t("trainingsEyebrow")}</span>
+            <h2 className="font-display mt-5 text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+              {t("trainingsTitle")}
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-6 text-muted">
+              {t("trainingsDescription")}
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/formations">
+              {t("trainingsViewAll")}
+              <ArrowRight className="ml-5 size-4" />
+            </Link>
+          </Button>
+        </Reveal>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div>
+            <h3 className="font-mono text-xs uppercase tracking-[0.12em] text-ink/50">
+              {t("trainingsEnterprise")}
+            </h3>
+            <div className="mt-5 space-y-4">
+              {enterprise.map((training) => (
+                <Link
+                  key={training.id}
+                  href={`/formations/${training.slug}`}
+                  className="group flex items-center justify-between gap-4 rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+                >
+                  <span className="text-lg font-medium leading-[1.3] text-ink">
+                    {training.title}
+                  </span>
+                  <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-mono text-xs uppercase tracking-[0.12em] text-ink/50">
+              {t("trainingsIndividual")}
+            </h3>
+            <div className="mt-5 space-y-4">
+              {individual.map((training) => (
+                <Link
+                  key={training.id}
+                  href={`/formations/${training.slug}`}
+                  className="group flex items-center justify-between gap-4 rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+                >
+                  <span className="text-lg font-medium leading-[1.3] text-ink">
+                    {training.title}
+                  </span>
+                  <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function SplitFeature({ data }: { data: Record<string, unknown> }) {
   const reverse = data.reverse === true;
   return (
@@ -182,7 +383,7 @@ export function SplitFeature({ data }: { data: Record<string, unknown> }) {
           }`}
         >
           <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
-          <h2 className="mt-5 max-w-xl text-[clamp(2.25rem,4vw,3rem)] font-normal leading-[1.18] tracking-[-0.025em]">
+          <h2 className="font-display mt-5 max-w-xl text-[clamp(2.25rem,4vw,3rem)] font-normal leading-[1.18] tracking-[-0.025em]">
             <EditorialHeading>{text(data.title)}</EditorialHeading>
           </h2>
           <p className="mt-5 max-w-xl text-base leading-6 text-muted">
@@ -221,7 +422,7 @@ export async function CtaSection({ data }: { data: Record<string, unknown> }) {
     <section className="reference-hero relative overflow-hidden py-20 text-center text-white md:py-24">
       <div className="container-shell relative z-10 flex flex-col items-center">
         <Reveal className="flex flex-col items-center">
-          <h2 className="max-w-4xl text-[clamp(2.5rem,4vw,3.5rem)] font-normal leading-[1.2]">
+          <h2 className="font-display max-w-4xl text-[clamp(2.5rem,4vw,3.5rem)] font-normal leading-[1.2]">
             <EditorialHeading>{text(data.title)}</EditorialHeading>
           </h2>
           <p className="mt-5 max-w-[680px] leading-6 text-white/85">
@@ -233,6 +434,11 @@ export async function CtaSection({ data }: { data: Record<string, unknown> }) {
               <ArrowRight className="ml-5 size-4" />
             </Link>
           </Button>
+          {text(data.reassurance) && (
+            <p className="mt-5 text-xs font-medium uppercase tracking-[0.08em] text-white/60">
+              {text(data.reassurance)}
+            </p>
+          )}
         </Reveal>
       </div>
     </section>
@@ -250,11 +456,11 @@ export async function AdvantagesSection({ data }: { data: Record<string, unknown
   const t = await getTranslations("HomeSections");
   const items = list<Advantage>(data.items);
   return (
-    <section className="section-pad overflow-hidden bg-[#f3f6fb]">
+    <section className="section-pad overflow-hidden bg-bg">
       <div className="container-shell">
         <Reveal className="mb-9 grid gap-5 lg:grid-cols-[.45fr_1fr] lg:items-end">
           <span className="eyebrow text-cobalt">{text(data.eyebrow)}</span>
-          <h2 className="max-w-3xl text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
+          <h2 className="font-display max-w-3xl text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
             <EditorialHeading>{text(data.title)}</EditorialHeading>
           </h2>
         </Reveal>
@@ -263,27 +469,27 @@ export async function AdvantagesSection({ data }: { data: Record<string, unknown
             <Reveal
               key={item.number}
               delay={index * 0.06}
-              className="group relative overflow-hidden rounded-[1.75rem] border border-[#d9e2f0] bg-canvas p-6 shadow-[0_18px_50px_rgba(34,53,92,.06)] transition duration-300 hover:-translate-y-1 hover:border-[#9db2d6] hover:shadow-[0_24px_60px_rgba(34,53,92,.11)] lg:p-7"
+              className="group relative overflow-hidden rounded-card border border-border bg-canvas p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-cobalt/40 lg:p-7"
             >
-              <div className="absolute -right-12 -top-14 size-36 rounded-full bg-[#dce7fb] opacity-55 blur-2xl transition group-hover:scale-125" />
+              <div className="absolute -right-12 -top-14 size-36 rounded-full bg-lime opacity-55 blur-2xl transition group-hover:scale-125" />
               <div className="relative flex items-center justify-between">
-                <span className="grid size-10 place-items-center rounded-full bg-[#07142e] font-mono text-xs text-white">
+                <span className="grid size-10 place-items-center rounded-full bg-accent font-mono text-xs text-white">
                   {item.number}
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#7890b6]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
                   {t("step", { number: index + 1 })}
                 </span>
               </div>
-              <h3 className="relative mt-7 text-2xl font-medium tracking-[-0.03em] text-[#101a35]">
+              <h3 className="font-display relative mt-7 text-2xl font-medium tracking-[-0.03em] text-ink">
                 {item.title}
               </h3>
-              <p className="relative mt-3 min-h-[4.5rem] text-sm leading-6 text-[#647086]">
+              <p className="relative mt-3 min-h-[4.5rem] text-sm leading-6 text-muted">
                 {item.description}
               </p>
-              <div className="relative mt-6 flex flex-wrap gap-2 border-t border-[#e2e8f2] pt-5">
+              <div className="relative mt-6 flex flex-wrap gap-2 border-t border-border pt-5">
                 {item.stats.map((stat) => (
-                  <span key={stat.label} className="rounded-full bg-[#edf2fa] px-3 py-2 text-xs text-[#405274]">
-                    <strong className="mr-1 font-semibold text-[#172442]">{stat.value}</strong>
+                  <span key={stat.label} className="rounded-full bg-lime px-3 py-2 text-xs text-ink/70">
+                    <strong className="mr-1 font-semibold text-ink">{stat.value}</strong>
                     {stat.label}
                   </span>
                 ))}
@@ -305,7 +511,7 @@ export async function CasesSection({ cases }: { cases: CaseStudy[] }) {
         <Reveal className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <span className="eyebrow text-ink">{t("casesEyebrow")}</span>
-            <h2 className="mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
+            <h2 className="font-display mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
               {t.rich("casesTitle", {
                 em: (chunks) => <span className="font-editorial">{chunks}</span>,
               })}
@@ -340,13 +546,13 @@ export async function CasesSection({ cases }: { cases: CaseStudy[] }) {
                 </div>
               </div>
               <div className="flex flex-col justify-between p-3 md:p-7">
-                <h3 className="max-w-2xl text-2xl font-medium leading-[1.35] tracking-[-0.025em]">
+                <h3 className="font-display max-w-2xl text-2xl font-medium leading-[1.35] tracking-[-0.025em]">
                   {item.title}
                 </h3>
                 <div className="mt-8 flex items-end justify-between">
                   <div className="flex flex-wrap gap-2">
                     {item.sector && (
-                      <span className="bg-[#374580] px-3 py-2 text-xs text-white">{item.sector}</span>
+                      <span className="bg-accent px-3 py-2 text-xs text-white">{item.sector}</span>
                     )}
                     {item.teamSize && (
                       <span className="bg-lime px-3 py-2 text-xs">
@@ -372,7 +578,7 @@ export function ProcessSection({ data }: { data: Record<string, unknown> }) {
       <div className="container-shell">
         <Reveal className="mb-9 max-w-3xl">
           <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
-          <h2 className="mt-5 text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
+          <h2 className="font-display mt-5 text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
             <EditorialHeading>{text(data.title).replace("\n", " ")}</EditorialHeading>
           </h2>
         </Reveal>
@@ -380,10 +586,10 @@ export function ProcessSection({ data }: { data: Record<string, unknown> }) {
           {steps.map((step, index) => (
             <Reveal
               key={step}
-              className="group flex min-h-44 flex-col justify-between rounded-2xl border border-lime bg-lime p-6 transition hover:-translate-y-1 hover:border-[#9db2d6] hover:bg-canvas hover:shadow-[0_18px_45px_rgba(34,53,92,.08)]"
+              className="group flex min-h-44 flex-col justify-between rounded-card border border-lime bg-lime p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:bg-canvas hover:shadow-card"
             >
-              <span className="text-right text-3xl font-medium text-[#7890b6] transition group-hover:text-ink">0{index + 1}</span>
-              <h3 className="text-lg font-medium leading-[1.4]">{step}</h3>
+              <span className="text-right text-3xl font-medium text-muted transition group-hover:text-ink">0{index + 1}</span>
+              <h3 className="font-display text-lg font-medium leading-[1.4]">{step}</h3>
             </Reveal>
           ))}
         </div>
@@ -414,7 +620,7 @@ export async function EventsPreview({ data }: { data: Record<string, unknown> })
         <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
-            <h2 className="mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
+            <h2 className="font-display mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
               <EditorialHeading>{text(data.title)}</EditorialHeading>
             </h2>
             <p className="mt-4 max-w-2xl leading-6 text-muted">
@@ -437,13 +643,13 @@ export async function EventsPreview({ data }: { data: Record<string, unknown> })
               <Link
                 key={item.id}
                 href={item.href}
-                className="group flex min-h-60 flex-col border-b border-r border-lime bg-canvas p-6 transition hover:bg-[#e8eef7]"
+                className="group flex min-h-60 flex-col border-b border-r border-lime bg-canvas p-6 transition hover:bg-lime/40"
               >
                 <div className="flex justify-between gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-cobalt">
                   <span>{item.type}</span>
                   <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
-                <h3 className="mt-8 text-2xl font-medium leading-[1.3] tracking-[-0.025em]">
+                <h3 className="font-display mt-8 text-2xl font-medium leading-[1.3] tracking-[-0.025em]">
                   {item.title}
                 </h3>
                 <div className="mt-auto pt-8 text-sm leading-6 text-muted">
@@ -472,7 +678,7 @@ export function AboutSection({ data }: { data: Record<string, unknown> }) {
     <section className="section-pad bg-canvas">
       <div className="container-shell grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
         <Reveal>
-          <div className="relative aspect-[4/3] max-h-[430px] overflow-hidden rounded-[1.75rem]">
+          <div className="relative aspect-[4/3] max-h-[430px] overflow-hidden rounded-card">
             <Image
               src={text(data.image)}
               alt=""
@@ -485,7 +691,7 @@ export function AboutSection({ data }: { data: Record<string, unknown> }) {
         <Reveal className="flex flex-col justify-between py-8 lg:items-end lg:px-10">
           <div className="max-w-3xl">
             <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
-            <h2 className="mt-5 text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
+            <h2 className="font-display mt-5 text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
               <EditorialHeading>{text(data.title)}</EditorialHeading>
             </h2>
           </div>
@@ -499,6 +705,36 @@ export function AboutSection({ data }: { data: Record<string, unknown> }) {
             </Button>
           </div>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+export async function BlogPreviewSection({ articles }: { articles: HomeArticle[] }) {
+  if (!articles.length) return null;
+  const t = await getTranslations("HomeSections");
+  return (
+    <section className="section-pad bg-canvas">
+      <div className="container-shell">
+        <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <span className="eyebrow text-ink">{t("blogEyebrow")}</span>
+            <h2 className="font-display mt-5 max-w-3xl text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
+              {t("blogTitle")}
+            </h2>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/blog">
+              {t("blogViewAll")}
+              <ArrowRight className="ml-5 size-4" />
+            </Link>
+          </Button>
+        </Reveal>
+        <div className="grid gap-x-6 gap-y-12 md:grid-cols-3">
+          {articles.map((article) => (
+            <ArticleCard key={article.id} article={article} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -531,17 +767,25 @@ export async function FaqSection({ items }: { items: Faq[] }) {
       <div className="container-shell grid gap-12 lg:grid-cols-[.75fr_1fr] lg:gap-20">
         <Reveal className="lg:sticky lg:top-32 lg:self-start">
           <span className="eyebrow text-ink">{t("faqEyebrow")}</span>
-          <h2 className="mt-5 max-w-lg text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
+          <h2 className="font-display mt-5 max-w-lg text-[clamp(2.5rem,4vw,3rem)] font-normal leading-[1.2]">
             {t.rich("faqTitle", {
               em: (chunks) => <span className="font-editorial">{chunks}</span>,
             })}
           </h2>
-          <Button asChild variant="outline" className="mt-8">
-            <Link href="/contact">
-              <Check className="mr-3 size-4" />
-              {t("faqWriteToUs")}
-            </Link>
-          </Button>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild variant="outline">
+              <Link href="/contact">
+                <Check className="mr-3 size-4" />
+                {t("faqWriteToUs")}
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/faq">
+                {t("faqViewAll")}
+                <ArrowRight className="ml-3 size-4" />
+              </Link>
+            </Button>
+          </div>
         </Reveal>
         <FaqList items={items} />
       </div>

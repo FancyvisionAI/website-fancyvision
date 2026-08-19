@@ -21,7 +21,9 @@ export async function GET(request: Request) {
     return NextResponse.json({ page, settings });
   } catch {
     return NextResponse.json(
-      { error: "Erreur serveur lors de la récupération des données entreprise." },
+      {
+        error: "Erreur serveur lors de la récupération des données entreprise.",
+      },
       { status: 500 },
     );
   }

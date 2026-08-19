@@ -11,23 +11,27 @@ async function main() {
     where: { status: ContentStatus.PUBLISHED, startAt: { gte: new Date() } },
     orderBy: { startAt: "asc" },
   });
-  if (!event) throw new Error("No upcoming event is available for verification.");
+  if (!event)
+    throw new Error("No upcoming event is available for verification.");
 
   const preferredDate = new Date(Date.now() + 2 * 86_400_000);
   preferredDate.setHours(14, 0, 0, 0);
 
-  const appointmentResponse = await fetch("http://127.0.0.1:3000/api/appointments", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: "Codex Appointment Check",
-      email: appointmentEmail,
-      phone: "+33 6 00 00 00 00",
-      topic: "Appel découverte",
-      preferredDate: preferredDate.toISOString(),
-      website: "",
-    }),
-  });
+  const appointmentResponse = await fetch(
+    "http://127.0.0.1:3000/api/appointments",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "Codex Appointment Check",
+        email: appointmentEmail,
+        phone: "+33 6 00 00 00 00",
+        topic: "Appel découverte",
+        preferredDate: preferredDate.toISOString(),
+        website: "",
+      }),
+    },
+  );
 
   const registrationResponse = await fetch(
     `http://127.0.0.1:3000/api/events/${event.id}/register`,
@@ -72,11 +76,10 @@ async function main() {
   }
 }
 
-main()
-  .finally(async () => {
-    await Promise.all([
-      db.appointment.deleteMany({ where: { email: appointmentEmail } }),
-      db.eventRegistration.deleteMany({ where: { email: registrationEmail } }),
-    ]);
-    await db.$disconnect();
-  });
+main().finally(async () => {
+  await Promise.all([
+    db.appointment.deleteMany({ where: { email: appointmentEmail } }),
+    db.eventRegistration.deleteMany({ where: { email: registrationEmail } }),
+  ]);
+  await db.$disconnect();
+});

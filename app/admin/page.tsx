@@ -88,7 +88,7 @@ export default async function AdminHome() {
                   key={item.id}
                   className="flex items-center gap-4 py-4 text-sm"
                 >
-                  <span className="size-2 rounded-full bg-lime ring-4 ring-lime/20" />
+                  <span className="ring-lime/20 size-2 rounded-full bg-lime ring-4" />
                   <div className="flex-1">
                     <p className="font-medium">
                       {item.action} · {item.entity}
@@ -124,7 +124,7 @@ export default async function AdminHome() {
             {[35, 55, 42, 75, 60, 90, 72, 100, 82].map((h, index) => (
               <span
                 key={index}
-                className="flex-1 rounded-t bg-lime/70"
+                className="bg-lime/70 flex-1 rounded-t"
                 style={{ height: `${h}%` }}
               />
             ))}

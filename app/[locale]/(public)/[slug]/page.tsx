@@ -45,7 +45,7 @@ export default async function DatabaseLandingPage({
         description={page.description}
         cta={{ label: t("cta"), href: "/rendez-vous" }}
       />
-      <section className="section-pad bg-[#f3f6fb]">
+      <section className="section-pad bg-bg">
         <div className="container-shell">
           <div className="mb-9 grid gap-5 lg:grid-cols-[.55fr_1fr] lg:items-end">
             <span className="eyebrow text-cobalt">{t("programsEyebrow")}</span>
@@ -53,7 +53,7 @@ export default async function DatabaseLandingPage({
               <h2 className="max-w-3xl text-[clamp(2rem,3.4vw,2.8rem)] font-normal leading-[1.15] tracking-[-0.03em]">
                 {t("programsTitle")}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-[#647086]">
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-muted">
                 {t("programsDescription")}
               </p>
             </div>

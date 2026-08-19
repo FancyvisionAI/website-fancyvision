@@ -10,10 +10,13 @@ export default async function BlogCategory({
   params: Promise<{ slug: string }>;
 }) {
   const t = await getTranslations("Pages.blogCategory");
+  const tCategories = await getTranslations("Categories");
   const locale = await getLocale();
   const { slug } = await params;
   const articles = await contentRepository.articles({ category: slug, locale });
-  const name = articles[0]?.category?.name ?? slug.replaceAll("-", " ");
+  const name = tCategories.has(slug)
+    ? tCategories(slug)
+    : (articles[0]?.category?.name ?? slug.replaceAll("-", " "));
   return (
     <>
       <PageHero

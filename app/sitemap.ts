@@ -23,6 +23,23 @@ function languageAlternates(path: string) {
   };
 }
 
+// Catégories de Service dont la route publique n'est PAS /services/[slug] :
+// agents IA -> /solutions-ia, secteurs -> /solutions-par-secteur. Le reste
+// (conseil, data) reste sous /services/[slug].
+const SERVICE_CATEGORY_PATHS: Record<string, string> = {
+  "agents-ia": "/solutions-ia",
+  secteurs: "/solutions-par-secteur",
+};
+
+// Sections principales sans ligne `Page` dédiée en base : indexées ici
+// directement plutôt que d'ajouter des lignes CMS vides.
+const STATIC_PATHS = [
+  "/solutions-ia",
+  "/solutions-par-secteur",
+  "/formations",
+  "/faq",
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [pages, services, trainings, articles, cases] = await Promise.all([
     db.page.findMany({
@@ -31,7 +48,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
     db.service.findMany({
       where: { status: "PUBLISHED" },
-      select: { slug: true, updatedAt: true },
+      select: {
+        slug: true,
+        updatedAt: true,
+        category: { select: { slug: true } },
+      },
     }),
     db.training.findMany({
       where: { status: "PUBLISHED" },
@@ -49,7 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pagePaths: Record<string, string> = {
     accueil: "/",
     services: "/services",
-    formation: "/formation",
+    formation: "/formations",
     "a-propos": "/a-propos",
     "etudes-de-cas": "/etudes-de-cas",
     blog: "/blog",
@@ -58,13 +79,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     confidentialite: "/confidentialite",
     conditions: "/conditions",
   };
+  const now = new Date();
   const entries: Array<{ path: string; lastModified: Date }> = [
     ...pages.map((item) => ({
       path: pagePaths[item.slug] ?? `/${item.slug}`,
       lastModified: item.updatedAt,
     })),
     ...services.map((item) => ({
-      path: `/services/${item.slug}`,
+      path: `${SERVICE_CATEGORY_PATHS[item.category?.slug ?? ""] ?? "/services"}/${item.slug}`,
       lastModified: item.updatedAt,
     })),
     ...trainings.map((item) => ({
@@ -79,9 +101,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: `/etudes-de-cas/${item.slug}`,
       lastModified: item.updatedAt,
     })),
+    ...STATIC_PATHS.map((path) => ({ path, lastModified: now })),
   ];
 
-  return entries.flatMap(({ path, lastModified }) =>
+  // Sécurité : ne jamais indexer une même URL deux fois.
+  const seen = new Set<string>();
+  const uniqueEntries = entries.filter(({ path }) => {
+    if (seen.has(path)) return false;
+    seen.add(path);
+    return true;
+  });
+
+  return uniqueEntries.flatMap(({ path, lastModified }) =>
     routing.locales.map((locale) => ({
       url: absoluteUrl(localizedPath(path, locale)),
       lastModified,

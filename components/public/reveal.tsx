@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function Reveal({
   children,
@@ -11,6 +11,10 @@ export function Reveal({
   className?: string;
   delay?: number;
 }) {
+  const reducedMotion = useReducedMotion();
+  if (reducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
   return (
     <motion.div
       className={className}

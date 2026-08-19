@@ -7,7 +7,11 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in your local .env file}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your local .env file}
     ports:
-      - "5432:5432"
+      # Port hôte décalé sur 5433 : un PostgreSQL natif Windows occupe déjà
+      # 5432 sur cette machine et interceptait les connexions destinées au
+      # conteneur (cause du PrismaClientInitializationError). Le port
+      # interne du conteneur reste 5432, inchangé.
+      - "5433:5432"
     volumes:
       - fancyvision_postgres:/var/lib/postgresql/data
     healthcheck:

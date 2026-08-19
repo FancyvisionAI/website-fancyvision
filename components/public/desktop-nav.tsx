@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import type {
+  NavigationSector,
   NavigationService,
   NavigationTraining,
 } from "@/components/public/header";
 import { Link } from "@/i18n/navigation";
-import { sectors } from "@/lib/content/sectors";
 
 type Item = { id: string; label: string; url: string };
 type OpenMenu = "services" | "sectors" | null;
@@ -18,10 +18,12 @@ export function DesktopNav({
   items,
   services,
   trainings,
+  sectors,
 }: {
   items: Item[];
   services: NavigationService[];
   trainings: NavigationTraining[];
+  sectors: NavigationSector[];
 }) {
   const t = useTranslations("DesktopNav");
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
@@ -48,6 +50,7 @@ export function DesktopNav({
   const privateTrainings = trainings.filter(
     (item) => item.categorySlug === "particuliers",
   );
+  const sectorColumnSize = Math.ceil(sectors.length / 3);
 
   return (
     <div ref={rootRef} className="hidden lg:block">
@@ -59,6 +62,13 @@ export function DesktopNav({
             setOpenMenu((current) => (current === "services" ? null : "services"))
           }
         />
+        <Link
+          href="/#solutions-ia"
+          className="py-7 text-sm font-medium transition hover:text-cobalt"
+          onClick={() => setOpenMenu(null)}
+        >
+          {t("solutionsAi")}
+        </Link>
         <MenuButton
           label={t("sectors")}
           open={openMenu === "sectors"}
@@ -70,16 +80,30 @@ export function DesktopNav({
           <Link
             key={item.id}
             href={item.url}
-            className="py-7 text-sm font-medium transition hover:text-[#4765b2]"
+            className="py-7 text-sm font-medium transition hover:text-cobalt"
             onClick={() => setOpenMenu(null)}
           >
             {item.label}
           </Link>
         ))}
+        <Link
+          href="/blog"
+          className="py-7 text-sm font-medium transition hover:text-cobalt"
+          onClick={() => setOpenMenu(null)}
+        >
+          {t("blog")}
+        </Link>
+        <Link
+          href="/contact"
+          className="py-7 text-sm font-medium transition hover:text-cobalt"
+          onClick={() => setOpenMenu(null)}
+        >
+          {t("contact")}
+        </Link>
       </nav>
 
       {openMenu === "services" && (
-        <div className="absolute inset-x-0 top-full border-t border-white/10 bg-[#11162d] text-white shadow-[0_24px_65px_rgba(4,7,27,.28)]">
+        <div className="absolute inset-x-0 top-full border-t border-white/10 bg-accent text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]">
           <div className="container-shell grid grid-cols-4 border-l border-white/15">
             <CompactColumn title={t("consulting")} items={consulting} prefix="/services" />
             <CompactColumn title={t("data")} items={data} prefix="/services" />
@@ -100,11 +124,16 @@ export function DesktopNav({
       )}
 
       {openMenu === "sectors" && (
-        <div className="absolute inset-x-0 top-full border-t border-white/10 bg-gradient-to-br from-[#071027] via-[#101b3b] to-[#263b68] text-white shadow-[0_24px_65px_rgba(4,7,27,.28)]">
+        <div className="absolute inset-x-0 top-full border-t border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]">
           <div className="container-shell grid min-h-[20rem] grid-cols-3 border-l border-white/15">
-            <SectorColumn title={t("ourSectors")} items={sectors.slice(0, 3)} />
-            <SectorColumn items={sectors.slice(3, 6)} />
-            <SectorColumn items={sectors.slice(6)} />
+            <SectorColumn
+              title={t("ourSectors")}
+              items={sectors.slice(0, sectorColumnSize)}
+            />
+            <SectorColumn
+              items={sectors.slice(sectorColumnSize, sectorColumnSize * 2)}
+            />
+            <SectorColumn items={sectors.slice(sectorColumnSize * 2)} />
           </div>
         </div>
       )}
@@ -124,7 +153,7 @@ function MenuButton({
   return (
     <button
       type="button"
-      className="flex items-center gap-2 py-7 text-sm font-medium transition hover:text-[#4765b2]"
+      className="flex items-center gap-2 py-7 text-sm font-medium transition hover:text-cobalt"
       onClick={onClick}
       aria-expanded={open}
     >
@@ -147,7 +176,7 @@ function CompactColumn({
 }) {
   return (
     <section className="min-h-[19rem] border-r border-white/15 px-7 py-8">
-      <h2 className="mb-5 font-mono text-[11px] uppercase tracking-[0.12em] text-[#a9c5ff]">
+      <h2 className="mb-5 font-mono text-[11px] uppercase tracking-[0.12em] text-cobalt-strong">
         {title}
       </h2>
       <div className="space-y-0.5">
@@ -165,7 +194,7 @@ function CompactColumn({
       {footer && (
         <Link
           href={footer.href}
-          className="mt-4 inline-block text-sm font-semibold text-white transition hover:text-[#a9c5ff]"
+          className="mt-4 inline-block text-sm font-semibold text-white transition hover:text-cobalt-strong"
         >
           {footer.label}
         </Link>
@@ -179,39 +208,25 @@ function SectorColumn({
   items,
 }: {
   title?: string;
-  items: ReadonlyArray<
-    | { readonly key: string; readonly href: string; readonly available: true }
-    | { readonly key: string; readonly available: false }
-  >;
+  items: NavigationSector[];
 }) {
-  const t = useTranslations("DesktopNav");
-  const tSectors = useTranslations("Sectors");
   return (
     <section className="border-r border-white/15 px-8 py-10">
       {title && (
-        <h2 className="mb-6 font-mono text-xs uppercase tracking-[0.1em] text-[#b8c9e8]">
+        <h2 className="mb-6 font-mono text-xs uppercase tracking-[0.1em] text-cobalt-strong">
           {title}
         </h2>
       )}
       <div className={title ? "space-y-5" : "space-y-6 pt-8"}>
-        {items.map((sector) =>
-          sector.available ? (
-            <Link
-              key={sector.key}
-              href={sector.href}
-              className="block w-fit text-base font-semibold transition hover:translate-x-1 hover:text-[#a9c5ff]"
-            >
-              {tSectors(sector.key)}
-            </Link>
-          ) : (
-            <div key={sector.key} className="flex flex-wrap items-center gap-3 text-base text-white/70">
-              <span>{tSectors(sector.key)}</span>
-              <span className="rounded-full bg-white/85 px-3 py-1 text-[11px] font-medium text-[#263b68]">
-                {t("comingSoon")}
-              </span>
-            </div>
-          ),
-        )}
+        {items.map((sector) => (
+          <Link
+            key={sector.id}
+            href={`/solutions-par-secteur/${sector.slug}`}
+            className="block w-fit text-base font-semibold transition hover:translate-x-1 hover:text-cobalt-strong"
+          >
+            {sector.title}
+          </Link>
+        ))}
       </div>
     </section>
   );

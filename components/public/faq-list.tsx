@@ -11,7 +11,7 @@ export function FaqList({ items }: { items: Faq[] }) {
       {items.map((item, index) => (
         <Accordion.Item key={item.id} value={item.id} className="border-b border-lime">
           <Accordion.Header>
-            <Accordion.Trigger className="group flex w-full items-center gap-5 py-6 text-left md:py-8">
+            <Accordion.Trigger className="group focus-visible:ring-cobalt focus-visible:ring-offset-canvas flex w-full items-center gap-5 rounded-control py-6 text-left outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:py-8">
               <span className="text-xs tabular-nums text-ink/40">0{index + 1}</span>
               <span className="flex-1 text-lg font-semibold tracking-[-0.025em] md:text-2xl">
                 {item.question}

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, Loader2, UserPlus } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -15,19 +15,20 @@ export function EventRegistrationForm({
   eventTitle: string;
 }) {
   const t = useTranslations("EventRegistrationForm");
+  const locale = useLocale();
   const [pending, setPending] = useState(false);
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
   return (
     <details ref={detailsRef} className="group mt-5 border-t border-white/10 pt-4">
-      <summary className="flex w-fit cursor-pointer list-none items-center gap-2 rounded-lg bg-[#6fda75] px-3.5 py-2 text-xs font-semibold text-[#071027] transition hover:bg-[#8be590] [&::-webkit-details-marker]:hidden">
+      <summary className="flex w-fit cursor-pointer list-none items-center gap-2 rounded-lg bg-[#6fda75] px-3.5 py-2 text-xs font-semibold text-accent transition hover:bg-[#8be590] [&::-webkit-details-marker]:hidden">
         <UserPlus className="size-3.5" />
         {t("register")}
         <span className="ml-1 group-open:hidden">+</span>
         <span className="ml-1 hidden group-open:inline">−</span>
       </summary>
       <form
-        className="mt-4 grid gap-2 rounded-xl border border-white/10 bg-[#09162e] p-3 sm:grid-cols-[1fr_1fr_.8fr_auto]"
+        className="mt-4 grid gap-2 rounded-xl border border-white/10 bg-accent p-3 sm:grid-cols-[1fr_1fr_.8fr_auto]"
         onSubmit={async (submitEvent) => {
           submitEvent.preventDefault();
           setPending(true);
@@ -36,7 +37,7 @@ export function EventRegistrationForm({
           const response = await fetch(`/api/events/${eventId}/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values),
+            body: JSON.stringify({ ...values, locale }),
           });
           const result = (await response.json().catch(() => ({}))) as {
             error?: string;
@@ -79,7 +80,7 @@ export function EventRegistrationForm({
         <button
           type="submit"
           disabled={pending}
-          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-white px-4 text-xs font-semibold text-[#071027] disabled:opacity-60"
+          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-white px-4 text-xs font-semibold text-accent disabled:opacity-60"
         >
           {pending ? <Loader2 className="size-3.5 animate-spin" /> : t("submit")}
           {!pending && <ArrowRight className="size-3.5" />}

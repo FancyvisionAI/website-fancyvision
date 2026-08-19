@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
 
-export function ArticleCard({
+export async function ArticleCard({
   article,
 }: {
   article: {
@@ -14,9 +15,16 @@ export function ArticleCard({
     coverImage: string | null;
     publishedAt: Date | null;
     readingTime: number;
-    category: { name: string } | null;
+    category: { name: string; slug: string } | null;
   };
 }) {
+  const locale = await getLocale();
+  const tCategories = await getTranslations("Categories");
+  const categoryLabel = article.category?.slug
+    ? tCategories.has(article.category.slug)
+      ? tCategories(article.category.slug)
+      : article.category.name
+    : undefined;
   return (
     <Link href={`/blog/${article.slug}`} className="group">
       <div className="relative aspect-[1.35/1] overflow-hidden rounded-[2rem] bg-accent">
@@ -35,11 +43,11 @@ export function ArticleCard({
       </div>
       <div className="px-2 pt-6">
         <div className="flex gap-3 text-xs font-semibold uppercase tracking-[0.1em] text-cobalt">
-          <span>{article.category?.name}</span><span>·</span><span>{article.readingTime} min</span>
+          <span>{categoryLabel}</span><span>·</span><span>{article.readingTime} min</span>
         </div>
         <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">{article.title}</h2>
         <p className="mt-4 line-clamp-2 leading-7 text-ink/55">{article.excerpt}</p>
-        {article.publishedAt && <p className="mt-5 text-xs text-ink/40">{formatDate(article.publishedAt)}</p>}
+        {article.publishedAt && <p className="mt-5 text-xs text-ink/40">{formatDate(article.publishedAt, locale)}</p>}
       </div>
     </Link>
   );

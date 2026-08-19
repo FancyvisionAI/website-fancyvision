@@ -4,14 +4,14 @@
 
 This package documents the existing PostgreSQL relational database exactly as defined by `prisma/schema.prisma` and the SQL migration history under `prisma/migrations`. It is documentation only: no database objects or data were changed.
 
-| Metric | Count |
-|---|---:|
-| Tables | 35 |
-| Physical columns | 308 |
-| Foreign keys | 25 |
-| Enums | 5 |
-| Explicit non-primary indexes | 20 |
-| Domain groups | 6 |
+| Metric                       | Count |
+| ---------------------------- | ----: |
+| Tables                       |    35 |
+| Physical columns             |   308 |
+| Foreign keys                 |    25 |
+| Enums                        |     5 |
+| Explicit non-primary indexes |    20 |
+| Domain groups                |     6 |
 
 The physical design uses quoted PascalCase table names and mostly camelCase columns. Authentication, CMS content, commercial offerings, publishing, engagement, events, and audit/analytics concerns are kept in distinct table groups.
 
@@ -26,28 +26,28 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 
 ## Domain overview
 
-| Domain | Tables |
-|---|---|
-| Authentication & Authorization | `User`, `Account`, `Session`, `VerificationToken`, `Role`, `Permission`, `RolePermission` |
-| Content & Navigation | `Page`, `Section`, `Seo`, `Setting`, `Menu`, `MenuItem`, `Media`, `Redirect` |
-| Offerings & Learning | `ServiceCategory`, `Service`, `TrainingCategory`, `Training`, `CaseStudy` |
-| Publishing | `ArticleCategory`, `Tag`, `Article`, `ArticleTag`, `ArticleRelation` |
-| Engagement & CRM | `Faq`, `Testimonial`, `NewsletterSubscriber`, `ContactRequest`, `Appointment`, `Event`, `EventRegistration` |
-| Organization & Observability | `TeamMember`, `AnalyticsEvent`, `AuditLog` |
+| Domain                         | Tables                                                                                                      |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Authentication & Authorization | `User`, `Account`, `Session`, `VerificationToken`, `Role`, `Permission`, `RolePermission`                   |
+| Content & Navigation           | `Page`, `Section`, `Seo`, `Setting`, `Menu`, `MenuItem`, `Media`, `Redirect`                                |
+| Offerings & Learning           | `ServiceCategory`, `Service`, `TrainingCategory`, `Training`, `CaseStudy`                                   |
+| Publishing                     | `ArticleCategory`, `Tag`, `Article`, `ArticleTag`, `ArticleRelation`                                        |
+| Engagement & CRM               | `Faq`, `Testimonial`, `NewsletterSubscriber`, `ContactRequest`, `Appointment`, `Event`, `EventRegistration` |
+| Organization & Observability   | `TeamMember`, `AnalyticsEvent`, `AuditLog`                                                                  |
 
 ## Diagram notation
 
-| Symbol | Meaning |
-|---|---|
-| PK | Primary key |
-| FK | Foreign key |
-| UQ / UK | Unique constraint |
-| `||` | Exactly one |
-| `|o` / `o|` | Zero or one; mirrored according to which side of the relationship it appears on |
-| `}o` / `o{` | Zero or many; mirrored according to which side of the relationship it appears on |
-| Solid relationship line | Enforced foreign key |
-| Blue entity | Core or high-traffic entity |
-| Gray entity | Junction entity |
+| Symbol                  | Meaning                                                                          |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| PK                      | Primary key                                                                      |
+| FK                      | Foreign key                                                                      |
+| UQ / UK                 | Unique constraint                                                                |
+| `                       |                                                                                  | `   | Exactly one                                                                     |
+| `                       | o`/`o                                                                            | `   | Zero or one; mirrored according to which side of the relationship it appears on |
+| `}o` / `o{`             | Zero or many; mirrored according to which side of the relationship it appears on |
+| Solid relationship line | Enforced foreign key                                                             |
+| Blue entity             | Core or high-traffic entity                                                      |
+| Gray entity             | Junction entity                                                                  |
 
 ## Enum reference
 
@@ -84,33 +84,33 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 
 ## Relationship and referential-action matrix
 
-| Parent | Child FK | Cardinality | Relationship | On delete | On update |
-|---|---|---|---|---|---|
-| `Role` | `User.roleId` | Role 0..1 — 0..* User | assigned to | SET NULL | CASCADE |
-| `User` | `Account.userId` | User 1 — 0..* Account | owns | CASCADE | CASCADE |
-| `User` | `Session.userId` | User 1 — 0..* Session | has | CASCADE | CASCADE |
-| `Role` | `RolePermission.roleId` | Role 1 — 0..* RolePermission | grants through | CASCADE | CASCADE |
-| `Permission` | `RolePermission.permissionId` | Permission 1 — 0..* RolePermission | assigned through | CASCADE | CASCADE |
-| `Page` | `Section.pageId` | Page 1 — 0..* Section | contains | CASCADE | CASCADE |
-| `Page` | `Seo.pageId` | Page 0..1 — 0..1 Seo | has SEO | CASCADE | CASCADE |
-| `Service` | `Seo.serviceId` | Service 0..1 — 0..1 Seo | has SEO | CASCADE | CASCADE |
-| `Training` | `Seo.trainingId` | Training 0..1 — 0..1 Seo | has SEO | CASCADE | CASCADE |
-| `Article` | `Seo.articleId` | Article 0..1 — 0..1 Seo | has SEO | CASCADE | CASCADE |
-| `CaseStudy` | `Seo.caseStudyId` | CaseStudy 0..1 — 0..1 Seo | has SEO | CASCADE | CASCADE |
-| `ServiceCategory` | `Service.categoryId` | ServiceCategory 0..1 — 0..* Service | classifies | SET NULL | CASCADE |
-| `TrainingCategory` | `Training.categoryId` | TrainingCategory 0..1 — 0..* Training | classifies | SET NULL | CASCADE |
-| `ArticleCategory` | `Article.categoryId` | ArticleCategory 0..1 — 0..* Article | classifies | SET NULL | CASCADE |
-| `User` | `Article.authorId` | User 0..1 — 0..* Article | authors | SET NULL | CASCADE |
-| `Article` | `ArticleTag.articleId` | Article 1 — 0..* ArticleTag | tagged through | CASCADE | CASCADE |
-| `Tag` | `ArticleTag.tagId` | Tag 1 — 0..* ArticleTag | labels through | CASCADE | CASCADE |
-| `Article` | `ArticleRelation.fromId` | Article 1 — 0..* ArticleRelation | relates from | CASCADE | CASCADE |
-| `Article` | `ArticleRelation.toId` | Article 1 — 0..* ArticleRelation | relates to | CASCADE | CASCADE |
-| `Service` | `CaseStudy.serviceId` | Service 0..1 — 0..* CaseStudy | demonstrated by | SET NULL | CASCADE |
-| `User` | `Appointment.assignedConsultantId` | User 0..1 — 0..* Appointment | assigned to | SET NULL | CASCADE |
-| `Menu` | `MenuItem.menuId` | Menu 1 — 0..* MenuItem | contains | CASCADE | CASCADE |
-| `MenuItem` | `MenuItem.parentId` | MenuItem 0..1 — 0..* MenuItem | parent of | CASCADE | CASCADE |
-| `User` | `AuditLog.userId` | User 0..1 — 0..* AuditLog | performs | SET NULL | CASCADE |
-| `Event` | `EventRegistration.eventId` | Event 1 — 0..* EventRegistration | receives | CASCADE | CASCADE |
+| Parent             | Child FK                           | Cardinality                           | Relationship     | On delete | On update |
+| ------------------ | ---------------------------------- | ------------------------------------- | ---------------- | --------- | --------- |
+| `Role`             | `User.roleId`                      | Role 0..1 — 0..* User                 | assigned to      | SET NULL  | CASCADE   |
+| `User`             | `Account.userId`                   | User 1 — 0..* Account                 | owns             | CASCADE   | CASCADE   |
+| `User`             | `Session.userId`                   | User 1 — 0..* Session                 | has              | CASCADE   | CASCADE   |
+| `Role`             | `RolePermission.roleId`            | Role 1 — 0..* RolePermission          | grants through   | CASCADE   | CASCADE   |
+| `Permission`       | `RolePermission.permissionId`      | Permission 1 — 0..* RolePermission    | assigned through | CASCADE   | CASCADE   |
+| `Page`             | `Section.pageId`                   | Page 1 — 0..* Section                 | contains         | CASCADE   | CASCADE   |
+| `Page`             | `Seo.pageId`                       | Page 0..1 — 0..1 Seo                  | has SEO          | CASCADE   | CASCADE   |
+| `Service`          | `Seo.serviceId`                    | Service 0..1 — 0..1 Seo               | has SEO          | CASCADE   | CASCADE   |
+| `Training`         | `Seo.trainingId`                   | Training 0..1 — 0..1 Seo              | has SEO          | CASCADE   | CASCADE   |
+| `Article`          | `Seo.articleId`                    | Article 0..1 — 0..1 Seo               | has SEO          | CASCADE   | CASCADE   |
+| `CaseStudy`        | `Seo.caseStudyId`                  | CaseStudy 0..1 — 0..1 Seo             | has SEO          | CASCADE   | CASCADE   |
+| `ServiceCategory`  | `Service.categoryId`               | ServiceCategory 0..1 — 0..* Service   | classifies       | SET NULL  | CASCADE   |
+| `TrainingCategory` | `Training.categoryId`              | TrainingCategory 0..1 — 0..* Training | classifies       | SET NULL  | CASCADE   |
+| `ArticleCategory`  | `Article.categoryId`               | ArticleCategory 0..1 — 0..* Article   | classifies       | SET NULL  | CASCADE   |
+| `User`             | `Article.authorId`                 | User 0..1 — 0..* Article              | authors          | SET NULL  | CASCADE   |
+| `Article`          | `ArticleTag.articleId`             | Article 1 — 0..* ArticleTag           | tagged through   | CASCADE   | CASCADE   |
+| `Tag`              | `ArticleTag.tagId`                 | Tag 1 — 0..* ArticleTag               | labels through   | CASCADE   | CASCADE   |
+| `Article`          | `ArticleRelation.fromId`           | Article 1 — 0..* ArticleRelation      | relates from     | CASCADE   | CASCADE   |
+| `Article`          | `ArticleRelation.toId`             | Article 1 — 0..* ArticleRelation      | relates to       | CASCADE   | CASCADE   |
+| `Service`          | `CaseStudy.serviceId`              | Service 0..1 — 0..* CaseStudy         | demonstrated by  | SET NULL  | CASCADE   |
+| `User`             | `Appointment.assignedConsultantId` | User 0..1 — 0..* Appointment          | assigned to      | SET NULL  | CASCADE   |
+| `Menu`             | `MenuItem.menuId`                  | Menu 1 — 0..* MenuItem                | contains         | CASCADE   | CASCADE   |
+| `MenuItem`         | `MenuItem.parentId`                | MenuItem 0..1 — 0..* MenuItem         | parent of        | CASCADE   | CASCADE   |
+| `User`             | `AuditLog.userId`                  | User 0..1 — 0..* AuditLog             | performs         | SET NULL  | CASCADE   |
+| `Event`            | `EventRegistration.eventId`        | Event 1 — 0..* EventRegistration      | receives         | CASCADE   | CASCADE   |
 
 ### Many-to-many and recursive structures
 
@@ -128,18 +128,18 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Application identities, credentials linkage, status, and optional role assignment.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | Yes | — | — |
-| `UQ` | `email` | `TEXT` | No | — | — |
-| — | `emailVerified` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `image` | `TEXT` | Yes | — | — |
-| — | `passwordHash` | `TEXT` | Yes | — | — |
-| — | `status` | `UserStatus` | No | `'ACTIVE'` | — |
-| `FK` | `roleId` | `TEXT` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column          | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | --------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`            | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`          | `TEXT`          |      Yes | —                    | —                         |
+| `UQ` | `email`         | `TEXT`          |       No | —                    | —                         |
+| —    | `emailVerified` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `image`         | `TEXT`          |      Yes | —                    | —                         |
+| —    | `passwordHash`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`        | `UserStatus`    |       No | `'ACTIVE'`           | —                         |
+| `FK` | `roleId`        | `TEXT`          |      Yes | —                    | —                         |
+| —    | `createdAt`     | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`     | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -169,19 +169,19 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** External authentication-provider accounts linked to users.  
 **Primary key:** `provider` + `providerAccountId`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `FK` | `userId` | `TEXT` | No | — | — |
-| — | `type` | `TEXT` | No | — | — |
-| `PK` | `provider` | `TEXT` | No | — | — |
-| `PK` | `providerAccountId` | `TEXT` | No | — | — |
-| — | `refresh_token` | `TEXT` | Yes | — | — |
-| — | `access_token` | `TEXT` | Yes | — | — |
-| — | `expires_at` | `INTEGER` | Yes | — | — |
-| — | `token_type` | `TEXT` | Yes | — | — |
-| — | `scope` | `TEXT` | Yes | — | — |
-| — | `id_token` | `TEXT` | Yes | — | — |
-| — | `session_state` | `TEXT` | Yes | — | — |
+| Key  | Column              | PostgreSQL type | Nullable | Default / generation | Notes |
+| ---- | ------------------- | --------------- | -------: | -------------------- | ----- |
+| `FK` | `userId`            | `TEXT`          |       No | —                    | —     |
+| —    | `type`              | `TEXT`          |       No | —                    | —     |
+| `PK` | `provider`          | `TEXT`          |       No | —                    | —     |
+| `PK` | `providerAccountId` | `TEXT`          |       No | —                    | —     |
+| —    | `refresh_token`     | `TEXT`          |      Yes | —                    | —     |
+| —    | `access_token`      | `TEXT`          |      Yes | —                    | —     |
+| —    | `expires_at`        | `INTEGER`       |      Yes | —                    | —     |
+| —    | `token_type`        | `TEXT`          |      Yes | —                    | —     |
+| —    | `scope`             | `TEXT`          |      Yes | —                    | —     |
+| —    | `id_token`          | `TEXT`          |      Yes | —                    | —     |
+| —    | `session_state`     | `TEXT`          |      Yes | —                    | —     |
 
 **Foreign keys**
 
@@ -206,11 +206,11 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Persisted authentication sessions associated with users.  
 **Primary key:** `sessionToken`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` `UQ` | `sessionToken` | `TEXT` | No | — | — |
-| `FK` | `userId` | `TEXT` | No | — | — |
-| — | `expires` | `TIMESTAMP(3)` | No | — | — |
+| Key       | Column         | PostgreSQL type | Nullable | Default / generation | Notes |
+| --------- | -------------- | --------------- | -------: | -------------------- | ----- |
+| `PK` `UQ` | `sessionToken` | `TEXT`          |       No | —                    | —     |
+| `FK`      | `userId`       | `TEXT`          |       No | —                    | —     |
+| —         | `expires`      | `TIMESTAMP(3)`  |       No | —                    | —     |
 
 **Foreign keys**
 
@@ -235,11 +235,11 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Short-lived tokens used by authentication verification flows.  
 **Primary key:** `identifier` + `token`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `identifier` | `TEXT` | No | — | — |
-| `PK` `UQ` | `token` | `TEXT` | No | — | — |
-| — | `expires` | `TIMESTAMP(3)` | No | — | — |
+| Key       | Column       | PostgreSQL type | Nullable | Default / generation | Notes |
+| --------- | ------------ | --------------- | -------: | -------------------- | ----- |
+| `PK`      | `identifier` | `TEXT`          |       No | —                    | —     |
+| `PK` `UQ` | `token`      | `TEXT`          |       No | —                    | —     |
+| —         | `expires`    | `TIMESTAMP(3)`  |       No | —                    | —     |
 
 **Foreign keys**
 
@@ -264,13 +264,13 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Named authorization roles assigned to users.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `UQ` | `name` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `UQ` | `name`        | `TEXT`          |       No | —                    | —                         |
+| —    | `description` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -295,11 +295,11 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Atomic authorization capabilities attached to roles.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `UQ` | `key` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | Yes | — | — |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `UQ` | `key`         | `TEXT`          |       No | —                    | —                         |
+| —    | `description` | `TEXT`          |      Yes | —                    | —                         |
 
 **Foreign keys**
 
@@ -323,10 +323,10 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Junction table implementing the many-to-many role-permission assignment.  
 **Primary key:** `roleId` + `permissionId`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` `FK` | `roleId` | `TEXT` | No | — | — |
-| `PK` `FK` | `permissionId` | `TEXT` | No | — | — |
+| Key       | Column         | PostgreSQL type | Nullable | Default / generation | Notes |
+| --------- | -------------- | --------------- | -------: | -------------------- | ----- |
+| `PK` `FK` | `roleId`       | `TEXT`          |       No | —                    | —     |
+| `PK` `FK` | `permissionId` | `TEXT`          |       No | —                    | —     |
 
 **Foreign keys**
 
@@ -353,19 +353,19 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Localized CMS pages and their publication lifecycle.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `slug` | `TEXT` | No | — | — |
-| — | `eyebrow` | `TEXT` | Yes | — | — |
-| — | `headline` | `TEXT` | Yes | — | — |
-| — | `description` | `TEXT` | Yes | — | — |
-| — | `status` | `ContentStatus` | No | `'DRAFT'` | — |
-| — | `publishedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `locale`      | `TEXT`          |       No | `'fr'`               | —                         |
+| —    | `title`       | `TEXT`          |       No | —                    | —                         |
+| —    | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `eyebrow`     | `TEXT`          |      Yes | —                    | —                         |
+| —    | `headline`    | `TEXT`          |      Yes | —                    | —                         |
+| —    | `description` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`      | `ContentStatus` |       No | `'DRAFT'`            | —                         |
+| —    | `publishedAt` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -392,17 +392,17 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Ordered structured content blocks belonging to a page.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `FK` | `pageId` | `TEXT` | No | — | — |
-| — | `type` | `TEXT` | No | — | — |
-| — | `name` | `TEXT` | No | — | — |
-| — | `data` | `JSONB` | No | — | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `visible` | `BOOLEAN` | No | `true` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `FK` | `pageId`    | `TEXT`          |       No | —                    | —                         |
+| —    | `type`      | `TEXT`          |       No | —                    | —                         |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `data`      | `JSONB`         |       No | —                    | —                         |
+| —    | `order`     | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `visible`   | `BOOLEAN`       |       No | `true`               | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -427,21 +427,21 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Optional one-to-one SEO metadata for one of several content types.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `FK` `UQ` | `pageId` | `TEXT` | Yes | — | — |
-| `FK` `UQ` | `serviceId` | `TEXT` | Yes | — | — |
-| `FK` `UQ` | `trainingId` | `TEXT` | Yes | — | — |
-| `FK` `UQ` | `articleId` | `TEXT` | Yes | — | — |
-| `FK` `UQ` | `caseStudyId` | `TEXT` | Yes | — | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | No | — | — |
-| — | `keywords` | `TEXT[]` | No | — | — |
-| — | `canonical` | `TEXT` | Yes | — | — |
-| — | `ogImage` | `TEXT` | Yes | — | — |
-| — | `schema` | `JSONB` | Yes | — | — |
-| — | `noIndex` | `BOOLEAN` | No | `false` | — |
+| Key       | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| --------- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK`      | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `FK` `UQ` | `pageId`      | `TEXT`          |      Yes | —                    | —                         |
+| `FK` `UQ` | `serviceId`   | `TEXT`          |      Yes | —                    | —                         |
+| `FK` `UQ` | `trainingId`  | `TEXT`          |      Yes | —                    | —                         |
+| `FK` `UQ` | `articleId`   | `TEXT`          |      Yes | —                    | —                         |
+| `FK` `UQ` | `caseStudyId` | `TEXT`          |      Yes | —                    | —                         |
+| —         | `title`       | `TEXT`          |       No | —                    | —                         |
+| —         | `description` | `TEXT`          |       No | —                    | —                         |
+| —         | `keywords`    | `TEXT[]`        |       No | —                    | —                         |
+| —         | `canonical`   | `TEXT`          |      Yes | —                    | —                         |
+| —         | `ogImage`     | `TEXT`          |      Yes | —                    | —                         |
+| —         | `schema`      | `JSONB`         |      Yes | —                    | —                         |
+| —         | `noIndex`     | `BOOLEAN`       |       No | `false`              | —                         |
 
 **Foreign keys**
 
@@ -478,14 +478,14 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Keyed JSON configuration grouped by application area.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `UQ` | `key` | `TEXT` | No | — | — |
-| — | `value` | `JSONB` | No | — | — |
-| — | `group` | `TEXT` | No | `'general'` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `UQ` | `key`       | `TEXT`          |       No | —                    | —                         |
+| —    | `value`     | `JSONB`         |       No | —                    | —                         |
+| —    | `group`     | `TEXT`          |       No | `'general'`          | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -510,14 +510,14 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Localized navigation menus by fixed header/footer location.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `location` | `MenuLocation` | No | — | — |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `location`  | `MenuLocation`  |       No | —                    | —                         |
+| —    | `locale`    | `TEXT`          |       No | `'fr'`               | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -541,16 +541,16 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Ordered hierarchical navigation entries belonging to a menu.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `FK` | `menuId` | `TEXT` | No | — | — |
-| `FK` | `parentId` | `TEXT` | Yes | — | — |
-| — | `label` | `TEXT` | No | — | — |
-| — | `url` | `TEXT` | No | — | — |
-| — | `external` | `BOOLEAN` | No | `false` | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `visible` | `BOOLEAN` | No | `true` | — |
+| Key  | Column     | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ---------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`       | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `FK` | `menuId`   | `TEXT`          |       No | —                    | —                         |
+| `FK` | `parentId` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `label`    | `TEXT`          |       No | —                    | —                         |
+| —    | `url`      | `TEXT`          |       No | —                    | —                         |
+| —    | `external` | `BOOLEAN`       |       No | `false`              | —                         |
+| —    | `order`    | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `visible`  | `BOOLEAN`       |       No | `true`               | —                         |
 
 **Foreign keys**
 
@@ -578,20 +578,20 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Metadata for uploaded media assets.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `url` | `TEXT` | No | — | — |
-| `UQ` | `key` | `TEXT` | Yes | — | — |
-| — | `mimeType` | `TEXT` | No | — | — |
-| — | `size` | `INTEGER` | No | — | — |
-| — | `width` | `INTEGER` | Yes | — | — |
-| — | `height` | `INTEGER` | Yes | — | — |
-| — | `alt` | `TEXT` | No | — | — |
-| — | `folder` | `TEXT` | Yes | `'/'` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `url`       | `TEXT`          |       No | —                    | —                         |
+| `UQ` | `key`       | `TEXT`          |      Yes | —                    | —                         |
+| —    | `mimeType`  | `TEXT`          |       No | —                    | —                         |
+| —    | `size`      | `INTEGER`       |       No | —                    | —                         |
+| —    | `width`     | `INTEGER`       |      Yes | —                    | —                         |
+| —    | `height`    | `INTEGER`       |      Yes | —                    | —                         |
+| —    | `alt`       | `TEXT`          |       No | —                    | —                         |
+| —    | `folder`    | `TEXT`          |      Yes | `'/'`                | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -615,15 +615,15 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Managed source-to-target URL redirects.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `UQ` | `source` | `TEXT` | No | — | — |
-| — | `target` | `TEXT` | No | — | — |
-| — | `permanent` | `BOOLEAN` | No | `true` | — |
-| — | `active` | `BOOLEAN` | No | `true` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `UQ` | `source`    | `TEXT`          |       No | —                    | —                         |
+| —    | `target`    | `TEXT`          |       No | —                    | —                         |
+| —    | `permanent` | `BOOLEAN`       |       No | `true`               | —                         |
+| —    | `active`    | `BOOLEAN`       |       No | `true`               | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -647,15 +647,15 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Ordered taxonomy for consulting and data services.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| `UQ` | `slug` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | Yes | — | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`        | `TEXT`          |       No | —                    | —                         |
+| `UQ` | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `description` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `order`       | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -679,23 +679,23 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Localized service offerings, content, ordering, and publication state.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| `FK` | `categoryId` | `TEXT` | Yes | — | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `slug` | `TEXT` | No | — | — |
-| — | `excerpt` | `TEXT` | No | — | — |
-| — | `content` | `JSONB` | No | — | — |
-| — | `icon` | `TEXT` | Yes | — | — |
-| — | `image` | `TEXT` | Yes | — | — |
-| — | `status` | `ContentStatus` | No | `'DRAFT'` | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `featured` | `BOOLEAN` | No | `false` | — |
-| — | `publishedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `locale`      | `TEXT`          |       No | `'fr'`               | —                         |
+| `FK` | `categoryId`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `title`       | `TEXT`          |       No | —                    | —                         |
+| —    | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `excerpt`     | `TEXT`          |       No | —                    | —                         |
+| —    | `content`     | `JSONB`         |       No | —                    | —                         |
+| —    | `icon`        | `TEXT`          |      Yes | —                    | —                         |
+| —    | `image`       | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`      | `ContentStatus` |       No | `'DRAFT'`            | —                         |
+| —    | `order`       | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `featured`    | `BOOLEAN`       |       No | `false`              | —                         |
+| —    | `publishedAt` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -723,13 +723,13 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Ordered taxonomy for training products.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| `UQ` | `slug` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | Yes | — | — |
-| — | `order` | `INTEGER` | No | `0` | — |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`        | `TEXT`          |       No | —                    | —                         |
+| `UQ` | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `description` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `order`       | `INTEGER`       |       No | `0`                  | —                         |
 
 **Foreign keys**
 
@@ -753,30 +753,30 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Localized training products, curricula, commercial fields, and publication state.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| `FK` | `categoryId` | `TEXT` | Yes | — | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `slug` | `TEXT` | No | — | — |
-| — | `excerpt` | `TEXT` | No | — | — |
-| — | `content` | `JSONB` | No | — | — |
-| — | `objectives` | `TEXT[]` | No | — | — |
-| — | `audience` | `TEXT[]` | No | — | — |
-| — | `modules` | `JSONB` | No | — | — |
-| — | `priceCents` | `INTEGER` | Yes | — | — |
-| — | `duration` | `TEXT` | Yes | — | — |
-| — | `image` | `TEXT` | Yes | — | — |
-| — | `pdfUrl` | `TEXT` | Yes | — | — |
-| — | `instructor` | `TEXT` | Yes | — | — |
-| — | `difficulty` | `Difficulty` | No | `'ALL_LEVELS'` | — |
-| — | `status` | `ContentStatus` | No | `'DRAFT'` | — |
-| — | `featured` | `BOOLEAN` | No | `false` | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `publishedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `locale`      | `TEXT`          |       No | `'fr'`               | —                         |
+| `FK` | `categoryId`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `title`       | `TEXT`          |       No | —                    | —                         |
+| —    | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `excerpt`     | `TEXT`          |       No | —                    | —                         |
+| —    | `content`     | `JSONB`         |       No | —                    | —                         |
+| —    | `objectives`  | `TEXT[]`        |       No | —                    | —                         |
+| —    | `audience`    | `TEXT[]`        |       No | —                    | —                         |
+| —    | `modules`     | `JSONB`         |       No | —                    | —                         |
+| —    | `priceCents`  | `INTEGER`       |      Yes | —                    | —                         |
+| —    | `duration`    | `TEXT`          |      Yes | —                    | —                         |
+| —    | `image`       | `TEXT`          |      Yes | —                    | —                         |
+| —    | `pdfUrl`      | `TEXT`          |      Yes | —                    | —                         |
+| —    | `instructor`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `difficulty`  | `Difficulty`    |       No | `'ALL_LEVELS'`       | —                         |
+| —    | `status`      | `ContentStatus` |       No | `'DRAFT'`            | —                         |
+| —    | `featured`    | `BOOLEAN`       |       No | `false`              | —                         |
+| —    | `order`       | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `publishedAt` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -803,29 +803,29 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Localized client case-study content optionally associated with a service.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| `FK` | `serviceId` | `TEXT` | Yes | — | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `slug` | `TEXT` | No | — | — |
-| — | `company` | `TEXT` | No | — | — |
-| — | `companyLogo` | `TEXT` | Yes | — | — |
-| — | `sector` | `TEXT` | Yes | — | — |
-| — | `teamSize` | `INTEGER` | Yes | — | — |
-| — | `excerpt` | `TEXT` | No | — | — |
-| — | `before` | `TEXT` | No | — | — |
-| — | `after` | `TEXT` | No | — | — |
-| — | `content` | `JSONB` | No | — | — |
-| — | `metrics` | `JSONB` | No | — | — |
-| — | `gallery` | `TEXT[]` | No | — | — |
-| — | `coverImage` | `TEXT` | Yes | — | — |
-| — | `status` | `ContentStatus` | No | `'DRAFT'` | — |
-| — | `featured` | `BOOLEAN` | No | `false` | — |
-| — | `publishedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `locale`      | `TEXT`          |       No | `'fr'`               | —                         |
+| `FK` | `serviceId`   | `TEXT`          |      Yes | —                    | —                         |
+| —    | `title`       | `TEXT`          |       No | —                    | —                         |
+| —    | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `company`     | `TEXT`          |       No | —                    | —                         |
+| —    | `companyLogo` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `sector`      | `TEXT`          |      Yes | —                    | —                         |
+| —    | `teamSize`    | `INTEGER`       |      Yes | —                    | —                         |
+| —    | `excerpt`     | `TEXT`          |       No | —                    | —                         |
+| —    | `before`      | `TEXT`          |       No | —                    | —                         |
+| —    | `after`       | `TEXT`          |       No | —                    | —                         |
+| —    | `content`     | `JSONB`         |       No | —                    | —                         |
+| —    | `metrics`     | `JSONB`         |       No | —                    | —                         |
+| —    | `gallery`     | `TEXT[]`        |       No | —                    | —                         |
+| —    | `coverImage`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`      | `ContentStatus` |       No | `'DRAFT'`            | —                         |
+| —    | `featured`    | `BOOLEAN`       |       No | `false`              | —                         |
+| —    | `publishedAt` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -852,12 +852,12 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Taxonomy for editorial articles.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| `UQ` | `slug` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | Yes | — | — |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`        | `TEXT`          |       No | —                    | —                         |
+| `UQ` | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `description` | `TEXT`          |      Yes | —                    | —                         |
 
 **Foreign keys**
 
@@ -881,11 +881,11 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Reusable tags linked to articles through a junction table.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| `UQ` | `slug` | `TEXT` | No | — | — |
+| Key  | Column | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------ | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`   | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name` | `TEXT`          |       No | —                    | —                         |
+| `UQ` | `slug` | `TEXT`          |       No | —                    | —                         |
 
 **Foreign keys**
 
@@ -909,24 +909,24 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Localized editorial content, authorship, scheduling, and publication state.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| `FK` | `categoryId` | `TEXT` | Yes | — | — |
-| `FK` | `authorId` | `TEXT` | Yes | — | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `slug` | `TEXT` | No | — | — |
-| — | `excerpt` | `TEXT` | No | — | — |
-| — | `content` | `JSONB` | No | — | — |
-| — | `coverImage` | `TEXT` | Yes | — | — |
-| — | `status` | `ContentStatus` | No | `'DRAFT'` | — |
-| — | `readingTime` | `INTEGER` | No | `5` | — |
-| — | `featured` | `BOOLEAN` | No | `false` | — |
-| — | `scheduledFor` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `publishedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column         | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | -------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`           | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `locale`       | `TEXT`          |       No | `'fr'`               | —                         |
+| `FK` | `categoryId`   | `TEXT`          |      Yes | —                    | —                         |
+| `FK` | `authorId`     | `TEXT`          |      Yes | —                    | —                         |
+| —    | `title`        | `TEXT`          |       No | —                    | —                         |
+| —    | `slug`         | `TEXT`          |       No | —                    | —                         |
+| —    | `excerpt`      | `TEXT`          |       No | —                    | —                         |
+| —    | `content`      | `JSONB`         |       No | —                    | —                         |
+| —    | `coverImage`   | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`       | `ContentStatus` |       No | `'DRAFT'`            | —                         |
+| —    | `readingTime`  | `INTEGER`       |       No | `5`                  | —                         |
+| —    | `featured`     | `BOOLEAN`       |       No | `false`              | —                         |
+| —    | `scheduledFor` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `publishedAt`  | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `createdAt`    | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`    | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -958,10 +958,10 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Junction table implementing the many-to-many article-tag relationship.  
 **Primary key:** `articleId` + `tagId`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` `FK` | `articleId` | `TEXT` | No | — | — |
-| `PK` `FK` | `tagId` | `TEXT` | No | — | — |
+| Key       | Column      | PostgreSQL type | Nullable | Default / generation | Notes |
+| --------- | ----------- | --------------- | -------: | -------------------- | ----- |
+| `PK` `FK` | `articleId` | `TEXT`          |       No | —                    | —     |
+| `PK` `FK` | `tagId`     | `TEXT`          |       No | —                    | —     |
 
 **Foreign keys**
 
@@ -988,10 +988,10 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Directional self-junction relating one article to another.  
 **Primary key:** `fromId` + `toId`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` `FK` | `fromId` | `TEXT` | No | — | — |
-| `PK` `FK` | `toId` | `TEXT` | No | — | — |
+| Key       | Column   | PostgreSQL type | Nullable | Default / generation | Notes |
+| --------- | -------- | --------------- | -------: | -------------------- | ----- |
+| `PK` `FK` | `fromId` | `TEXT`          |       No | —                    | —     |
+| `PK` `FK` | `toId`   | `TEXT`          |       No | —                    | —     |
 
 **Foreign keys**
 
@@ -1018,16 +1018,16 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Frequently asked questions with category, ordering, and visibility.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `category` | `TEXT` | No | — | — |
-| — | `question` | `TEXT` | No | — | — |
-| — | `answer` | `TEXT` | No | — | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `visible` | `BOOLEAN` | No | `true` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `category`  | `TEXT`          |       No | —                    | —                         |
+| —    | `question`  | `TEXT`          |       No | —                    | —                         |
+| —    | `answer`    | `TEXT`          |       No | —                    | —                         |
+| —    | `order`     | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `visible`   | `BOOLEAN`       |       No | `true`               | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1051,19 +1051,19 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Customer testimonial content and display controls.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `company` | `TEXT` | Yes | — | — |
-| — | `position` | `TEXT` | Yes | — | — |
-| — | `quote` | `TEXT` | No | — | — |
-| — | `avatar` | `TEXT` | Yes | — | — |
-| — | `rating` | `INTEGER` | No | `5` | — |
-| — | `visible` | `BOOLEAN` | No | `true` | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `company`   | `TEXT`          |      Yes | —                    | —                         |
+| —    | `position`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `quote`     | `TEXT`          |       No | —                    | —                         |
+| —    | `avatar`    | `TEXT`          |      Yes | —                    | —                         |
+| —    | `rating`    | `INTEGER`       |       No | `5`                  | —                         |
+| —    | `visible`   | `BOOLEAN`       |       No | `true`               | —                         |
+| —    | `order`     | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1087,15 +1087,15 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Newsletter subscription lifecycle and source attribution.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `UQ` | `email` | `TEXT` | No | — | — |
-| — | `locale` | `TEXT` | No | `'fr'` | — |
-| — | `source` | `TEXT` | Yes | — | — |
-| — | `confirmedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `unsubscribedAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
+| Key  | Column           | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ---------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`             | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `UQ` | `email`          | `TEXT`          |       No | —                    | —                         |
+| —    | `locale`         | `TEXT`          |       No | `'fr'`               | —                         |
+| —    | `source`         | `TEXT`          |      Yes | —                    | —                         |
+| —    | `confirmedAt`    | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `unsubscribedAt` | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `createdAt`      | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
 
 **Foreign keys**
 
@@ -1119,20 +1119,20 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Inbound contact-form requests and processing state.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `email` | `TEXT` | No | — | — |
-| — | `phone` | `TEXT` | Yes | — | — |
-| — | `company` | `TEXT` | Yes | — | — |
-| — | `subject` | `TEXT` | Yes | — | — |
-| — | `message` | `TEXT` | No | — | — |
-| — | `status` | `RequestStatus` | No | `'NEW'` | — |
-| — | `replyStatus` | `TEXT` | Yes | — | — |
-| — | `metadata` | `JSONB` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`        | `TEXT`          |       No | —                    | —                         |
+| —    | `email`       | `TEXT`          |       No | —                    | —                         |
+| —    | `phone`       | `TEXT`          |      Yes | —                    | —                         |
+| —    | `company`     | `TEXT`          |      Yes | —                    | —                         |
+| —    | `subject`     | `TEXT`          |      Yes | —                    | —                         |
+| —    | `message`     | `TEXT`          |       No | —                    | —                         |
+| —    | `status`      | `RequestStatus` |       No | `'NEW'`              | —                         |
+| —    | `replyStatus` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `metadata`    | `JSONB`         |      Yes | —                    | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1156,21 +1156,21 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Appointment requests, scheduling preference, consultant assignment, and notes.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `email` | `TEXT` | No | — | — |
-| — | `phone` | `TEXT` | Yes | — | — |
-| — | `company` | `TEXT` | Yes | — | — |
-| — | `preferredDate` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `topic` | `TEXT` | Yes | — | — |
-| — | `message` | `TEXT` | Yes | — | — |
-| — | `status` | `RequestStatus` | No | `'NEW'` | — |
-| `FK` | `assignedConsultantId` | `TEXT` | Yes | — | — |
-| — | `notes` | `TEXT` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column                 | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ---------------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`                   | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`                 | `TEXT`          |       No | —                    | —                         |
+| —    | `email`                | `TEXT`          |       No | —                    | —                         |
+| —    | `phone`                | `TEXT`          |      Yes | —                    | —                         |
+| —    | `company`              | `TEXT`          |      Yes | —                    | —                         |
+| —    | `preferredDate`        | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `topic`                | `TEXT`          |      Yes | —                    | —                         |
+| —    | `message`              | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`               | `RequestStatus` |       No | `'NEW'`              | —                         |
+| `FK` | `assignedConsultantId` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `notes`                | `TEXT`          |      Yes | —                    | —                         |
+| —    | `createdAt`            | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`            | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1194,23 +1194,23 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Published event schedule, audience, capacity, and registration ownership.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `UQ` | `slug` | `TEXT` | No | — | — |
-| — | `title` | `TEXT` | No | — | — |
-| — | `description` | `TEXT` | No | — | — |
-| — | `type` | `TEXT` | No | — | — |
-| — | `audience` | `TEXT` | No | — | — |
-| — | `location` | `TEXT` | No | — | — |
-| — | `host` | `TEXT` | No | — | — |
-| — | `startAt` | `TIMESTAMP(3)` | No | — | — |
-| — | `endAt` | `TIMESTAMP(3)` | Yes | — | — |
-| — | `image` | `TEXT` | Yes | — | — |
-| — | `capacity` | `INTEGER` | Yes | — | — |
-| — | `status` | `ContentStatus` | No | `'DRAFT'` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column        | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ------------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`          | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `UQ` | `slug`        | `TEXT`          |       No | —                    | —                         |
+| —    | `title`       | `TEXT`          |       No | —                    | —                         |
+| —    | `description` | `TEXT`          |       No | —                    | —                         |
+| —    | `type`        | `TEXT`          |       No | —                    | —                         |
+| —    | `audience`    | `TEXT`          |       No | —                    | —                         |
+| —    | `location`    | `TEXT`          |       No | —                    | —                         |
+| —    | `host`        | `TEXT`          |       No | —                    | —                         |
+| —    | `startAt`     | `TIMESTAMP(3)`  |       No | —                    | —                         |
+| —    | `endAt`       | `TIMESTAMP(3)`  |      Yes | —                    | —                         |
+| —    | `image`       | `TEXT`          |      Yes | —                    | —                         |
+| —    | `capacity`    | `INTEGER`       |      Yes | —                    | —                         |
+| —    | `status`      | `ContentStatus` |       No | `'DRAFT'`            | —                         |
+| —    | `createdAt`   | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt`   | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1236,18 +1236,18 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Per-event attendee registration and processing state.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `FK` | `eventId` | `TEXT` | No | — | — |
-| — | `name` | `TEXT` | No | — | — |
-| — | `email` | `TEXT` | No | — | — |
-| — | `phone` | `TEXT` | Yes | — | — |
-| — | `company` | `TEXT` | Yes | — | — |
-| — | `message` | `TEXT` | Yes | — | — |
-| — | `status` | `RequestStatus` | No | `'NEW'` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `FK` | `eventId`   | `TEXT`          |       No | —                    | —                         |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `email`     | `TEXT`          |       No | —                    | —                         |
+| —    | `phone`     | `TEXT`          |      Yes | —                    | —                         |
+| —    | `company`   | `TEXT`          |      Yes | —                    | —                         |
+| —    | `message`   | `TEXT`          |      Yes | —                    | —                         |
+| —    | `status`    | `RequestStatus` |       No | `'NEW'`              | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1273,19 +1273,19 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Team profile content and visibility controls.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `position` | `TEXT` | No | — | — |
-| — | `biography` | `TEXT` | No | — | — |
-| — | `picture` | `TEXT` | Yes | — | — |
-| — | `linkedin` | `TEXT` | Yes | — | — |
-| — | `social` | `JSONB` | Yes | — | — |
-| — | `order` | `INTEGER` | No | `0` | — |
-| — | `visible` | `BOOLEAN` | No | `true` | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
-| — | `updatedAt` | `TIMESTAMP(3)` | No | — | Prisma-managed @updatedAt |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `position`  | `TEXT`          |       No | —                    | —                         |
+| —    | `biography` | `TEXT`          |       No | —                    | —                         |
+| —    | `picture`   | `TEXT`          |      Yes | —                    | —                         |
+| —    | `linkedin`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `social`    | `JSONB`         |      Yes | —                    | —                         |
+| —    | `order`     | `INTEGER`       |       No | `0`                  | —                         |
+| —    | `visible`   | `BOOLEAN`       |       No | `true`               | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
+| —    | `updatedAt` | `TIMESTAMP(3)`  |       No | —                    | Prisma-managed @updatedAt |
 
 **Foreign keys**
 
@@ -1309,14 +1309,14 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Append-only lightweight analytics events.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| — | `name` | `TEXT` | No | — | — |
-| — | `path` | `TEXT` | Yes | — | — |
-| — | `sessionId` | `TEXT` | Yes | — | — |
-| — | `metadata` | `JSONB` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| —    | `name`      | `TEXT`          |       No | —                    | —                         |
+| —    | `path`      | `TEXT`          |      Yes | —                    | —                         |
+| —    | `sessionId` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `metadata`  | `JSONB`         |      Yes | —                    | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
 
 **Foreign keys**
 
@@ -1340,17 +1340,17 @@ The physical design uses quoted PascalCase table names and mostly camelCase colu
 **Purpose:** Append-only administrative audit records with optional user attribution.  
 **Primary key:** `id`
 
-| Key | Column | PostgreSQL type | Nullable | Default / generation | Notes |
-|---|---|---|---:|---|---|
-| `PK` | `id` | `TEXT` | No | — | Prisma app default cuid() |
-| `FK` | `userId` | `TEXT` | Yes | — | — |
-| — | `action` | `TEXT` | No | — | — |
-| — | `entity` | `TEXT` | No | — | — |
-| — | `entityId` | `TEXT` | Yes | — | — |
-| — | `before` | `JSONB` | Yes | — | — |
-| — | `after` | `JSONB` | Yes | — | — |
-| — | `ipAddress` | `TEXT` | Yes | — | — |
-| — | `createdAt` | `TIMESTAMP(3)` | No | `CURRENT_TIMESTAMP` | — |
+| Key  | Column      | PostgreSQL type | Nullable | Default / generation | Notes                     |
+| ---- | ----------- | --------------- | -------: | -------------------- | ------------------------- |
+| `PK` | `id`        | `TEXT`          |       No | —                    | Prisma app default cuid() |
+| `FK` | `userId`    | `TEXT`          |      Yes | —                    | —                         |
+| —    | `action`    | `TEXT`          |       No | —                    | —                         |
+| —    | `entity`    | `TEXT`          |       No | —                    | —                         |
+| —    | `entityId`  | `TEXT`          |      Yes | —                    | —                         |
+| —    | `before`    | `JSONB`         |      Yes | —                    | —                         |
+| —    | `after`     | `JSONB`         |      Yes | —                    | —                         |
+| —    | `ipAddress` | `TEXT`          |      Yes | —                    | —                         |
+| —    | `createdAt` | `TIMESTAMP(3)`  |       No | `CURRENT_TIMESTAMP`  | —                         |
 
 **Foreign keys**
 

@@ -36,19 +36,17 @@ const bulletList = (items: readonly string[]) => ({
   })),
 });
 
-const rich = (...content: Array<Record<string, unknown>>) => ({
-  type: "doc",
-  content,
-}) as Prisma.InputJsonObject;
+const rich = (...content: Array<Record<string, unknown>>) =>
+  ({
+    type: "doc",
+    content,
+  }) as Prisma.InputJsonObject;
 
 const categorySlugByName = new Map(
   dev2ArticleCategories.map(([slug, name]) => [name, slug]),
 );
 
-export async function seedDev2Content(
-  prisma: PrismaClient,
-  adminId: string,
-) {
+export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
   const now = new Date();
 
   const serviceCategories = {
@@ -197,7 +195,8 @@ export async function seedDev2Content(
       },
       {
         title: "Démonstrations métier",
-        description: "Découvrir les usages les plus utiles dans votre contexte.",
+        description:
+          "Découvrir les usages les plus utiles dans votre contexte.",
       },
       {
         title: "Exercices pratiques",
@@ -273,12 +272,12 @@ export async function seedDev2Content(
       where: { slug },
       update: {
         name,
-        description: `Articles, méthodes et analyses FancyVision sur le thème « ${name} ».`,
+        description: `Articles, méthodes et analyses Sapiens IA sur le thème « ${name} ».`,
       },
       create: {
         slug,
         name,
-        description: `Articles, méthodes et analyses FancyVision sur le thème « ${name} ».`,
+        description: `Articles, méthodes et analyses Sapiens IA sur le thème « ${name} ».`,
       },
     });
     articleCategoryIds.set(slug, category.id);
@@ -392,7 +391,7 @@ export async function seedDev2Content(
       eyebrow: "Conseil · Formation · Intégration",
       headline: "Donnez une vision claire à vos projets d’IA",
       description:
-        "FancyVision aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
+        "Sapiens IA aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
       status: ContentStatus.PUBLISHED,
       publishedAt: now,
     },
@@ -403,7 +402,7 @@ export async function seedDev2Content(
       eyebrow: "Conseil · Formation · Intégration",
       headline: "Donnez une vision claire à vos projets d’IA",
       description:
-        "FancyVision aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
+        "Sapiens IA aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
       status: ContentStatus.PUBLISHED,
       publishedAt: now,
     },
@@ -421,7 +420,7 @@ export async function seedDev2Content(
           eyebrow: "Conseil · Formation · Intégration",
           title: "Donnez une vision claire\nà vos projets d’IA",
           description:
-            "FancyVision aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
+            "Sapiens IA aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
           primaryLabel: "Échangeons sur votre projet",
           primaryHref: "/rendez-vous",
           secondaryLabel: "Voir les prochaines sessions",
@@ -449,7 +448,7 @@ export async function seedDev2Content(
           eyebrow: "Data",
           title: "Des données fiables,\nutiles et activables",
           description:
-            "De la stratégie à la Data Science, FancyVision construit les fondations et les produits qui transforment vos données en décisions.",
+            "De la stratégie à la Data Science, Sapiens IA construit les fondations et les produits qui transforment vos données en décisions.",
           categorySlug: "data",
           image: dev2Assets.custom,
         },
@@ -534,7 +533,7 @@ export async function seedDev2Content(
         order: 7,
         data: {
           eyebrow: "Agenda",
-          title: "Les prochaines sessions FancyVision",
+          title: "Les prochaines sessions Sapiens IA",
           description:
             "Formations, ateliers et rencontres pour apprendre, pratiquer et échanger avec nos experts.",
           items: dev2Events,
@@ -578,8 +577,8 @@ export async function seedDev2Content(
           eyebrow: "À propos",
           title: "Rendre l’IA accessible, utile et responsable",
           description:
-            "FancyVision réunit consultants, formateurs et experts produit pour relier la stratégie aux usages du quotidien.",
-          ctaLabel: "Découvrir FancyVision",
+            "Sapiens IA réunit consultants, formateurs et experts produit pour relier la stratégie aux usages du quotidien.",
+          ctaLabel: "Découvrir Sapiens IA",
           ctaHref: "/a-propos",
           image: dev2Assets.hero,
         },
@@ -604,10 +603,10 @@ export async function seedDev2Content(
     },
     {
       slug: "a-propos",
-      title: "À propos de FancyVision",
+      title: "À propos de Sapiens IA",
       headline: "Rendre l’IA accessible, utile et responsable.",
       description:
-        "FancyVision réunit consultants, formateurs et experts produit pour accompagner les organisations de la compréhension au déploiement.",
+        "Sapiens IA réunit consultants, formateurs et experts produit pour accompagner les organisations de la compréhension au déploiement.",
     },
     {
       slug: "etudes-de-cas",
@@ -618,7 +617,7 @@ export async function seedDev2Content(
     },
     {
       slug: "blog",
-      title: "Le média FancyVision",
+      title: "Le média Sapiens IA",
       headline: "Actualités et opinions sur l’IA.",
       description:
         "Guides pratiques, analyses et méthodes pour passer de la curiosité à l’usage.",
@@ -684,7 +683,7 @@ export async function seedDev2Content(
         body: rich(
           heading("Éditeur"),
           paragraph(
-            "FancyVision présente ses activités de conseil et de formation en intelligence artificielle.",
+            "Sapiens IA présente ses activités de conseil et de formation en intelligence artificielle.",
           ),
           heading("Données personnelles"),
           paragraph(
@@ -776,7 +775,7 @@ export async function seedDev2Content(
     update: {
       group: "general",
       value: {
-        name: "FancyVision",
+        name: "Sapiens IA",
         email: "bonjour@fancyvision.ai",
         phone: "07 56 28 77 92",
         address: "128 rue La Boétie, 75008 Paris",
@@ -787,7 +786,7 @@ export async function seedDev2Content(
       key: "company",
       group: "general",
       value: {
-        name: "FancyVision",
+        name: "Sapiens IA",
         email: "bonjour@fancyvision.ai",
         phone: "07 56 28 77 92",
         address: "128 rue La Boétie, 75008 Paris",
@@ -801,8 +800,9 @@ export async function seedDev2Content(
     update: {
       group: "branding",
       value: {
-        logo: "FancyVision",
-        tagline: "Conseil, formation et intégration de l’intelligence artificielle.",
+        logo: "Sapiens IA",
+        tagline:
+          "Conseil, formation et intégration de l’intelligence artificielle.",
         defaultOgImage: dev2Assets.og,
       },
     },
@@ -810,8 +810,9 @@ export async function seedDev2Content(
       key: "site",
       group: "branding",
       value: {
-        logo: "FancyVision",
-        tagline: "Conseil, formation et intégration de l’intelligence artificielle.",
+        logo: "Sapiens IA",
+        tagline:
+          "Conseil, formation et intégration de l’intelligence artificielle.",
         defaultOgImage: dev2Assets.og,
       },
     },
