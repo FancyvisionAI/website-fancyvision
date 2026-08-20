@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatWidget } from "@fancyvision/chat-widget";
+import { ChatWidget } from "../../lib/chat-widget-src";
 import { useLocale } from "next-intl";
 
 export function FancyVisionChat() {
