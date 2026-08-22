@@ -51,8 +51,8 @@ export default async function ArticlePage({
     "@type": "Article",
     headline: article.title,
     datePublished: article.publishedAt?.toISOString(),
-    author: { "@type": "Person", name: article.author?.name ?? "Sapiens IA" },
-    publisher: { "@type": "Organization", name: "Sapiens IA" },
+    author: { "@type": "Person", name: article.author?.name ?? "Sapiens-IA" },
+    publisher: { "@type": "Organization", name: "Sapiens-IA" },
   };
   return (
     <>
@@ -70,7 +70,7 @@ export default async function ArticlePage({
             <span>·</span>
             <span>{t("readingTime", { count: article.readingTime })}</span>
             <span>·</span>
-            <span>{article.author?.name ?? "Sapiens IA"}</span>
+            <span>{article.author?.name ?? "Sapiens-IA"}</span>
           </div>
           {article.coverImage && (
             <div className="relative mt-10 aspect-[2/1] overflow-hidden rounded-[2rem]">

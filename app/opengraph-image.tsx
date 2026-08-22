@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Sapiens IA — L’IA utile, adoptée par vos équipes";
+export const alt = "Sapiens-IA — L’IA utile, adoptée par vos équipes";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -20,7 +20,7 @@ export default function Image() {
       }}
     >
       <div style={{ fontSize: 42, fontWeight: 800, letterSpacing: "-2px" }}>
-        Sapiens IA.
+        Sapiens-IA.
       </div>
       <div
         style={{

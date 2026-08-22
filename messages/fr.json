@@ -17,7 +17,7 @@
     "productivite": "Productivité"
   },
   "Header": {
-    "homeAriaLabel": "Sapiens IA, accueil",
+    "homeAriaLabel": "Sapiens-IA, accueil",
     "bookAppointment": "Audit gratuit",
     "trainingNavLabel": "Formation"
   },
@@ -85,13 +85,13 @@
     "faq": "FAQ",
     "contact": "Contact",
     "legal": "Mentions légales",
-    "copyright": "© {year} Sapiens IA. Tous droits réservés.",
+    "copyright": "© {year} Sapiens-IA. Tous droits réservés.",
     "tagline": "Conseil & formation en intelligence artificielle"
   },
   "Newsletter": {
     "eyebrow": "Newsletter",
     "heading": "La newsletter sur l’<em>IA</em>, suivie par les décideurs.",
-    "success": "Bienvenue dans la newsletter Sapiens IA.",
+    "success": "Bienvenue dans la newsletter Sapiens-IA.",
     "error": "Impossible de vous inscrire pour le moment.",
     "emailPlaceholder": "votre@email.fr",
     "subscribe": "S’inscrire",
@@ -168,7 +168,7 @@
   "HomeSections": {
     "heroPrimaryCta": "Audit gratuit",
     "heroSecondaryCta": "Voir les prochaines sessions",
-    "servicesImageAlt": "Consultants Sapiens IA en atelier",
+    "servicesImageAlt": "Consultants Sapiens-IA en atelier",
     "ctaLabel": "Demander mon audit gratuit",
     "step": "Étape 0{number}",
     "casesEyebrow": "Études de cas",
@@ -204,14 +204,14 @@
     "appointment": {
       "eyebrow": "Audit gratuit",
       "title": "Demander mon Audit IA gratuit",
-      "leadText": "Découvrez en 60 minutes où l’IA peut faire la différence dans votre activité. Échangez gratuitement et sans engagement avec un consultant Sapiens IA. Nous identifions avec vous 2 à 3 cas d’usage prioritaires, adaptés à votre métier et à votre secteur, et nous vous indiquons la marche à suivre concrète pour démarrer.",
+      "leadText": "Découvrez en 60 minutes où l’IA peut faire la différence dans votre activité. Échangez gratuitement et sans engagement avec un consultant Sapiens-IA. Nous identifions avec vous 2 à 3 cas d’usage prioritaires, adaptés à votre métier et à votre secteur, et nous vous indiquons la marche à suivre concrète pour démarrer.",
       "reassurance": "Sans engagement · Réponse sous 48h · Échange confidentiel",
       "videoCall": "Visioconférence · 30 minutes",
       "noCommitment": "Sans engagement"
     },
     "about": {
       "metaTitle": "Le cabinet",
-      "metaDescription": "Découvrez l’équipe et la mission de Sapiens IA.",
+      "metaDescription": "Découvrez l’équipe et la mission de Sapiens-IA.",
       "eyebrow": "Le cabinet",
       "joinUs": "Nous rejoindre",
       "missionEyebrow": "Notre mission",
@@ -224,7 +224,7 @@
       "articleCount": "{count, plural, =0 {Aucun article à découvrir.} one {# article à découvrir.} other {# articles à découvrir.}}"
     },
     "blog": {
-      "metaTitle": "Le blog Sapiens IA",
+      "metaTitle": "Le blog Sapiens-IA",
       "metaDescription": "L’intelligence artificielle et la donnée au Maroc : décryptages, cas d’usage et retours d’expérience.",
       "eyebrow": "Le blog",
       "readingTime": "{count, plural, one {# minute de lecture} other {# minutes de lecture}}"
@@ -236,7 +236,7 @@
     },
     "faq": {
       "metaTitle": "Questions fréquentes",
-      "metaDescription": "Toutes les réponses à vos questions sur l’audit IA, nos solutions et nos formations Sapiens IA.",
+      "metaDescription": "Toutes les réponses à vos questions sur l’audit IA, nos solutions et nos formations Sapiens-IA.",
       "eyebrow": "Vos questions",
       "title": "Questions fréquentes",
       "description": "Toutes les réponses à vos questions sur l’audit IA, nos solutions, nos formations et la confidentialité de vos données.",
@@ -244,7 +244,7 @@
     },
     "caseStudies": {
       "metaTitle": "Études de cas",
-      "metaDescription": "Des transformations IA concrètes menées avec Sapiens IA.",
+      "metaDescription": "Des transformations IA concrètes menées avec Sapiens-IA.",
       "eyebrow": "Cas clients",
       "teamSize": "{count, plural, one {# collaborateur} other {# collaborateurs}}"
     },
@@ -297,7 +297,7 @@
       "modules": "Modules",
       "designTraining": "Concevoir votre formation",
       "toBeConfirmed": "À valider",
-      "toBeConfirmedBanner": "Le détail de cette formation (objectifs, programme, prérequis, durée, livrables) est en cours de validation avec Sapiens IA.",
+      "toBeConfirmedBanner": "Le détail de cette formation (objectifs, programme, prérequis, durée, livrables) est en cours de validation avec Sapiens-IA.",
       "levelBeginner": "Sensibilisation",
       "levelIntermediate": "Approfondissement",
       "levelAdvanced": "Expertise",
@@ -325,15 +325,15 @@
     },
     "services": {
       "metaTitle": "Conseil en intelligence artificielle",
-      "metaDescription": "Audit, conduite du changement, développement et gouvernance IA avec Sapiens IA.",
+      "metaDescription": "Audit, conduite du changement, développement et gouvernance IA avec Sapiens-IA.",
       "eyebrow": "Cabinet de conseil",
       "cta": "Parler de votre projet",
       "consultingEyebrow": "Conseil",
       "consultingTitle": "Conseil IA — Passez de l’intention à l’impact",
-      "consultingDescription": "Sapiens IA vous accompagne à chaque étape de votre transformation par l’intelligence artificielle : identifier les bons cas d’usage, développer des solutions sur-mesure, ancrer durablement les nouveaux usages dans l’organisation et piloter sereinement les outils et licences IA. Notre promesse : la simplicité, avec des solutions pertinentes et mesurables plutôt que des projets IT lourds et incertains.",
+      "consultingDescription": "Sapiens-IA vous accompagne à chaque étape de votre transformation par l’intelligence artificielle : identifier les bons cas d’usage, développer des solutions sur-mesure, ancrer durablement les nouveaux usages dans l’organisation et piloter sereinement les outils et licences IA. Notre promesse : la simplicité, avec des solutions pertinentes et mesurables plutôt que des projets IT lourds et incertains.",
       "dataEyebrow": "Data",
       "dataTitle": "Conseil Data IA — La donnée, fondation de votre transformation IA",
-      "dataDescription": "Avant l’IA, il y a la donnée. Sapiens IA aide les organisations à structurer, gouverner et valoriser leur patrimoine de données pour en faire le socle solide de leurs projets d’intelligence artificielle. Cette offre est complémentaire de notre offre Conseil IA : là où le Conseil IA identifie et déploie des cas d’usage IA, le Conseil Data IA sécurise et prépare la donnée qui alimente ces cas d’usage."
+      "dataDescription": "Avant l’IA, il y a la donnée. Sapiens-IA aide les organisations à structurer, gouverner et valoriser leur patrimoine de données pour en faire le socle solide de leurs projets d’intelligence artificielle. Cette offre est complémentaire de notre offre Conseil IA : là où le Conseil IA identifie et déploie des cas d’usage IA, le Conseil Data IA sécurise et prépare la donnée qui alimente ces cas d’usage."
     },
     "serviceDetail": {
       "cta": "Échanger avec un consultant",
@@ -347,7 +347,7 @@
     },
     "solutionsIa": {
       "metaTitle": "Nos solutions et agents IA",
-      "metaDescription": "Découvrez la gamme d’agents IA Sapiens IA : hôtellerie, call center, marketing, commercial, RH, juridique, media, finance et direction.",
+      "metaDescription": "Découvrez la gamme d’agents IA Sapiens-IA : hôtellerie, call center, marketing, commercial, RH, juridique, media, finance et direction.",
       "eyebrow": "Solutions & agents IA",
       "title": "Nos solutions et agents IA",
       "description": "Des agents IA sur mesure, conçus pour automatiser les tâches à faible valeur ajoutée et augmenter la performance de chaque équipe, fonction par fonction.",
@@ -374,7 +374,7 @@
     },
     "events": {
       "metaTitle": "Événements IA",
-      "metaDescription": "Découvrez les formations, ateliers et rencontres Sapiens IA et inscrivez-vous en ligne.",
+      "metaDescription": "Découvrez les formations, ateliers et rencontres Sapiens-IA et inscrivez-vous en ligne.",
       "title": "Événements",
       "organizeEvent": "Organiser un événement",
       "upcoming": "À venir",

@@ -90,7 +90,7 @@ export async function Header() {
             className="size-9 shrink-0"
             priority
           />
-          Sapiens IA<span className="text-cobalt">.</span>
+          Sapiens-IA<span className="text-cobalt">.</span>
         </Link>
 
         <DesktopNav

@@ -17,7 +17,7 @@
     "productivite": "Productivity"
   },
   "Header": {
-    "homeAriaLabel": "Sapiens IA, home",
+    "homeAriaLabel": "Sapiens-IA, home",
     "bookAppointment": "Free audit",
     "trainingNavLabel": "Training"
   },
@@ -85,13 +85,13 @@
     "faq": "FAQ",
     "contact": "Contact",
     "legal": "Legal notice",
-    "copyright": "© {year} Sapiens IA. All rights reserved.",
+    "copyright": "© {year} Sapiens-IA. All rights reserved.",
     "tagline": "AI consulting and training"
   },
   "Newsletter": {
     "eyebrow": "Newsletter",
     "heading": "The newsletter on <em>AI</em>, read by decision-makers.",
-    "success": "Welcome to the Sapiens IA newsletter.",
+    "success": "Welcome to the Sapiens-IA newsletter.",
     "error": "Unable to subscribe right now.",
     "emailPlaceholder": "you@email.com",
     "subscribe": "Subscribe",
@@ -168,7 +168,7 @@
   "HomeSections": {
     "heroPrimaryCta": "Free audit",
     "heroSecondaryCta": "See upcoming sessions",
-    "servicesImageAlt": "Sapiens IA consultants in a workshop",
+    "servicesImageAlt": "Sapiens-IA consultants in a workshop",
     "ctaLabel": "Request my free audit",
     "step": "Step 0{number}",
     "casesEyebrow": "Case studies",
@@ -204,14 +204,14 @@
     "appointment": {
       "eyebrow": "Free audit",
       "title": "Request my free AI audit",
-      "leadText": "Discover in 60 minutes where AI can make a difference in your business. Talk to a Sapiens IA consultant, free and with no obligation. Together, we identify 2 to 3 priority use cases tailored to your business and industry, and show you exactly how to get started.",
+      "leadText": "Discover in 60 minutes where AI can make a difference in your business. Talk to a Sapiens-IA consultant, free and with no obligation. Together, we identify 2 to 3 priority use cases tailored to your business and industry, and show you exactly how to get started.",
       "reassurance": "No obligation · Response within 48h · Confidential conversation",
       "videoCall": "Video call · 30 minutes",
       "noCommitment": "No commitment"
     },
     "about": {
       "metaTitle": "The firm",
-      "metaDescription": "Discover Sapiens IA’s team and mission.",
+      "metaDescription": "Discover Sapiens-IA’s team and mission.",
       "eyebrow": "The firm",
       "joinUs": "Join us",
       "missionEyebrow": "Our mission",
@@ -224,7 +224,7 @@
       "articleCount": "{count, plural, =0 {No articles to discover.} one {# article to discover.} other {# articles to discover.}}"
     },
     "blog": {
-      "metaTitle": "The Sapiens IA Blog",
+      "metaTitle": "The Sapiens-IA Blog",
       "metaDescription": "Artificial intelligence and data in Morocco: insights, use cases and real-world experience.",
       "eyebrow": "The blog",
       "readingTime": "{count, plural, one {# minute read} other {# minutes read}}"
@@ -236,7 +236,7 @@
     },
     "faq": {
       "metaTitle": "Frequently asked questions",
-      "metaDescription": "All the answers to your questions about AI audits, our solutions and our Sapiens IA training programs.",
+      "metaDescription": "All the answers to your questions about AI audits, our solutions and our Sapiens-IA training programs.",
       "eyebrow": "Your questions",
       "title": "Frequently asked questions",
       "description": "All the answers to your questions about AI audits, our solutions, our training programs and the confidentiality of your data.",
@@ -244,7 +244,7 @@
     },
     "caseStudies": {
       "metaTitle": "Case studies",
-      "metaDescription": "Concrete AI transformations delivered with Sapiens IA.",
+      "metaDescription": "Concrete AI transformations delivered with Sapiens-IA.",
       "eyebrow": "Client cases",
       "teamSize": "{count, plural, one {# team member} other {# team members}}"
     },
@@ -297,7 +297,7 @@
       "modules": "Modules",
       "designTraining": "Design your training",
       "toBeConfirmed": "To be confirmed",
-      "toBeConfirmedBanner": "The detailed content of this training (objectives, curriculum, prerequisites, duration, deliverables) is currently being confirmed with Sapiens IA.",
+      "toBeConfirmedBanner": "The detailed content of this training (objectives, curriculum, prerequisites, duration, deliverables) is currently being confirmed with Sapiens-IA.",
       "levelBeginner": "Awareness",
       "levelIntermediate": "Deep-dive",
       "levelAdvanced": "Expertise",
@@ -325,15 +325,15 @@
     },
     "services": {
       "metaTitle": "AI consulting",
-      "metaDescription": "Audit, change management, development and AI governance with Sapiens IA.",
+      "metaDescription": "Audit, change management, development and AI governance with Sapiens-IA.",
       "eyebrow": "Consulting firm",
       "cta": "Talk about your project",
       "consultingEyebrow": "Consulting",
       "consultingTitle": "AI Consulting — From Intent to Impact",
-      "consultingDescription": "Sapiens IA supports you at every stage of your AI transformation: identifying the right use cases, developing custom solutions, durably embedding new practices across the organization, and confidently managing your AI tools and licenses. Our promise: simplicity, with relevant, measurable solutions rather than heavy, uncertain IT projects.",
+      "consultingDescription": "Sapiens-IA supports you at every stage of your AI transformation: identifying the right use cases, developing custom solutions, durably embedding new practices across the organization, and confidently managing your AI tools and licenses. Our promise: simplicity, with relevant, measurable solutions rather than heavy, uncertain IT projects.",
       "dataEyebrow": "Data",
       "dataTitle": "Data Consulting — Data, the Foundation of Your AI Transformation",
-      "dataDescription": "Before AI, there is data. Sapiens IA helps organizations structure, govern and unlock the value of their data assets to build a solid foundation for their AI projects. This offering complements our AI Consulting offer: where AI Consulting identifies and deploys AI use cases, Data Consulting secures and prepares the data that feeds those use cases."
+      "dataDescription": "Before AI, there is data. Sapiens-IA helps organizations structure, govern and unlock the value of their data assets to build a solid foundation for their AI projects. This offering complements our AI Consulting offer: where AI Consulting identifies and deploys AI use cases, Data Consulting secures and prepares the data that feeds those use cases."
     },
     "serviceDetail": {
       "cta": "Talk to a consultant",
@@ -347,7 +347,7 @@
     },
     "solutionsIa": {
       "metaTitle": "Our AI solutions and agents",
-      "metaDescription": "Discover the Sapiens IA range of AI agents: hospitality, call center, marketing, sales, HR, legal, media, finance and management.",
+      "metaDescription": "Discover the Sapiens-IA range of AI agents: hospitality, call center, marketing, sales, HR, legal, media, finance and management.",
       "eyebrow": "AI solutions & agents",
       "title": "Our AI solutions and agents",
       "description": "Tailored AI agents, designed to automate low-value tasks and boost the performance of every team, function by function.",
@@ -374,7 +374,7 @@
     },
     "events": {
       "metaTitle": "AI events",
-      "metaDescription": "Discover Sapiens IA’s training sessions, workshops and meetups, and register online.",
+      "metaDescription": "Discover Sapiens-IA’s training sessions, workshops and meetups, and register online.",
       "title": "Events",
       "organizeEvent": "Organize an event",
       "upcoming": "Upcoming",

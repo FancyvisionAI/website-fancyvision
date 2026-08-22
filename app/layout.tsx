@@ -32,15 +32,15 @@ export async function generateMetadata(): Promise<Metadata> {
       process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
     ),
     title: {
-      default: "Sapiens IA — Conseil & formation IA",
-      template: "%s — Sapiens IA",
+      default: "Sapiens-IA — Conseil & formation IA",
+      template: "%s — Sapiens-IA",
     },
     description:
-      "Sapiens IA accompagne les organisations dans l’adoption concrète et responsable de l’intelligence artificielle.",
+      "Sapiens-IA accompagne les organisations dans l’adoption concrète et responsable de l’intelligence artificielle.",
     openGraph: {
       type: "website",
       locale: openGraphLocales[locale] ?? openGraphLocales.fr,
-      siteName: "Sapiens IA",
+      siteName: "Sapiens-IA",
     },
     twitter: { card: "summary_large_image" },
   };

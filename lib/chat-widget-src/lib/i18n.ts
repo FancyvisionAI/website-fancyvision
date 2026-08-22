@@ -22,12 +22,12 @@ export interface ChatWidgetStrings {
 
 const STRINGS: Record<ChatLocale, ChatWidgetStrings> = {
   fr: {
-    title: "Sapiens IA",
+    title: "Sapiens-IA",
     subtitle: "Réponses en français · en ligne",
     openChat: "Ouvrir le chat",
     closeChat: "Fermer le chat",
     emptyState:
-      "Bonjour. Écrivez votre message pour démarrer la conversation avec l'assistant Sapiens IA.",
+      "Bonjour. Écrivez votre message pour démarrer la conversation avec l'assistant Sapiens-IA.",
     loading: "L'assistant répond…",
     inputPlaceholder: "Votre message…",
     inputAriaLabel: "Votre message",
@@ -43,12 +43,12 @@ const STRINGS: Record<ChatLocale, ChatWidgetStrings> = {
     unexpectedError: "Une erreur inattendue est survenue.",
   },
   en: {
-    title: "Sapiens IA",
+    title: "Sapiens-IA",
     subtitle: "Responses in English · online",
     openChat: "Open chat",
     closeChat: "Close chat",
     emptyState:
-      "Hello. Type your message to start the conversation with the Sapiens IA assistant.",
+      "Hello. Type your message to start the conversation with the Sapiens-IA assistant.",
     loading: "The assistant is replying…",
     inputPlaceholder: "Your message…",
     inputAriaLabel: "Your message",

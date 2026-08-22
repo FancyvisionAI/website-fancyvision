@@ -122,7 +122,7 @@ export default async function EventsPage({
         <div className="mb-7 flex flex-col justify-between gap-5 border-b border-white/10 pb-6 sm:flex-row sm:items-end">
           <div>
             <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#91abd6]">
-              Sapiens IA Sessions
+              Sapiens-IA Sessions
             </span>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.035em]">
               {t("title")}
