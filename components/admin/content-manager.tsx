@@ -5,22 +5,45 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+import { MediaPicker } from "@/components/admin/media-picker";
 import { RichEditor } from "@/components/admin/rich-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { AdminModule } from "@/lib/admin-modules";
+import type { AdminField, AdminModule } from "@/lib/admin-modules";
 
 type Item = Record<string, unknown> & { id: string };
+type RelationOptions = Record<string, Array<{ label: string; value: string }>>;
+
+const STATUS_LABELS: Record<string, string> = {
+  DRAFT: "Brouillon",
+  SCHEDULED: "Planifié",
+  PUBLISHED: "Publié",
+  ARCHIVED: "Archivé",
+};
+
+function formatDateTime(value: unknown) {
+  if (!value || typeof value !== "string") return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat("fr-FR", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
 
 export function ContentManager({
   moduleKey,
   config,
   initialItems,
+  relationOptions,
+  translatable = false,
 }: {
   moduleKey: string;
   config: AdminModule;
   initialItems: Item[];
+  relationOptions?: RelationOptions;
+  translatable?: boolean;
 }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -45,16 +68,17 @@ export function ContentManager({
         item.action ??
         item.id,
     );
-  const subtitleOf = (item: Item) =>
-    String(
+  const subtitleOf = (item: Item) => {
+    const raw =
       item.excerpt ??
-        item.position ??
-        item.company ??
-        item.category ??
-        item.status ??
-        item.group ??
-        "",
-    );
+      item.position ??
+      item.company ??
+      item.category ??
+      item.status ??
+      item.group ??
+      "";
+    return typeof raw === "string" ? raw : "";
+  };
 
   async function remove(id: string) {
     if (!window.confirm("Supprimer définitivement cet élément ?")) return;
@@ -116,8 +140,13 @@ export function ContentManager({
                 {titleOf(item).slice(0, 2).toUpperCase()}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold">
-                  {titleOf(item)}
+                <p className="flex items-center gap-2 truncate text-sm font-semibold">
+                  <span className="truncate">{titleOf(item)}</span>
+                  {translatable && item.locale === "en" && (
+                    <span className="shrink-0 rounded-full bg-amber-50 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide text-amber-700">
+                      EN — orpheline
+                    </span>
+                  )}
                 </p>
                 <p className="mt-1 truncate text-xs text-muted">
                   {subtitleOf(item)}
@@ -166,7 +195,11 @@ export function ContentManager({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.14em] text-muted">
-                  {creating ? "Création" : "Modification"}
+                  {creating
+                    ? "Création"
+                    : editing?.locale === "en"
+                      ? "Modification — version anglaise"
+                      : "Modification"}
                 </p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-[-0.05em]">
                   {creating ? `Nouveau ${config.singular}` : titleOf(editing!)}
@@ -187,6 +220,12 @@ export function ContentManager({
               config={config}
               item={editing}
               pending={pending}
+              relationOptions={relationOptions}
+              translatable={translatable}
+              onOpenTranslation={(translation) => {
+                setCreating(false);
+                setEditing(translation);
+              }}
               onSave={async (data) => {
                 setPending(true);
                 const response = await fetch("/api/admin/content", {
@@ -218,18 +257,101 @@ export function ContentManager({
   );
 }
 
+function TranslationBlock({
+  item,
+  onOpenTranslation,
+}: {
+  item: Item;
+  onOpenTranslation: (translation: Item) => void;
+}) {
+  const translations = Array.isArray(item.translations)
+    ? (item.translations as Item[])
+    : [];
+  const translation = translations[0] ?? null;
+
+  return (
+    <div className="mt-2 grid gap-3 rounded-2xl border border-border bg-bg p-5">
+      <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted">
+        Version anglaise
+      </p>
+      {!translation ? (
+        <p className="text-sm text-muted">Version anglaise : Non générée</p>
+      ) : (
+        <div className="grid gap-1.5 text-sm text-muted">
+          <p>
+            <span className="font-semibold text-ink">Statut : </span>
+            {STATUS_LABELS[String(translation.status)] ??
+              String(translation.status ?? "—")}
+            {translation.translationStatus === "FAILED" && (
+              <span className="ml-2 font-mono text-xs font-semibold text-red-500">
+                échec de la dernière génération
+              </span>
+            )}
+            {translation.translationStatus === "PENDING" && (
+              <span className="ml-2 font-mono text-xs font-semibold text-amber-700">
+                génération en cours
+              </span>
+            )}
+          </p>
+          <p>
+            <span className="font-semibold text-ink">Générée le : </span>
+            {formatDateTime(translation.translationGeneratedAt) ??
+              "Non renseigné (traduction existante)"}
+          </p>
+          <p>
+            <span className="font-semibold text-ink">
+              Dernière modification :{" "}
+            </span>
+            {formatDateTime(translation.translationEditedAt) ?? "Jamais"}
+          </p>
+        </div>
+      )}
+      <div className="mt-1 flex flex-wrap gap-2">
+        {translation && (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onOpenTranslation(translation)}
+          >
+            Relire l’anglais
+          </Button>
+        )}
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled
+          title="Bientôt disponible"
+        >
+          Régénérer — Bientôt disponible
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function EditorForm({
   config,
   item,
   pending,
+  relationOptions,
+  translatable,
+  onOpenTranslation,
   onSave,
 }: {
   config: AdminModule;
   item: Item | null;
   pending: boolean;
+  relationOptions?: RelationOptions;
+  translatable: boolean;
+  onOpenTranslation: (translation: Item) => void;
   onSave: (data: Record<string, unknown>) => Promise<void>;
 }) {
   const [values, setValues] = useState<Record<string, unknown>>(item ?? {});
+  const showTranslationBlock =
+    translatable && Boolean(item) && !item?.translationOfId;
+
   return (
     <form
       className="mt-8 grid gap-5"
@@ -241,83 +363,127 @@ function EditorForm({
       {config.fields.map((field) => (
         <label key={field.name} className="grid gap-2 text-sm font-semibold">
           {field.label}
-          {field.type === "textarea" ? (
-            <Textarea
-              required={field.required}
-              value={String(values[field.name] ?? "")}
-              onChange={(e) =>
-                setValues({ ...values, [field.name]: e.target.value })
-              }
-            />
-          ) : field.type === "richtext" ? (
-            <RichEditor
-              value={values[field.name]}
-              onChange={(value) =>
-                setValues((current) => ({ ...current, [field.name]: value }))
-              }
-            />
-          ) : field.type === "json" ? (
-            <Textarea
-              value={JSON.stringify(values[field.name] ?? null, null, 2)}
-              onChange={(e) => {
-                try {
-                  setValues({
-                    ...values,
-                    [field.name]: JSON.parse(e.target.value),
-                  });
-                } catch {
-                  // Preserve the last valid value until the JSON is valid.
-                }
-              }}
-              className="min-h-44 font-mono text-xs"
-            />
-          ) : field.type === "select" ? (
-            <select
-              className="h-12 rounded-xl border border-border bg-canvas px-4"
-              value={String(
-                values[field.name] ?? field.options?.[0]?.value ?? "",
-              )}
-              onChange={(e) =>
-                setValues({ ...values, [field.name]: e.target.value })
-              }
-            >
-              {field.options?.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          ) : field.type === "boolean" ? (
-            <input
-              type="checkbox"
-              checked={Boolean(values[field.name])}
-              onChange={(e) =>
-                setValues({ ...values, [field.name]: e.target.checked })
-              }
-              className="size-5 accent-cobalt"
-            />
-          ) : (
-            <Input
-              type={field.type === "number" ? "number" : "text"}
-              required={field.required}
-              value={String(values[field.name] ?? "")}
-              onChange={(e) =>
-                setValues({
-                  ...values,
-                  [field.name]:
-                    field.type === "number"
-                      ? Number(e.target.value)
-                      : e.target.value,
-                })
-              }
-            />
-          )}
+          <FieldInput
+            field={field}
+            value={values[field.name]}
+            options={
+              field.relationOptionsKey
+                ? relationOptions?.[field.relationOptionsKey]
+                : undefined
+            }
+            onChange={(value) => setValues({ ...values, [field.name]: value })}
+          />
         </label>
       ))}
       <Button size="lg" disabled={pending} className="mt-4 w-fit">
         <Save className="mr-2 size-4" />{" "}
         {pending ? "Enregistrement…" : "Enregistrer"}
       </Button>
+      {showTranslationBlock && item && (
+        <TranslationBlock item={item} onOpenTranslation={onOpenTranslation} />
+      )}
     </form>
+  );
+}
+
+function FieldInput({
+  field,
+  value,
+  options,
+  onChange,
+}: {
+  field: AdminField;
+  value: unknown;
+  options?: Array<{ label: string; value: string }>;
+  onChange: (value: unknown) => void;
+}) {
+  if (field.type === "textarea") {
+    return (
+      <Textarea
+        required={field.required}
+        value={String(value ?? "")}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    );
+  }
+  if (field.type === "richtext") {
+    return <RichEditor value={value} onChange={onChange} />;
+  }
+  if (field.type === "json") {
+    return (
+      <Textarea
+        value={JSON.stringify(value ?? null, null, 2)}
+        onChange={(e) => {
+          try {
+            onChange(JSON.parse(e.target.value));
+          } catch {
+            // Preserve the last valid value until the JSON is valid.
+          }
+        }}
+        className="min-h-44 font-mono text-xs"
+      />
+    );
+  }
+  if (field.type === "media") {
+    return (
+      <MediaPicker
+        value={String(value ?? "")}
+        mediaKind={field.mediaKind ?? "image"}
+        onChange={onChange}
+      />
+    );
+  }
+  if (field.type === "relation") {
+    return (
+      <select
+        className="h-12 rounded-xl border border-border bg-canvas px-4"
+        value={String(value ?? "")}
+        onChange={(e) => onChange(e.target.value || null)}
+      >
+        <option value="">— Aucune —</option>
+        {options?.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  }
+  if (field.type === "select") {
+    return (
+      <select
+        className="h-12 rounded-xl border border-border bg-canvas px-4"
+        value={String(value ?? field.options?.[0]?.value ?? "")}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {field.options?.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  }
+  if (field.type === "boolean") {
+    return (
+      <input
+        type="checkbox"
+        checked={Boolean(value)}
+        onChange={(e) => onChange(e.target.checked)}
+        className="size-5 accent-cobalt"
+      />
+    );
+  }
+  return (
+    <Input
+      type={field.type === "number" ? "number" : "text"}
+      required={field.required}
+      value={String(value ?? "")}
+      onChange={(e) =>
+        onChange(
+          field.type === "number" ? Number(e.target.value) : e.target.value,
+        )
+      }
+    />
   );
 }

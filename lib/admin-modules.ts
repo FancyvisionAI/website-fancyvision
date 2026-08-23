@@ -2,9 +2,21 @@ export type AdminField = {
   name: string;
   label: string;
   type?:
-    "text" | "textarea" | "number" | "boolean" | "select" | "richtext" | "json";
+    | "text"
+    | "textarea"
+    | "number"
+    | "boolean"
+    | "select"
+    | "richtext"
+    | "json"
+    | "media"
+    | "relation";
   options?: Array<{ label: string; value: string }>;
   required?: boolean;
+  /** Uniquement pour type "media" : restreint le sélecteur au bon type de fichier. */
+  mediaKind?: "image" | "pdf";
+  /** Uniquement pour type "relation" : clé dans `relationOptions` fournie par la page admin. */
+  relationOptionsKey?: string;
 };
 
 export type AdminModule = {
@@ -55,7 +67,13 @@ export const adminModules: Record<string, AdminModule> = {
       { name: "excerpt", label: "Résumé", type: "textarea", required: true },
       { name: "content", label: "Contenu", type: "richtext" },
       { name: "icon", label: "Icône" },
-      { name: "image", label: "Image" },
+      { name: "image", label: "Image", type: "media", mediaKind: "image" },
+      {
+        name: "categoryId",
+        label: "Catégorie",
+        type: "relation",
+        relationOptionsKey: "categories",
+      },
       {
         name: "status",
         label: "Statut",
@@ -79,8 +97,14 @@ export const adminModules: Record<string, AdminModule> = {
       { name: "duration", label: "Durée" },
       { name: "priceCents", label: "Prix (centimes)", type: "number" },
       { name: "instructor", label: "Formateur" },
-      { name: "image", label: "Image" },
-      { name: "pdfUrl", label: "PDF" },
+      { name: "image", label: "Image", type: "media", mediaKind: "image" },
+      { name: "pdfUrl", label: "PDF", type: "media", mediaKind: "pdf" },
+      {
+        name: "categoryId",
+        label: "Catégorie",
+        type: "relation",
+        relationOptionsKey: "categories",
+      },
       {
         name: "status",
         label: "Statut",
@@ -100,7 +124,18 @@ export const adminModules: Record<string, AdminModule> = {
       { name: "slug", label: "Slug", required: true },
       { name: "excerpt", label: "Chapeau", type: "textarea", required: true },
       { name: "content", label: "Article", type: "richtext" },
-      { name: "coverImage", label: "Image de couverture" },
+      {
+        name: "coverImage",
+        label: "Image de couverture",
+        type: "media",
+        mediaKind: "image",
+      },
+      {
+        name: "categoryId",
+        label: "Catégorie",
+        type: "relation",
+        relationOptionsKey: "categories",
+      },
       { name: "readingTime", label: "Lecture (min)", type: "number" },
       {
         name: "status",
@@ -144,7 +179,12 @@ export const adminModules: Record<string, AdminModule> = {
       { name: "before", label: "Avant", type: "textarea" },
       { name: "after", label: "Après", type: "textarea" },
       { name: "content", label: "Récit", type: "richtext" },
-      { name: "coverImage", label: "Couverture" },
+      {
+        name: "coverImage",
+        label: "Couverture",
+        type: "media",
+        mediaKind: "image",
+      },
       {
         name: "status",
         label: "Statut",

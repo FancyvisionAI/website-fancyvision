@@ -36,6 +36,64 @@ async function requireAdmin() {
   return session;
 }
 
+/**
+ * Quand la fiche modifiée est elle-même une traduction (translationOfId
+ * renseigné), on marque translationEditedAt pour la protéger d'une future
+ * régénération automatique — cf. audit CMS FR → EN, §08.
+ */
+async function markTranslationEditedIfApplicable(
+  moduleKey: string,
+  id: string,
+) {
+  const where = { id, translationOfId: { not: null } };
+  const data = { translationEditedAt: new Date() };
+  switch (moduleKey) {
+    case "pages":
+      await db.page.updateMany({ where, data });
+      break;
+    case "services":
+      await db.service.updateMany({ where, data });
+      break;
+    case "trainings":
+      await db.training.updateMany({ where, data });
+      break;
+    case "articles":
+      await db.article.updateMany({ where, data });
+      break;
+    case "case-studies":
+      await db.caseStudy.updateMany({ where, data });
+      break;
+    default:
+      break;
+  }
+}
+
+export async function GET(request: Request) {
+  const session = await requireAdmin();
+  if (!session)
+    return NextResponse.json({ error: "Non autorisé." }, { status: 401 });
+  const { searchParams } = new URL(request.url);
+  const moduleKey = searchParams.get("module");
+  if (moduleKey !== "media")
+    return NextResponse.json(
+      { error: "Module non pris en charge." },
+      { status: 400 },
+    );
+  const kind = searchParams.get("kind");
+  const items = await db.media.findMany({
+    where:
+      kind === "pdf"
+        ? { mimeType: "application/pdf" }
+        : kind === "image"
+          ? { mimeType: { startsWith: "image/" } }
+          : undefined,
+    orderBy: { createdAt: "desc" },
+    select: { id: true, name: true, url: true, mimeType: true, alt: true },
+    take: 100,
+  });
+  return NextResponse.json(items);
+}
+
 export async function POST(request: Request) {
   const session = await requireAdmin();
   if (!session)
@@ -67,6 +125,7 @@ export async function POST(request: Request) {
           content: json(data.content),
           icon: optional(data.icon),
           image: optional(data.image),
+          categoryId: optional(data.categoryId),
           order: number(data.order),
           featured: boolean(data.featured),
           status: status(data.status),
@@ -89,6 +148,7 @@ export async function POST(request: Request) {
           instructor: optional(data.instructor),
           image: optional(data.image),
           pdfUrl: optional(data.pdfUrl),
+          categoryId: optional(data.categoryId),
           featured: boolean(data.featured),
           status: status(data.status),
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
@@ -103,6 +163,7 @@ export async function POST(request: Request) {
           excerpt: string(data.excerpt),
           content: json(data.content),
           coverImage: optional(data.coverImage),
+          categoryId: optional(data.categoryId),
           readingTime: number(data.readingTime, 5),
           featured: boolean(data.featured),
           status: status(data.status),
@@ -231,6 +292,7 @@ export async function PATCH(request: Request) {
           content: json(data.content),
           icon: optional(data.icon),
           image: optional(data.image),
+          categoryId: optional(data.categoryId),
           order: number(data.order),
           featured: boolean(data.featured),
           status: status(data.status),
@@ -251,6 +313,7 @@ export async function PATCH(request: Request) {
           instructor: optional(data.instructor),
           image: optional(data.image),
           pdfUrl: optional(data.pdfUrl),
+          categoryId: optional(data.categoryId),
           featured: boolean(data.featured),
           status: status(data.status),
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
@@ -266,6 +329,7 @@ export async function PATCH(request: Request) {
           excerpt: string(data.excerpt),
           content: json(data.content),
           coverImage: optional(data.coverImage),
+          categoryId: optional(data.categoryId),
           readingTime: number(data.readingTime, 5),
           featured: boolean(data.featured),
           status: status(data.status),
@@ -414,6 +478,7 @@ export async function PATCH(request: Request) {
         { status: 400 },
       );
   }
+  await markTranslationEditedIfApplicable(moduleKey, id);
   await db.auditLog.create({
     data: {
       userId: session.user.id,
