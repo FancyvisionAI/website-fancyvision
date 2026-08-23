@@ -2,6 +2,7 @@ import "server-only";
 
 import { createHash } from "node:crypto";
 
+import { GoogleGenAI } from "@google/genai";
 import Anthropic from "@anthropic-ai/sdk";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
@@ -15,7 +16,8 @@ import { rateLimit } from "@/lib/rate-limit";
 // Article, Page, CaseStudy, Faq ou Event sans validation explicite.
 // ============================================================
 
-const MODEL = "claude-sonnet-5";
+const ANTHROPIC_MODEL = "claude-sonnet-5";
+const GEMINI_MODEL = "gemini-2.5-flash";
 
 // ---- Arbre Tiptap : uniquement ce dont on a besoin ici ----
 type TiptapNode = {
@@ -142,7 +144,7 @@ async function callClaudeTranslate(fr: {
   const client = new Anthropic({ apiKey });
 
   const message = await client.messages.create({
-    model: MODEL,
+    model: ANTHROPIC_MODEL,
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
     tools: [
@@ -194,6 +196,100 @@ async function callClaudeTranslate(fr: {
   if (!parsed.success) throw new Error("invalid-tool-output-shape");
   return parsed.data;
 }
+
+// ---- Abstraction provider : le seul point que la migration Anthropic
+// → Gemini doit toucher. Le prompt système, les règles de traduction et
+// la validation de sortie (`validateTranslationOutput`) restent partagés
+// et inchangés, quel que soit le provider actif. ----
+
+type TranslationInput = {
+  title: string;
+  excerpt: string;
+  contentTexts: string[];
+};
+
+interface TranslationProvider {
+  translate(input: TranslationInput): Promise<TranslationOutput>;
+}
+
+class AnthropicTranslationProvider implements TranslationProvider {
+  translate(input: TranslationInput): Promise<TranslationOutput> {
+    return callClaudeTranslate(input);
+  }
+}
+
+// Même schéma que celui envoyé à Anthropic (submit_translation.input_schema
+// ci-dessus), reformulé en JSON Schema pour `response_format` — dupliqué
+// volontairement plutôt que partagé, pour ne rien changer au chemin
+// Anthropic existant pendant cette migration.
+const GEMINI_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    title: { type: "string" },
+    excerpt: { type: "string" },
+    contentTexts: {
+      type: "array",
+      items: { type: "string" },
+      description:
+        "Un élément traduit par élément source, même ordre, même nombre.",
+    },
+    seoTitle: {
+      type: "string",
+      description: "Titre SEO anglais, environ 60 caractères.",
+    },
+    seoDescription: {
+      type: "string",
+      description: "Meta description anglaise, environ 150-160 caractères.",
+    },
+  },
+  required: ["title", "excerpt", "contentTexts", "seoTitle", "seoDescription"],
+};
+
+class GeminiTranslationProvider implements TranslationProvider {
+  async translate(fr: TranslationInput): Promise<TranslationOutput> {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) throw new Error("missing-gemini-api-key");
+    const client = new GoogleGenAI({ apiKey });
+
+    const interaction = await client.interactions.create({
+      model: GEMINI_MODEL,
+      system_instruction: SYSTEM_PROMPT,
+      input: buildUserPrompt(fr),
+      response_format: {
+        type: "text",
+        mime_type: "application/json",
+        schema: GEMINI_RESPONSE_SCHEMA,
+      },
+    });
+
+    if (!interaction.output_text) throw new Error("no-output-in-response");
+    let raw: unknown;
+    try {
+      raw = JSON.parse(interaction.output_text);
+    } catch {
+      throw new Error("invalid-tool-output-shape");
+    }
+    const parsed = translationOutputSchema.safeParse(raw);
+    if (!parsed.success) throw new Error("invalid-tool-output-shape");
+    return parsed.data;
+  }
+}
+
+// Les deux providers sont exportés pour permettre un rollback instantané
+// (aucune donnée en base ne dépend du provider utilisé) — voir
+// `activeProvider` ci-dessous, seul point à modifier pour basculer.
+export const anthropicProvider: TranslationProvider =
+  new AnthropicTranslationProvider();
+export const geminiProvider: TranslationProvider =
+  new GeminiTranslationProvider();
+
+// Bascule du provider actif — point unique à modifier pour revenir à
+// Anthropic (`activeProvider = anthropicProvider`). GEMINI_API_KEY n'étant
+// pas encore configurée à ce stade de la migration, toute traduction
+// réelle échouera avec "missing-gemini-api-key" (capturé par le catch
+// existant de `finishServiceTranslation`, sans changement de comportement)
+// tant que la clé n'est pas ajoutée.
+const activeProvider: TranslationProvider = geminiProvider;
 
 // ---- Validation de sortie (indépendante du provider) ----
 
@@ -359,7 +455,7 @@ export async function finishServiceTranslation(
   const sourceHash = hashServiceSource(fr);
 
   try {
-    const raw = await callClaudeTranslate({
+    const raw = await activeProvider.translate({
       title: fr.title,
       excerpt: fr.excerpt,
       contentTexts,

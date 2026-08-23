@@ -35,14 +35,21 @@ require.cache[serverOnlyPath] = {
   exports: {},
 } as unknown as NodeJS.Module;
 
-type MockToolResponse = { content: Array<{ type: string; input: unknown }> };
-let mockResponse: MockToolResponse = { content: [] };
+// Une seule source de vérité pour la réponse simulée du LLM — partagée
+// entre les deux mocks (Anthropic et Gemini) pour que `setMockTranslation`
+// continue de fonctionner quel que soit le provider actif dans
+// `lib/translation/service-translator.ts` (rollback-proof).
+let mockCandidate: unknown = {};
 function setMockTranslation(input: unknown) {
-  mockResponse = { content: [{ type: "tool_use", input }] };
+  mockCandidate = input;
 }
 
 class FakeAnthropic {
-  messages = { create: async () => mockResponse };
+  messages = {
+    create: async () => ({
+      content: [{ type: "tool_use", input: mockCandidate }],
+    }),
+  };
   constructor(_opts: { apiKey: string }) {}
 }
 const anthropicPath = require.resolve("@anthropic-ai/sdk");
@@ -53,11 +60,27 @@ require.cache[anthropicPath] = {
   exports: { __esModule: true, default: FakeAnthropic },
 } as unknown as NodeJS.Module;
 
-// L'appel réseau est entièrement mocké (FakeAnthropic ci-dessus) : cette
-// clé n'est jamais utilisée pour un vrai appel, elle sert seulement à
-// passer le garde-fou `if (!apiKey)` de callClaudeTranslate. Scénario E
-// la retire temporairement pour tester précisément ce garde-fou.
+class FakeGoogleGenAI {
+  interactions = {
+    create: async () => ({ output_text: JSON.stringify(mockCandidate) }),
+  };
+  constructor(_opts: { apiKey: string }) {}
+}
+const genaiPath = require.resolve("@google/genai");
+require.cache[genaiPath] = {
+  id: genaiPath,
+  filename: genaiPath,
+  loaded: true,
+  exports: { __esModule: true, GoogleGenAI: FakeGoogleGenAI },
+} as unknown as NodeJS.Module;
+
+// L'appel réseau est entièrement mocké (FakeAnthropic / FakeGoogleGenAI
+// ci-dessus) : ces clés ne sont jamais utilisées pour un vrai appel, elles
+// servent seulement à passer le garde-fou `if (!apiKey)` de chaque
+// provider. Scénario E les retire temporairement pour tester précisément
+// ce garde-fou.
 process.env.ANTHROPIC_API_KEY ??= "sk-ant-test-mock-key-not-real";
+process.env.GEMINI_API_KEY ??= "test-mock-key-not-real";
 
 const TEST_TAG = `test-p2-translation-${Date.now()}`;
 const results: Array<{ scenario: string; ok: boolean; detail?: string }> = [];
@@ -274,13 +297,18 @@ async function main() {
         where: { id: beginA.enId },
         data: { translationStatus: "PENDING" },
       });
-      const savedKey = process.env.ANTHROPIC_API_KEY;
+      const savedAnthropicKey = process.env.ANTHROPIC_API_KEY;
+      const savedGeminiKey = process.env.GEMINI_API_KEY;
       delete process.env.ANTHROPIC_API_KEY;
+      delete process.env.GEMINI_API_KEY;
       const frBeforeError = await db.service.findUnique({
         where: { id: fr.id },
       });
       await finishServiceTranslation(fr.id, beginA.enId);
-      if (savedKey !== undefined) process.env.ANTHROPIC_API_KEY = savedKey;
+      if (savedAnthropicKey !== undefined)
+        process.env.ANTHROPIC_API_KEY = savedAnthropicKey;
+      if (savedGeminiKey !== undefined)
+        process.env.GEMINI_API_KEY = savedGeminiKey;
       const enAfterError = await db.service.findUnique({
         where: { id: beginA.enId },
       });
