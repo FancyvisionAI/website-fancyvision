@@ -1,9 +1,25 @@
 import { ContentStatus, Prisma, RequestStatus } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import {
+  beginServiceTranslation,
+  finishServiceTranslation,
+} from "@/lib/translation/service-translator";
 import { adminContentSchema } from "@/lib/validators";
+
+/**
+ * Prototype P2 : Service uniquement. Ne bloque jamais la réponse à
+ * l'admin — seul le lancement (création/reset du brouillon EN) est
+ * synchrone ; l'appel LLM est différé via after().
+ */
+async function triggerServiceTranslation(frId: string, userId: string) {
+  const translation = await beginServiceTranslation(frId);
+  if (translation.proceed) {
+    after(() => finishServiceTranslation(frId, translation.enId, userId));
+  }
+}
 
 const emptyDoc = { type: "doc", content: [] };
 const string = (value: unknown, fallback = "") =>
@@ -132,6 +148,7 @@ export async function POST(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      await triggerServiceTranslation(result.id, session.user.id);
       break;
     case "trainings":
       result = await db.training.create({
@@ -282,8 +299,8 @@ export async function PATCH(request: Request) {
         },
       });
       break;
-    case "services":
-      await db.service.update({
+    case "services": {
+      const updatedService = await db.service.update({
         where: { id },
         data: {
           title: string(data.title),
@@ -299,7 +316,11 @@ export async function PATCH(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      if (updatedService.locale === "fr" && !updatedService.translationOfId) {
+        await triggerServiceTranslation(updatedService.id, session.user.id);
+      }
       break;
+    }
     case "trainings":
       await db.training.update({
         where: { id },

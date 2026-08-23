@@ -217,6 +217,7 @@ export function ContentManager({
             </div>
             <EditorForm
               key={editing?.id ?? "new"}
+              moduleKey={moduleKey}
               config={config}
               item={editing}
               pending={pending}
@@ -258,16 +259,50 @@ export function ContentManager({
 }
 
 function TranslationBlock({
+  moduleKey,
   item,
   onOpenTranslation,
 }: {
+  moduleKey: string;
   item: Item;
   onOpenTranslation: (translation: Item) => void;
 }) {
+  const router = useRouter();
+  const [regenerating, setRegenerating] = useState(false);
   const translations = Array.isArray(item.translations)
     ? (item.translations as Item[])
     : [];
   const translation = translations[0] ?? null;
+  // Le bouton n'est actif que pour Service (prototype P2) et seulement
+  // une fois la version anglaise déjà modifiée manuellement : régénérer
+  // une traduction jamais éditée n'a pas de sens (elle se met déjà à
+  // jour toute seule à chaque sauvegarde du FR).
+  const canRegenerate =
+    moduleKey === "services" && Boolean(translation?.translationEditedAt);
+
+  async function regenerate() {
+    if (
+      !window.confirm(
+        "Cette version anglaise a été modifiée manuellement. La régénérer effacera ces modifications et les remplacera par une nouvelle traduction automatique. Continuer ?",
+      )
+    )
+      return;
+    setRegenerating(true);
+    const response = await fetch("/api/admin/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ module: moduleKey, id: item.id }),
+    });
+    setRegenerating(false);
+    if (!response.ok) {
+      toast.error("Régénération impossible.");
+      return;
+    }
+    toast.success(
+      "Régénération lancée — la traduction sera prête sous quelques instants.",
+    );
+    router.refresh();
+  }
 
   return (
     <div className="mt-2 grid gap-3 rounded-2xl border border-border bg-bg p-5">
@@ -321,10 +356,17 @@ function TranslationBlock({
           type="button"
           variant="outline"
           size="sm"
-          disabled
-          title="Bientôt disponible"
+          disabled={!canRegenerate || regenerating}
+          onClick={canRegenerate ? regenerate : undefined}
+          title={
+            canRegenerate
+              ? undefined
+              : moduleKey !== "services"
+                ? "Bientôt disponible pour ce module"
+                : "Disponible uniquement après une modification manuelle de la version anglaise"
+          }
         >
-          Régénérer — Bientôt disponible
+          {regenerating ? "Régénération…" : "Régénérer"}
         </Button>
       </div>
     </div>
@@ -332,6 +374,7 @@ function TranslationBlock({
 }
 
 function EditorForm({
+  moduleKey,
   config,
   item,
   pending,
@@ -340,6 +383,7 @@ function EditorForm({
   onOpenTranslation,
   onSave,
 }: {
+  moduleKey: string;
   config: AdminModule;
   item: Item | null;
   pending: boolean;
@@ -380,7 +424,11 @@ function EditorForm({
         {pending ? "Enregistrement…" : "Enregistrer"}
       </Button>
       {showTranslationBlock && item && (
-        <TranslationBlock item={item} onOpenTranslation={onOpenTranslation} />
+        <TranslationBlock
+          moduleKey={moduleKey}
+          item={item}
+          onOpenTranslation={onOpenTranslation}
+        />
       )}
     </form>
   );
