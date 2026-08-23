@@ -41,22 +41,22 @@ enum Difficulty {
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String      @unique
+  email         String        @unique
   emailVerified DateTime?
   image         String?
   passwordHash  String?
-  status        UserStatus  @default(ACTIVE)
+  status        UserStatus    @default(ACTIVE)
   roleId        String?
-  role          Role?       @relation(fields: [roleId], references: [id])
+  role          Role?         @relation(fields: [roleId], references: [id])
   accounts      Account[]
   sessions      Session[]
-  authoredPosts Article[]   @relation("ArticleAuthor")
+  authoredPosts Article[]     @relation("ArticleAuthor")
   activity      AuditLog[]
   assignedCalls Appointment[] @relation("AssignedConsultant")
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Account {
@@ -71,7 +71,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  user              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -134,8 +134,17 @@ model Page {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
+  translationOfId        String?
+  translationOf          Page?     @relation("PageTranslation", fields: [translationOfId], references: [id], onDelete: SetNull)
+  translations           Page[]    @relation("PageTranslation")
+  translationStatus      String?
+  translationSourceHash  String?
+  translationGeneratedAt DateTime?
+  translationEditedAt    DateTime?
+
   @@unique([locale, slug])
   @@index([status, publishedAt])
+  @@index([translationOfId])
 }
 
 model Section {
@@ -154,24 +163,24 @@ model Section {
 }
 
 model Seo {
-  id          String  @id @default(cuid())
-  pageId      String? @unique
-  page        Page?   @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  serviceId   String? @unique
-  service     Service? @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  trainingId  String? @unique
-  training    Training? @relation(fields: [trainingId], references: [id], onDelete: Cascade)
-  articleId   String? @unique
-  article     Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  caseStudyId String? @unique
+  id          String     @id @default(cuid())
+  pageId      String?    @unique
+  page        Page?      @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  serviceId   String?    @unique
+  service     Service?   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  trainingId  String?    @unique
+  training    Training?  @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  articleId   String?    @unique
+  article     Article?   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  caseStudyId String?    @unique
   caseStudy   CaseStudy? @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
   title       String
-  description String  @db.Text
+  description String     @db.Text
   keywords    String[]
   canonical   String?
   ogImage     String?
   schema      Json?
-  noIndex     Boolean @default(false)
+  noIndex     Boolean    @default(false)
 }
 
 model ServiceCategory {
@@ -186,27 +195,36 @@ model ServiceCategory {
 }
 
 model Service {
-  id          String          @id @default(cuid())
-  locale      String          @default("fr")
+  id          String           @id @default(cuid())
+  locale      String           @default("fr")
   categoryId  String?
   category    ServiceCategory? @relation(fields: [categoryId], references: [id])
   title       String
   slug        String
-  excerpt     String          @db.Text
+  excerpt     String           @db.Text
   content     Json
   icon        String?
   image       String?
-  status      ContentStatus   @default(DRAFT)
-  order       Int             @default(0)
-  featured    Boolean         @default(false)
+  status      ContentStatus    @default(DRAFT)
+  order       Int              @default(0)
+  featured    Boolean          @default(false)
   publishedAt DateTime?
   seo         Seo?
   caseStudies CaseStudy[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  translationOfId        String?
+  translationOf          Service?  @relation("ServiceTranslation", fields: [translationOfId], references: [id], onDelete: SetNull)
+  translations           Service[] @relation("ServiceTranslation")
+  translationStatus      String?
+  translationSourceHash  String?
+  translationGeneratedAt DateTime?
+  translationEditedAt    DateTime?
 
   @@unique([locale, slug])
   @@index([status, order])
+  @@index([translationOfId])
 }
 
 model TrainingCategory {
@@ -219,40 +237,49 @@ model TrainingCategory {
 }
 
 model Training {
-  id           String           @id @default(cuid())
-  locale       String           @default("fr")
-  categoryId   String?
-  category     TrainingCategory? @relation(fields: [categoryId], references: [id])
-  title        String
-  slug         String
-  excerpt      String           @db.Text
-  content      Json
-  objectives   String[]
-  audience     String[]
-  modules      Json
-  priceCents   Int?
-  duration     String?
-  image        String?
-  pdfUrl       String?
-  instructor   String?
-  difficulty   Difficulty       @default(ALL_LEVELS)
-  status       ContentStatus    @default(DRAFT)
-  featured     Boolean          @default(false)
-  order        Int              @default(0)
-  publishedAt  DateTime?
-  seo          Seo?
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  id          String            @id @default(cuid())
+  locale      String            @default("fr")
+  categoryId  String?
+  category    TrainingCategory? @relation(fields: [categoryId], references: [id])
+  title       String
+  slug        String
+  excerpt     String            @db.Text
+  content     Json
+  objectives  String[]
+  audience    String[]
+  modules     Json
+  priceCents  Int?
+  duration    String?
+  image       String?
+  pdfUrl      String?
+  instructor  String?
+  difficulty  Difficulty        @default(ALL_LEVELS)
+  status      ContentStatus     @default(DRAFT)
+  featured    Boolean           @default(false)
+  order       Int               @default(0)
+  publishedAt DateTime?
+  seo         Seo?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  translationOfId        String?
+  translationOf          Training?  @relation("TrainingTranslation", fields: [translationOfId], references: [id], onDelete: SetNull)
+  translations           Training[] @relation("TrainingTranslation")
+  translationStatus      String?
+  translationSourceHash  String?
+  translationGeneratedAt DateTime?
+  translationEditedAt    DateTime?
 
   @@unique([locale, slug])
   @@index([status, order])
+  @@index([translationOfId])
 }
 
 model ArticleCategory {
-  id          String     @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
-  slug        String     @unique
-  description String?    @db.Text
+  slug        String    @unique
+  description String?   @db.Text
   articles    Article[]
 }
 
@@ -264,31 +291,40 @@ model Tag {
 }
 
 model Article {
-  id           String          @id @default(cuid())
-  locale       String          @default("fr")
+  id           String            @id @default(cuid())
+  locale       String            @default("fr")
   categoryId   String?
-  category     ArticleCategory? @relation(fields: [categoryId], references: [id])
+  category     ArticleCategory?  @relation(fields: [categoryId], references: [id])
   authorId     String?
-  author       User?           @relation("ArticleAuthor", fields: [authorId], references: [id])
+  author       User?             @relation("ArticleAuthor", fields: [authorId], references: [id])
   title        String
   slug         String
-  excerpt      String          @db.Text
+  excerpt      String            @db.Text
   content      Json
   coverImage   String?
-  status       ContentStatus   @default(DRAFT)
-  readingTime  Int             @default(5)
-  featured     Boolean         @default(false)
+  status       ContentStatus     @default(DRAFT)
+  readingTime  Int               @default(5)
+  featured     Boolean           @default(false)
   scheduledFor DateTime?
   publishedAt  DateTime?
   tags         ArticleTag[]
   relatedFrom  ArticleRelation[] @relation("RelatedFrom")
   relatedTo    ArticleRelation[] @relation("RelatedTo")
   seo          Seo?
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  translationOfId        String?
+  translationOf          Article?  @relation("ArticleTranslation", fields: [translationOfId], references: [id], onDelete: SetNull)
+  translations           Article[] @relation("ArticleTranslation")
+  translationStatus      String?
+  translationSourceHash  String?
+  translationGeneratedAt DateTime?
+  translationEditedAt    DateTime?
 
   @@unique([locale, slug])
   @@index([status, publishedAt])
+  @@index([translationOfId])
 }
 
 model ArticleTag {
@@ -348,8 +384,17 @@ model CaseStudy {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
+  translationOfId        String?
+  translationOf          CaseStudy?  @relation("CaseStudyTranslation", fields: [translationOfId], references: [id], onDelete: SetNull)
+  translations           CaseStudy[] @relation("CaseStudyTranslation")
+  translationStatus      String?
+  translationSourceHash  String?
+  translationGeneratedAt DateTime?
+  translationEditedAt    DateTime?
+
   @@unique([locale, slug])
   @@index([status, publishedAt])
+  @@index([translationOfId])
 }
 
 model Faq {
@@ -388,18 +433,18 @@ model NewsletterSubscriber {
 }
 
 model ContactRequest {
-  id        String        @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  company   String?
-  subject   String?
-  message   String        @db.Text
-  status    RequestStatus @default(NEW)
+  id          String        @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  subject     String?
+  message     String        @db.Text
+  status      RequestStatus @default(NEW)
   replyStatus String?
-  metadata  Json?
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@index([status, createdAt])
 }
@@ -483,17 +528,17 @@ model Menu {
 }
 
 model MenuItem {
-  id         String     @id @default(cuid())
-  menuId     String
-  menu       Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
-  parentId   String?
-  parent     MenuItem?  @relation("MenuChildren", fields: [parentId], references: [id], onDelete: Cascade)
-  children   MenuItem[] @relation("MenuChildren")
-  label      String
-  url        String
-  external   Boolean    @default(false)
-  order      Int        @default(0)
-  visible    Boolean    @default(true)
+  id       String     @id @default(cuid())
+  menuId   String
+  menu     Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parentId String?
+  parent   MenuItem?  @relation("MenuChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children MenuItem[] @relation("MenuChildren")
+  label    String
+  url      String
+  external Boolean    @default(false)
+  order    Int        @default(0)
+  visible  Boolean    @default(true)
 
   @@index([menuId, order])
 }
@@ -535,16 +580,16 @@ model AnalyticsEvent {
 }
 
 model AuditLog {
-  id         String   @id @default(cuid())
-  userId     String?
-  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  action     String
-  entity     String
-  entityId   String?
-  before     Json?
-  after      Json?
-  ipAddress  String?
-  createdAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  before    Json?
+  after     Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
 
   @@index([entity, createdAt])
 }
