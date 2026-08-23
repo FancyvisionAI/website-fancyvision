@@ -9,11 +9,11 @@ export default async function MediaPage() {
     <div>
       <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
         <div>
-          <p className="text-sm text-black/45">Administration</p>
+          <p className="text-sm text-muted">Administration</p>
           <h1 className="mt-2 text-4xl font-semibold tracking-[-0.06em]">
             Médiathèque
           </h1>
-          <p className="mt-3 text-sm text-black/50">
+          <p className="mt-3 text-sm text-muted">
             Images et documents sécurisés via UploadThing.
           </p>
         </div>
@@ -23,7 +23,7 @@ export default async function MediaPage() {
         {items.map((item) => (
           <article
             key={item.id}
-            className="overflow-hidden rounded-3xl bg-white"
+            className="overflow-hidden rounded-3xl bg-canvas"
           >
             <div className="relative aspect-[1.3/1] bg-canvas">
               {item.mimeType.startsWith("image/") ? (
@@ -41,7 +41,7 @@ export default async function MediaPage() {
             </div>
             <div className="p-5">
               <p className="truncate text-sm font-semibold">{item.name}</p>
-              <p className="mt-1 truncate text-xs text-black/40">{item.alt}</p>
+              <p className="mt-1 truncate text-xs text-muted">{item.alt}</p>
             </div>
           </article>
         ))}

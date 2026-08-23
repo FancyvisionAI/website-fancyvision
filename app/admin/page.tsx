@@ -29,7 +29,7 @@ export default async function AdminHome() {
       label: "Articles publiés",
       value: articles,
       icon: BookOpen,
-      color: "bg-cobalt text-white",
+      color: "bg-accent text-white",
     },
     {
       label: "Nouveaux contacts",
@@ -41,20 +41,20 @@ export default async function AdminHome() {
       label: "Rendez-vous à traiter",
       value: appointments,
       icon: CalendarDays,
-      color: "bg-white",
+      color: "bg-canvas",
     },
     {
       label: "Abonnés newsletter",
       value: subscribers,
       icon: Mail,
-      color: "bg-white",
+      color: "bg-canvas",
     },
   ];
   return (
     <div>
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
-          <p className="text-sm text-black/45">Vue d’ensemble</p>
+          <p className="text-sm text-muted">Vue d’ensemble</p>
           <h1 className="mt-2 text-4xl font-semibold tracking-[-0.06em]">
             Bonjour, l’équipe.
           </h1>
@@ -76,12 +76,12 @@ export default async function AdminHome() {
         ))}
       </div>
       <div className="mt-8 grid gap-5 xl:grid-cols-[1.3fr_.7fr]">
-        <section className="rounded-3xl bg-white p-6">
+        <section className="rounded-3xl bg-canvas p-6">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Activité récente</h2>
-            <Activity className="size-4 text-black/40" />
+            <Activity className="size-4 text-muted" />
           </div>
-          <div className="mt-6 divide-y divide-black/10">
+          <div className="mt-6 divide-y divide-border">
             {recent.length ? (
               recent.map((item) => (
                 <div
@@ -93,24 +93,24 @@ export default async function AdminHome() {
                     <p className="font-medium">
                       {item.action} · {item.entity}
                     </p>
-                    <p className="text-xs text-black/40">
+                    <p className="text-xs text-muted">
                       {item.user?.name ?? "Système"}
                     </p>
                   </div>
-                  <time className="text-xs text-black/40">
+                  <time className="text-xs text-muted">
                     {formatDate(item.createdAt)}
                   </time>
                 </div>
               ))
             ) : (
-              <p className="py-8 text-sm text-black/40">
+              <p className="py-8 text-sm text-muted">
                 Le journal se remplira dès la première modification.
               </p>
             )}
           </div>
         </section>
-        <section className="rounded-3xl bg-ink p-6 text-white">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-lime">
+        <section className="rounded-3xl bg-accent p-6 text-white">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/70">
             Trafic
           </p>
           <h2 className="mt-5 text-3xl font-semibold tracking-[-0.05em]">
@@ -124,7 +124,7 @@ export default async function AdminHome() {
             {[35, 55, 42, 75, 60, 90, 72, 100, 82].map((h, index) => (
               <span
                 key={index}
-                className="bg-lime/70 flex-1 rounded-t"
+                className="flex-1 rounded-t bg-white/70"
                 style={{ height: `${h}%` }}
               />
             ))}

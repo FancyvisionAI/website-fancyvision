@@ -15,20 +15,20 @@ export default async function AdminLayout({
   const session = await auth();
   if (!session?.user) redirect("/connexion");
   return (
-    <div className="flex min-h-screen bg-[#f6f6f2]">
+    <div className="flex min-h-screen bg-bg">
       <Sidebar />
       <div className="min-w-0 flex-1">
-        <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-black/10 bg-[#f6f6f2]/90 px-5 backdrop-blur md:px-8">
+        <header className="bg-bg/90 sticky top-0 z-30 flex h-20 items-center justify-between border-b border-border px-5 backdrop-blur md:px-8">
           <Link href="/admin" className="font-semibold lg:hidden">
-            FancyVision CMS
+            Sapiens-IA CMS
           </Link>
-          <button className="grid size-10 place-items-center rounded-full border border-black/10 lg:hidden">
+          <button className="grid size-10 place-items-center rounded-full border border-border lg:hidden">
             <Menu className="size-4" />
           </button>
           <div className="ml-auto flex items-center gap-4">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-semibold">{session.user.name}</p>
-              <p className="text-xs text-black/45">{session.user.role}</p>
+              <p className="text-xs text-muted">{session.user.role}</p>
             </div>
             <form
               action={async () => {
@@ -37,7 +37,7 @@ export default async function AdminLayout({
               }}
             >
               <button
-                className="grid size-10 place-items-center rounded-full border border-black/10 bg-white"
+                className="grid size-10 place-items-center rounded-full border border-border bg-canvas"
                 aria-label="Se déconnecter"
               >
                 <LogOut className="size-4" />

@@ -28,8 +28,8 @@ export function RichEditor({
   });
   if (!editor) return null;
   return (
-    <div className="overflow-hidden rounded-xl border border-black/15 bg-white">
-      <div className="flex gap-1 border-b border-black/10 p-2">
+    <div className="overflow-hidden rounded-xl border border-border bg-canvas">
+      <div className="flex gap-1 border-b border-border p-2">
         {[
           {
             label: "Gras",
@@ -61,7 +61,7 @@ export function RichEditor({
             type="button"
             key={item.label}
             onClick={item.action}
-            className={`grid size-9 place-items-center rounded-lg ${item.active ? "bg-ink text-white" : "hover:bg-black/5"}`}
+            className={`grid size-9 place-items-center rounded-lg ${item.active ? "bg-accent text-white" : "hover:bg-ink/5"}`}
             title={item.label}
           >
             <item.icon className="size-4" />

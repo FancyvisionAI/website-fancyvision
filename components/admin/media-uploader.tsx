@@ -15,8 +15,8 @@ export function MediaUploader() {
       endpoint="mediaUploader"
       appearance={{
         button:
-          "rounded-full bg-ink px-6 text-sm font-semibold text-white after:bg-transparent",
-        allowedContent: "text-xs text-black/40",
+          "rounded-full bg-accent px-6 text-sm font-semibold text-white after:bg-transparent",
+        allowedContent: "text-xs text-muted",
       }}
       onClientUploadComplete={() => {
         toast.success("Fichier ajouté à la médiathèque.");

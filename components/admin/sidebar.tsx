@@ -70,12 +70,12 @@ const groups = [
 
 export function Sidebar() {
   return (
-    <aside className="hidden h-screen w-72 shrink-0 overflow-y-auto border-r border-white/10 bg-ink p-5 text-white lg:block">
+    <aside className="hidden h-screen w-72 shrink-0 overflow-y-auto border-r border-white/10 bg-accent p-5 text-white lg:block">
       <Link
         href="/"
         className="inline-flex p-3 text-2xl font-black tracking-[-0.06em]"
       >
-        FancyVision<span className="text-lime">.</span>
+        Sapiens-IA<span className="text-white">.</span>
       </Link>
       <nav className="mt-8 space-y-8">
         {groups.map((group) => (

@@ -71,11 +71,11 @@ export function ContentManager({
     <div>
       <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
         <div>
-          <p className="text-sm text-black/45">Administration</p>
+          <p className="text-sm text-muted">Administration</p>
           <h1 className="mt-2 text-4xl font-semibold tracking-[-0.06em]">
             {config.title}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-black/50">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
             {config.description}
           </p>
         </div>
@@ -99,9 +99,9 @@ export function ContentManager({
           )}
         </div>
       </div>
-      <div className="mt-8 rounded-3xl bg-white p-5">
+      <div className="mt-8 rounded-3xl bg-canvas p-5">
         <div className="relative max-w-md">
-          <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-black/35" />
+          <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" />
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -119,11 +119,11 @@ export function ContentManager({
                 <p className="truncate text-sm font-semibold">
                   {titleOf(item)}
                 </p>
-                <p className="mt-1 truncate text-xs text-black/40">
+                <p className="mt-1 truncate text-xs text-muted">
                   {subtitleOf(item)}
                 </p>
               </div>
-              <span className="hidden text-xs text-black/35 md:block">
+              <span className="hidden text-xs text-muted md:block">
                 {String(item.updatedAt ?? item.createdAt ?? "")?.slice(0, 10)}
               </span>
               {(!config.readonly || config.allowDelete) && (
@@ -134,7 +134,7 @@ export function ContentManager({
                         setCreating(false);
                         setEditing(item);
                       }}
-                      className="grid size-9 place-items-center rounded-full border border-black/10 hover:bg-black/5"
+                      className="hover:bg-ink/5 grid size-9 place-items-center rounded-full border border-border"
                       aria-label="Modifier"
                     >
                       <Pencil className="size-3.5" />
@@ -154,7 +154,7 @@ export function ContentManager({
             </div>
           ))}
           {!filtered.length && (
-            <p className="py-12 text-center text-sm text-black/40">
+            <p className="py-12 text-center text-sm text-muted">
               Aucun élément.
             </p>
           )}
@@ -162,10 +162,10 @@ export function ContentManager({
       </div>
       {open && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 p-4 backdrop-blur-sm">
-          <div className="ml-auto min-h-full w-full max-w-3xl rounded-[2rem] bg-[#f6f6f2] p-6 md:p-8">
+          <div className="ml-auto min-h-full w-full max-w-3xl rounded-[2rem] bg-canvas p-6 md:p-8">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.14em] text-black/40">
+                <p className="text-xs uppercase tracking-[0.14em] text-muted">
                   {creating ? "Création" : "Modification"}
                 </p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-[-0.05em]">
@@ -177,7 +177,7 @@ export function ContentManager({
                   setCreating(false);
                   setEditing(null);
                 }}
-                className="grid size-10 place-items-center rounded-full border border-black/10"
+                className="grid size-10 place-items-center rounded-full border border-border"
               >
                 <X className="size-4" />
               </button>
@@ -273,7 +273,7 @@ function EditorForm({
             />
           ) : field.type === "select" ? (
             <select
-              className="h-12 rounded-xl border border-black/15 bg-white px-4"
+              className="h-12 rounded-xl border border-border bg-canvas px-4"
               value={String(
                 values[field.name] ?? field.options?.[0]?.value ?? "",
               )}

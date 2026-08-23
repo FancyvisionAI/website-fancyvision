@@ -213,7 +213,11 @@ export const adminModules: Record<string, AdminModule> = {
     fields: [
       { name: "name", label: "Nom" },
       { name: "email", label: "Email" },
+      { name: "phone", label: "Téléphone" },
+      { name: "company", label: "Entreprise" },
       { name: "topic", label: "Sujet" },
+      { name: "preferredDate", label: "Date souhaitée" },
+      { name: "message", label: "Message", type: "textarea" },
       {
         name: "status",
         label: "Statut",
