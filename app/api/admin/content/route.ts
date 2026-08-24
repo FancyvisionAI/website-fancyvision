@@ -1,4 +1,9 @@
-import { ContentStatus, Prisma, RequestStatus } from "@prisma/client";
+import {
+  ContentStatus,
+  Difficulty,
+  Prisma,
+  RequestStatus,
+} from "@prisma/client";
 import { after, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
@@ -7,6 +12,10 @@ import {
   beginServiceTranslation,
   finishServiceTranslation,
 } from "@/lib/translation/service-translator";
+import {
+  beginTrainingTranslation,
+  finishTrainingTranslation,
+} from "@/lib/translation/training-translator";
 import { adminContentSchema } from "@/lib/validators";
 
 /**
@@ -18,6 +27,17 @@ async function triggerServiceTranslation(frId: string, userId: string) {
   const translation = await beginServiceTranslation(frId);
   if (translation.proceed) {
     after(() => finishServiceTranslation(frId, translation.enId, userId));
+  }
+}
+
+/**
+ * Prototype P3 : Training uniquement. Même principe que
+ * triggerServiceTranslation ci-dessus.
+ */
+async function triggerTrainingTranslation(frId: string, userId: string) {
+  const translation = await beginTrainingTranslation(frId);
+  if (translation.proceed) {
+    after(() => finishTrainingTranslation(frId, translation.enId, userId));
   }
 }
 
@@ -45,6 +65,14 @@ const json = (value: unknown) =>
   value && typeof value === "object"
     ? (value as Prisma.InputJsonValue)
     : emptyDoc;
+const jsonArray = (value: unknown) =>
+  Array.isArray(value) ? (value as Prisma.InputJsonValue) : [];
+const stringArray = (value: unknown) =>
+  Array.isArray(value) ? value.map(String) : [];
+const difficulty = (value: unknown) =>
+  Object.values(Difficulty).includes(value as Difficulty)
+    ? (value as Difficulty)
+    : Difficulty.ALL_LEVELS;
 
 async function requireAdmin() {
   const session = await auth();
@@ -157,10 +185,11 @@ export async function POST(request: Request) {
           slug: string(data.slug),
           excerpt: string(data.excerpt),
           content: json(data.content),
-          modules: [],
-          objectives: [],
-          audience: [],
+          modules: jsonArray(data.modules),
+          objectives: stringArray(data.objectives),
+          audience: stringArray(data.audience),
           duration: optional(data.duration),
+          difficulty: difficulty(data.difficulty),
           priceCents: data.priceCents ? number(data.priceCents) : null,
           instructor: optional(data.instructor),
           image: optional(data.image),
@@ -171,6 +200,7 @@ export async function POST(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      await triggerTrainingTranslation(result.id, session.user.id);
       break;
     case "articles":
       result = await db.article.create({
@@ -321,15 +351,19 @@ export async function PATCH(request: Request) {
       }
       break;
     }
-    case "trainings":
-      await db.training.update({
+    case "trainings": {
+      const updatedTraining = await db.training.update({
         where: { id },
         data: {
           title: string(data.title),
           slug: string(data.slug),
           excerpt: string(data.excerpt),
           content: json(data.content),
+          modules: jsonArray(data.modules),
+          objectives: stringArray(data.objectives),
+          audience: stringArray(data.audience),
           duration: optional(data.duration),
+          difficulty: difficulty(data.difficulty),
           priceCents: data.priceCents ? number(data.priceCents) : null,
           instructor: optional(data.instructor),
           image: optional(data.image),
@@ -340,7 +374,11 @@ export async function PATCH(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      if (updatedTraining.locale === "fr" && !updatedTraining.translationOfId) {
+        await triggerTrainingTranslation(updatedTraining.id, session.user.id);
+      }
       break;
+    }
     case "articles":
       await db.article.update({
         where: { id },

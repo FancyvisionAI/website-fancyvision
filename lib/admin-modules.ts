@@ -10,7 +10,8 @@ export type AdminField = {
     | "richtext"
     | "json"
     | "media"
-    | "relation";
+    | "relation"
+    | "list";
   options?: Array<{ label: string; value: string }>;
   required?: boolean;
   /** Uniquement pour type "media" : restreint le sélecteur au bon type de fichier. */
@@ -35,6 +36,13 @@ const statusOptions = [
   { label: "Planifié", value: "SCHEDULED" },
   { label: "Publié", value: "PUBLISHED" },
   { label: "Archivé", value: "ARCHIVED" },
+];
+
+const difficultyOptions = [
+  { label: "Débutant", value: "BEGINNER" },
+  { label: "Intermédiaire", value: "INTERMEDIATE" },
+  { label: "Avancé", value: "ADVANCED" },
+  { label: "Tous niveaux", value: "ALL_LEVELS" },
 ];
 
 export const adminModules: Record<string, AdminModule> = {
@@ -95,6 +103,12 @@ export const adminModules: Record<string, AdminModule> = {
       { name: "excerpt", label: "Résumé", type: "textarea", required: true },
       { name: "content", label: "Contenu", type: "richtext" },
       { name: "duration", label: "Durée" },
+      {
+        name: "difficulty",
+        label: "Niveau",
+        type: "select",
+        options: difficultyOptions,
+      },
       { name: "priceCents", label: "Prix (centimes)", type: "number" },
       { name: "instructor", label: "Formateur" },
       { name: "image", label: "Image", type: "media", mediaKind: "image" },
@@ -104,6 +118,21 @@ export const adminModules: Record<string, AdminModule> = {
         label: "Catégorie",
         type: "relation",
         relationOptionsKey: "categories",
+      },
+      {
+        name: "objectives",
+        label: "Objectifs (un par ligne)",
+        type: "list",
+      },
+      {
+        name: "audience",
+        label: "Public visé (un par ligne)",
+        type: "list",
+      },
+      {
+        name: "modules",
+        label: "Programme (JSON — tableau de {title, description})",
+        type: "json",
       },
       {
         name: "status",

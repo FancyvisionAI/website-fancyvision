@@ -273,12 +273,14 @@ function TranslationBlock({
     ? (item.translations as Item[])
     : [];
   const translation = translations[0] ?? null;
-  // Le bouton n'est actif que pour Service (prototype P2) et seulement
-  // une fois la version anglaise déjà modifiée manuellement : régénérer
-  // une traduction jamais éditée n'a pas de sens (elle se met déjà à
-  // jour toute seule à chaque sauvegarde du FR).
+  // Le bouton n'est actif que pour Service (P2) et Training (P3), et
+  // seulement une fois la version anglaise déjà modifiée manuellement :
+  // régénérer une traduction jamais éditée n'a pas de sens (elle se met
+  // déjà à jour toute seule à chaque sauvegarde du FR).
+  const TRANSLATION_ENGINE_MODULES = new Set(["services", "trainings"]);
   const canRegenerate =
-    moduleKey === "services" && Boolean(translation?.translationEditedAt);
+    TRANSLATION_ENGINE_MODULES.has(moduleKey) &&
+    Boolean(translation?.translationEditedAt);
 
   async function regenerate() {
     if (
@@ -451,6 +453,23 @@ function FieldInput({
         required={field.required}
         value={String(value ?? "")}
         onChange={(e) => onChange(e.target.value)}
+      />
+    );
+  }
+  if (field.type === "list") {
+    const items = Array.isArray(value) ? (value as string[]) : [];
+    return (
+      <Textarea
+        value={items.join("\n")}
+        onChange={(e) =>
+          onChange(
+            e.target.value
+              .split("\n")
+              .map((line) => line.trim())
+              .filter((line) => line.length > 0),
+          )
+        }
+        className="min-h-32"
       />
     );
   }
