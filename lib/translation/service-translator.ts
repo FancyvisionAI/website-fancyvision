@@ -17,7 +17,12 @@ import { rateLimit } from "@/lib/rate-limit";
 // ============================================================
 
 const ANTHROPIC_MODEL = "claude-sonnet-5";
-const GEMINI_MODEL = "gemini-2.5-flash";
+// gemini-2.5-flash a été retiré par Google (retrait anticipé avant la date
+// officielle du 16/10/2026, confirmé par erreur API réelle "This model
+// models/gemini-2.5-flash is no longer ..."). gemini-3.5-flash est le
+// remplacement stable documenté par Google, toujours éligible Free Tier
+// sans la mention "accès limité" qui s'applique à gemini-3.6/3.7-flash.
+const GEMINI_MODEL = "gemini-3.5-flash";
 
 // ---- Arbre Tiptap : uniquement ce dont on a besoin ici ----
 type TiptapNode = {
