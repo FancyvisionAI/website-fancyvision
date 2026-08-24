@@ -16,6 +16,10 @@ import {
   beginTrainingTranslation,
   finishTrainingTranslation,
 } from "@/lib/translation/training-translator";
+import {
+  beginArticleTranslation,
+  finishArticleTranslation,
+} from "@/lib/translation/article-translator";
 import { adminContentSchema } from "@/lib/validators";
 
 /**
@@ -38,6 +42,17 @@ async function triggerTrainingTranslation(frId: string, userId: string) {
   const translation = await beginTrainingTranslation(frId);
   if (translation.proceed) {
     after(() => finishTrainingTranslation(frId, translation.enId, userId));
+  }
+}
+
+/**
+ * Prototype P4 : Article uniquement. Même principe que
+ * triggerServiceTranslation ci-dessus.
+ */
+async function triggerArticleTranslation(frId: string, userId: string) {
+  const translation = await beginArticleTranslation(frId);
+  if (translation.proceed) {
+    after(() => finishArticleTranslation(frId, translation.enId, userId));
   }
 }
 
@@ -218,6 +233,7 @@ export async function POST(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      await triggerArticleTranslation(result.id, session.user.id);
       break;
     case "team":
       result = await db.teamMember.create({
@@ -379,8 +395,8 @@ export async function PATCH(request: Request) {
       }
       break;
     }
-    case "articles":
-      await db.article.update({
+    case "articles": {
+      const updatedArticle = await db.article.update({
         where: { id },
         data: {
           title: string(data.title),
@@ -395,7 +411,11 @@ export async function PATCH(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      if (updatedArticle.locale === "fr" && !updatedArticle.translationOfId) {
+        await triggerArticleTranslation(updatedArticle.id, session.user.id);
+      }
       break;
+    }
     case "team":
       await db.teamMember.update({
         where: { id },

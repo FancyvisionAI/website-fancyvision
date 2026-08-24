@@ -9,12 +9,16 @@ import {
   beginTrainingTranslation,
   finishTrainingTranslation,
 } from "@/lib/translation/training-translator";
+import {
+  beginArticleTranslation,
+  finishArticleTranslation,
+} from "@/lib/translation/article-translator";
 
 /**
- * Déclenchement manuel explicite ("Régénérer") — prototypes Service (P2)
- * et Training (P3) UNIQUEMENT. Aucun autre module n'est accepté ici,
- * volontairement : la généralisation à Article/Page/CaseStudy/Faq/Event
- * est hors périmètre, même si le code le permettrait techniquement.
+ * Déclenchement manuel explicite ("Régénérer") — prototypes Service (P2),
+ * Training (P3) et Article (P4) UNIQUEMENT. Aucun autre module n'est
+ * accepté ici, volontairement : la généralisation à Page/CaseStudy/Faq/
+ * Event est hors périmètre, même si le code le permettrait techniquement.
  */
 export async function POST(request: Request) {
   const session = await auth();
@@ -51,9 +55,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ started: true, enId: result.enId });
   }
 
+  if (body.module === "articles") {
+    const result = await beginArticleTranslation(body.id, { force: true });
+    if (!result.proceed)
+      return NextResponse.json({ error: result.reason }, { status: 409 });
+    after(() =>
+      finishArticleTranslation(body.id!, result.enId, session.user.id),
+    );
+    return NextResponse.json({ started: true, enId: result.enId });
+  }
+
   return NextResponse.json(
     {
-      error: "Ce prototype ne gère que les modules 'services' et 'trainings'.",
+      error:
+        "Ce prototype ne gère que les modules 'services', 'trainings' et 'articles'.",
     },
     { status: 400 },
   );
