@@ -273,15 +273,20 @@ function TranslationBlock({
     ? (item.translations as Item[])
     : [];
   const translation = translations[0] ?? null;
-  // Le bouton n'est actif que pour Service (P2), Training (P3) et
-  // Article (P4), et seulement une fois la version anglaise déjà
+  // Le bouton n'est actif que pour Service (P2), Training (P3), Article
+  // (P4) et Page (P5), et seulement une fois la version anglaise déjà
   // modifiée manuellement : régénérer une traduction jamais éditée n'a
   // pas de sens (elle se met déjà à jour toute seule à chaque
-  // sauvegarde du FR).
+  // sauvegarde du FR). Pour Page, une page exclue (accueil, légales,
+  // formation-ia-*) peut afficher un bouton actif si elle a déjà une EN
+  // éditée manuellement (cas d'"accueil"), mais le clic échoue toujours
+  // côté serveur — l'exclusion est garantie dans beginPageTranslation,
+  // pas ici.
   const TRANSLATION_ENGINE_MODULES = new Set([
     "services",
     "trainings",
     "articles",
+    "pages",
   ]);
   const canRegenerate =
     TRANSLATION_ENGINE_MODULES.has(moduleKey) &&

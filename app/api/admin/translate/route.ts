@@ -13,12 +13,20 @@ import {
   beginArticleTranslation,
   finishArticleTranslation,
 } from "@/lib/translation/article-translator";
+import {
+  beginPageTranslation,
+  finishPageTranslation,
+} from "@/lib/translation/page-translator";
 
 /**
  * Déclenchement manuel explicite ("Régénérer") — prototypes Service (P2),
- * Training (P3) et Article (P4) UNIQUEMENT. Aucun autre module n'est
- * accepté ici, volontairement : la généralisation à Page/CaseStudy/Faq/
- * Event est hors périmètre, même si le code le permettrait techniquement.
+ * Training (P3), Article (P4) et Page (P5) UNIQUEMENT. Aucun autre
+ * module n'est accepté ici, volontairement : la généralisation à
+ * CaseStudy/Faq/Event est hors périmètre, même si le code le
+ * permettrait techniquement. Pour Page, `beginPageTranslation` refuse
+ * lui-même les pages exclues (accueil, légales, formation-ia-*) même
+ * avec `force: true` — cette route ne peut jamais contourner cette
+ * règle.
  */
 export async function POST(request: Request) {
   const session = await auth();
@@ -65,10 +73,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ started: true, enId: result.enId });
   }
 
+  if (body.module === "pages") {
+    const result = await beginPageTranslation(body.id, { force: true });
+    if (!result.proceed)
+      return NextResponse.json({ error: result.reason }, { status: 409 });
+    after(() => finishPageTranslation(body.id!, result.enId, session.user.id));
+    return NextResponse.json({ started: true, enId: result.enId });
+  }
+
   return NextResponse.json(
     {
       error:
-        "Ce prototype ne gère que les modules 'services', 'trainings' et 'articles'.",
+        "Ce prototype ne gère que les modules 'services', 'trainings', 'articles' et 'pages'.",
     },
     { status: 400 },
   );

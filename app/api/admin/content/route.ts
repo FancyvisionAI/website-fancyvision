@@ -20,6 +20,10 @@ import {
   beginArticleTranslation,
   finishArticleTranslation,
 } from "@/lib/translation/article-translator";
+import {
+  beginPageTranslation,
+  finishPageTranslation,
+} from "@/lib/translation/page-translator";
 import { adminContentSchema } from "@/lib/validators";
 
 /**
@@ -53,6 +57,19 @@ async function triggerArticleTranslation(frId: string, userId: string) {
   const translation = await beginArticleTranslation(frId);
   if (translation.proceed) {
     after(() => finishArticleTranslation(frId, translation.enId, userId));
+  }
+}
+
+/**
+ * Prototype P5 : Page uniquement, périmètre restreint à
+ * title/headline/description/SEO. `beginPageTranslation` applique
+ * lui-même l'exclusion (accueil, pages légales, formation-ia-*) avant
+ * toute autre logique.
+ */
+async function triggerPageTranslation(frId: string, userId: string) {
+  const translation = await beginPageTranslation(frId);
+  if (translation.proceed) {
+    after(() => finishPageTranslation(frId, translation.enId, userId));
   }
 }
 
@@ -174,6 +191,7 @@ export async function POST(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      await triggerPageTranslation(result.id, session.user.id);
       break;
     case "services":
       result = await db.service.create({
@@ -332,8 +350,8 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Données invalides." }, { status: 400 });
   const { module: moduleKey, id, data } = parsed.data;
   switch (moduleKey) {
-    case "pages":
-      await db.page.update({
+    case "pages": {
+      const updatedPage = await db.page.update({
         where: { id },
         data: {
           title: string(data.title),
@@ -344,7 +362,11 @@ export async function PATCH(request: Request) {
           publishedAt: status(data.status) === "PUBLISHED" ? new Date() : null,
         },
       });
+      if (updatedPage.locale === "fr" && !updatedPage.translationOfId) {
+        await triggerPageTranslation(updatedPage.id, session.user.id);
+      }
       break;
+    }
     case "services": {
       const updatedService = await db.service.update({
         where: { id },
