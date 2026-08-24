@@ -373,7 +373,7 @@ function TranslationBlock({
           title={
             canRegenerate
               ? undefined
-              : moduleKey !== "services"
+              : !TRANSLATION_ENGINE_MODULES.has(moduleKey)
                 ? "Bientôt disponible pour ce module"
                 : "Disponible uniquement après une modification manuelle de la version anglaise"
           }
@@ -513,7 +513,7 @@ function FieldInput({
   if (field.type === "relation") {
     return (
       <select
-        className="h-12 rounded-xl border border-border bg-canvas px-4"
+        className="h-12 rounded-xl border border-border bg-canvas px-4 text-ink"
         value={String(value ?? "")}
         onChange={(e) => onChange(e.target.value || null)}
       >
@@ -529,7 +529,7 @@ function FieldInput({
   if (field.type === "select") {
     return (
       <select
-        className="h-12 rounded-xl border border-border bg-canvas px-4"
+        className="h-12 rounded-xl border border-border bg-canvas px-4 text-ink"
         value={String(value ?? field.options?.[0]?.value ?? "")}
         onChange={(e) => onChange(e.target.value)}
       >
