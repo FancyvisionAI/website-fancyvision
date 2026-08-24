@@ -184,11 +184,13 @@ export const contentRepository = {
       }),
     );
   },
-  faqs: cache(() => {
-    return db.faq.findMany({
-      where: { visible: true },
-      orderBy: { order: "asc" },
-    });
+  faqs: cache((locale: string = routing.defaultLocale) => {
+    return findLocalizedList(locale, (loc) =>
+      db.faq.findMany({
+        where: { visible: true, locale: loc },
+        orderBy: { order: "asc" },
+      }),
+    );
   }),
   team: cache(() => {
     return db.teamMember.findMany({
@@ -289,16 +291,19 @@ export const contentRepository = {
           take: 6,
         }),
       ),
-      db.faq.findMany({
-        where: {
-          visible: true,
-          OR: [
-            { question: { contains: q, mode: "insensitive" } },
-            { answer: { contains: q, mode: "insensitive" } },
-          ],
-        },
-        take: 6,
-      }),
+      findLocalizedList(locale, (loc) =>
+        db.faq.findMany({
+          where: {
+            visible: true,
+            locale: loc,
+            OR: [
+              { question: { contains: q, mode: "insensitive" } },
+              { answer: { contains: q, mode: "insensitive" } },
+            ],
+          },
+          take: 6,
+        }),
+      ),
     ]);
     return [
       ...services.map((item) => ({

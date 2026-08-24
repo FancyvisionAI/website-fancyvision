@@ -55,7 +55,9 @@ async function itemsFor(moduleKey: string) {
         orderBy: { updatedAt: "desc" },
       });
     case "faq":
-      return db.faq.findMany({ orderBy: { order: "asc" } });
+      return db.faq.findMany({
+        orderBy: [{ locale: "asc" }, { order: "asc" }],
+      });
     case "testimonials":
       return db.testimonial.findMany({ orderBy: { order: "asc" } });
     case "contacts":

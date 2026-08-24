@@ -22,7 +22,7 @@ export default async function ServicesPage() {
   const [page, services, faqs] = await Promise.all([
     contentRepository.page("services", locale),
     contentRepository.services(false, locale),
-    contentRepository.faqs(),
+    contentRepository.faqs(locale),
   ]);
   if (!page) notFound();
   const consulting = services.filter(

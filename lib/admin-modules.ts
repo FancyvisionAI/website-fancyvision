@@ -38,6 +38,11 @@ const statusOptions = [
   { label: "Archivé", value: "ARCHIVED" },
 ];
 
+const localeOptions = [
+  { label: "Français", value: "fr" },
+  { label: "English", value: "en" },
+];
+
 const difficultyOptions = [
   { label: "Débutant", value: "BEGINNER" },
   { label: "Intermédiaire", value: "INTERMEDIATE" },
@@ -225,9 +230,16 @@ export const adminModules: Record<string, AdminModule> = {
   },
   faq: {
     title: "Questions fréquentes",
-    description: "Questions, réponses, catégories, ordre et visibilité.",
+    description:
+      "Questions, réponses, langue, catégories, ordre et visibilité.",
     singular: "question",
     fields: [
+      {
+        name: "locale",
+        label: "Langue",
+        type: "select",
+        options: localeOptions,
+      },
       { name: "category", label: "Catégorie", required: true },
       { name: "question", label: "Question", required: true },
       { name: "answer", label: "Réponse", type: "textarea", required: true },

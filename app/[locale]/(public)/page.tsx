@@ -73,7 +73,7 @@ export default async function HomePage() {
     contentRepository.page("accueil", locale),
     contentRepository.services(false, locale),
     contentRepository.caseStudies(locale),
-    contentRepository.faqs(),
+    contentRepository.faqs(locale),
     contentRepository.testimonials(),
     contentRepository.articles({ take: 3, locale }),
     contentRepository.servicesByCategory("agents-ia", locale),

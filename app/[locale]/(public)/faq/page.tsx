@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { FaqList } from "@/components/public/faq-list";
 import { PageHero } from "@/components/public/page-hero";
@@ -15,7 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function FaqPage() {
   const t = await getTranslations("Pages.faq");
-  const faqs = await contentRepository.faqs();
+  const locale = await getLocale();
+  const faqs = await contentRepository.faqs(locale);
 
   return (
     <>

@@ -105,6 +105,7 @@ const difficulty = (value: unknown) =>
   Object.values(Difficulty).includes(value as Difficulty)
     ? (value as Difficulty)
     : Difficulty.ALL_LEVELS;
+const faqLocale = (value: unknown) => (value === "en" ? "en" : "fr");
 
 async function requireAdmin() {
   const session = await auth();
@@ -290,6 +291,7 @@ export async function POST(request: Request) {
     case "faq":
       result = await db.faq.create({
         data: {
+          locale: faqLocale(data.locale),
           category: string(data.category),
           question: string(data.question),
           answer: string(data.answer),
@@ -476,6 +478,7 @@ export async function PATCH(request: Request) {
       await db.faq.update({
         where: { id },
         data: {
+          locale: faqLocale(data.locale),
           category: string(data.category),
           question: string(data.question),
           answer: string(data.answer),

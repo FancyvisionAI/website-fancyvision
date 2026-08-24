@@ -399,6 +399,7 @@ model CaseStudy {
 
 model Faq {
   id        String   @id @default(cuid())
+  locale    String   @default("fr")
   category  String
   question  String
   answer    String   @db.Text
@@ -406,6 +407,8 @@ model Faq {
   visible   Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([locale, order])
 }
 
 model Testimonial {
