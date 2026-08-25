@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Minus, Plus, Search, X } from "lucide-react";
+import { ChevronDown, Menu, Plus, Search, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -14,15 +14,13 @@ import type {
 import { LocaleSwitcher } from "@/components/public/locale-switcher";
 import { Link } from "@/i18n/navigation";
 
-type Item = { id: string; label: string; url: string };
+type OpenSection = "services" | "formations" | "sectors" | null;
 
 export function MobileNav({
-  items,
   services,
   trainings,
   sectors,
 }: {
-  items: Item[];
   services: NavigationService[];
   trainings: NavigationTraining[];
   sectors: NavigationSector[];
@@ -30,13 +28,11 @@ export function MobileNav({
   const t = useTranslations("MobileNav");
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [sectorsOpen, setSectorsOpen] = useState(false);
+  const [openSection, setOpenSection] = useState<OpenSection>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const close = useCallback(() => {
     setOpen(false);
-    setServicesOpen(false);
-    setSectorsOpen(false);
+    setOpenSection(null);
   }, []);
 
   useEffect(() => setMounted(true), []);
@@ -55,6 +51,9 @@ export function MobileNav({
       window.removeEventListener("keydown", closeFromKeyboard);
     };
   }, [close, open]);
+
+  const toggleSection = (section: Exclude<OpenSection, null>) =>
+    setOpenSection((current) => (current === section ? null : section));
 
   const overlay = mounted && open
     ? createPortal(
@@ -77,7 +76,7 @@ export function MobileNav({
                 height={32}
                 className="size-8 shrink-0"
               />
-              Sapiens-IA<span className="text-cobalt">.</span>
+              Sapiens-IA
             </Link>
             <div className="flex items-center gap-3">
               <LocaleSwitcher />
@@ -96,43 +95,90 @@ export function MobileNav({
             <button
               type="button"
               className="flex w-full items-center justify-between border-b border-lime py-4 text-left text-[1.15rem] font-medium tracking-[-0.025em]"
-              onClick={() => {
-                setServicesOpen((value) => !value);
-                setSectorsOpen(false);
-              }}
-              aria-expanded={servicesOpen}
+              onClick={() => toggleSection("services")}
+              aria-expanded={openSection === "services"}
             >
               {t("services")}
-              {servicesOpen ? <Minus className="size-5" /> : <Plus className="size-5" />}
+              <ChevronDown
+                aria-hidden="true"
+                className={`size-5 shrink-0 transition-transform duration-200 ${
+                  openSection === "services" ? "rotate-180" : ""
+                }`}
+              />
             </button>
-            {servicesOpen && (
+            {openSection === "services" && (
               <div className="my-2 rounded-card bg-accent px-5 text-white shadow-[0_12px_32px_rgba(10,17,32,.3)]">
-                <MobileGroup title={t("consulting")} items={services.filter((item) => item.categorySlug === "conseil")} prefix="/services" close={close} />
-                <MobileGroup title={t("data")} items={services.filter((item) => item.categorySlug === "data")} prefix="/services" close={close} />
-                <MobileGroup title={t("corporateTraining")} items={trainings.filter((item) => item.categorySlug === "entreprise")} prefix="/formations" close={close} />
-                <MobileGroup title={t("individualTraining")} items={trainings.filter((item) => item.categorySlug === "particuliers")} prefix="/formations" close={close} />
+                <MobileGroup
+                  title={t("consulting")}
+                  items={services.filter((item) => item.categorySlug === "conseil")}
+                  prefix="/services"
+                  close={close}
+                />
+                <MobileGroup
+                  title={t("data")}
+                  items={services.filter((item) => item.categorySlug === "data")}
+                  prefix="/services"
+                  close={close}
+                />
               </div>
             )}
+
+            <button
+              type="button"
+              className="flex w-full items-center justify-between border-b border-lime py-4 text-left text-[1.15rem] font-medium tracking-[-0.025em]"
+              onClick={() => toggleSection("formations")}
+              aria-expanded={openSection === "formations"}
+            >
+              {t("formations")}
+              <ChevronDown
+                aria-hidden="true"
+                className={`size-5 shrink-0 transition-transform duration-200 ${
+                  openSection === "formations" ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {openSection === "formations" && (
+              <div className="my-2 rounded-card bg-accent px-5 text-white shadow-[0_12px_32px_rgba(10,17,32,.3)]">
+                <MobileGroup
+                  title={t("corporateTraining")}
+                  items={trainings.filter((item) => item.categorySlug === "entreprise")}
+                  prefix="/formations"
+                  close={close}
+                />
+                <MobileGroup
+                  title={t("individualTraining")}
+                  items={trainings.filter(
+                    (item) => item.categorySlug === "particuliers",
+                  )}
+                  prefix="/formations"
+                  close={close}
+                />
+              </div>
+            )}
+
             <Link
-              href="/#solutions-ia"
+              href="/solutions-ia"
               className="flex items-center border-b border-lime py-4 text-[1.15rem] font-medium tracking-[-0.025em]"
               onClick={close}
             >
               {t("solutionsAi")}
             </Link>
+
             <button
               type="button"
               className="flex w-full items-center justify-between border-b border-lime py-4 text-left text-[1.15rem] font-medium tracking-[-0.025em]"
-              onClick={() => {
-                setSectorsOpen((value) => !value);
-                setServicesOpen(false);
-              }}
-              aria-expanded={sectorsOpen}
+              onClick={() => toggleSection("sectors")}
+              aria-expanded={openSection === "sectors"}
             >
               {t("sectors")}
-              {sectorsOpen ? <Minus className="size-5" /> : <Plus className="size-5" />}
+              <ChevronDown
+                aria-hidden="true"
+                className={`size-5 shrink-0 transition-transform duration-200 ${
+                  openSection === "sectors" ? "rotate-180" : ""
+                }`}
+              />
             </button>
-            {sectorsOpen && (
+            {openSection === "sectors" && (
               <div className="my-2 rounded-card bg-gradient-to-br from-accent to-cobalt-strong p-5 text-white shadow-[0_12px_32px_rgba(10,17,32,.3)]">
                 <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.15em] text-cobalt-strong">
                   {t("ourSectors")}
@@ -151,16 +197,7 @@ export function MobileNav({
                 </div>
               </div>
             )}
-            {items.map((item) => (
-              <Link
-                key={item.id}
-                href={item.url}
-                className="flex items-center border-b border-lime py-4 text-[1.15rem] font-medium tracking-[-0.025em]"
-                onClick={close}
-              >
-                {item.label}
-              </Link>
-            ))}
+
             <Link
               href="/blog"
               className="flex items-center border-b border-lime py-4 text-[1.15rem] font-medium tracking-[-0.025em]"

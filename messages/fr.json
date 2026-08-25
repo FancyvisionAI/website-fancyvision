@@ -18,8 +18,7 @@
   },
   "Header": {
     "homeAriaLabel": "Sapiens-IA, accueil",
-    "bookAppointment": "Audit gratuit",
-    "trainingNavLabel": "Formation"
+    "bookAppointment": "Audit gratuit"
   },
   "LocaleSwitcher": {
     "ariaLabel": "Changer de langue"
@@ -30,12 +29,13 @@
   },
   "DesktopNav": {
     "services": "Nos services",
+    "formations": "Nos formations",
     "sectors": "Secteurs",
-    "solutionsAi": "Solutions IA",
+    "solutionsAi": "Nos solutions et agents IA",
     "blog": "Blog",
     "contact": "Contact",
-    "consulting": "Conseil",
-    "data": "Data",
+    "consulting": "Conseil IA",
+    "data": "Conseil Data IA",
     "corporateTraining": "Formation en entreprise",
     "individualTraining": "Formations pour particuliers",
     "allCorporateTrainings": "Toutes nos formations en entreprise",
@@ -47,12 +47,13 @@
     "navigationAriaLabel": "Navigation principale",
     "closeMenu": "Fermer le menu",
     "services": "Nos services",
-    "consulting": "Conseil",
-    "data": "Data",
+    "formations": "Nos formations",
+    "consulting": "Conseil IA",
+    "data": "Conseil Data IA",
     "corporateTraining": "Formation en entreprise",
     "individualTraining": "Formation particuliers",
     "sectors": "Secteurs",
-    "solutionsAi": "Solutions IA",
+    "solutionsAi": "Nos solutions et agents IA",
     "blog": "Blog",
     "contact": "Contact",
     "ourSectors": "Nos secteurs d’expertise",

@@ -1,8 +1,8 @@
 "use client";
 
-import { Minus, Plus } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type {
   NavigationSector,
@@ -11,16 +11,18 @@ import type {
 } from "@/components/public/header";
 import { Link } from "@/i18n/navigation";
 
-type Item = { id: string; label: string; url: string };
-type OpenMenu = "services" | "sectors" | null;
+type OpenMenu = "services" | "formations" | "sectors" | null;
+
+// Délai de grâce avant fermeture au survol : évite qu'un mouvement de
+// souris rapide entre le déclencheur et le panneau (ou un léger
+// dépassement du panneau) ne ferme le menu par erreur.
+const CLOSE_DELAY = 150;
 
 export function DesktopNav({
-  items,
   services,
   trainings,
   sectors,
 }: {
-  items: Item[];
   services: NavigationService[];
   trainings: NavigationTraining[];
   sectors: NavigationSector[];
@@ -28,13 +30,39 @@ export function DesktopNav({
   const t = useTranslations("DesktopNav");
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = useCallback(() => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  }, []);
+
+  const scheduleClose = useCallback(() => {
+    cancelClose();
+    closeTimeoutRef.current = setTimeout(() => setOpenMenu(null), CLOSE_DELAY);
+  }, [cancelClose]);
+
+  const openOnHover = useCallback(
+    (menu: Exclude<OpenMenu, null>) => {
+      cancelClose();
+      setOpenMenu(menu);
+    },
+    [cancelClose],
+  );
+
+  const closeNow = useCallback(() => {
+    cancelClose();
+    setOpenMenu(null);
+  }, [cancelClose]);
 
   useEffect(() => {
     const closeFromOutside = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpenMenu(null);
+      if (!rootRef.current?.contains(event.target as Node)) closeNow();
     };
     const closeFromKeyboard = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenMenu(null);
+      if (event.key === "Escape") closeNow();
     };
     document.addEventListener("mousedown", closeFromOutside);
     document.addEventListener("keydown", closeFromKeyboard);
@@ -42,7 +70,11 @@ export function DesktopNav({
       document.removeEventListener("mousedown", closeFromOutside);
       document.removeEventListener("keydown", closeFromKeyboard);
     };
-  }, []);
+  }, [closeNow]);
+
+  // Nettoyage du timer de fermeture en attente si le composant démonte
+  // pendant le délai de grâce.
+  useEffect(() => () => cancelClose(), [cancelClose]);
 
   const consulting = services.filter((item) => item.categorySlug === "conseil");
   const data = services.filter((item) => item.categorySlug === "data");
@@ -53,87 +85,129 @@ export function DesktopNav({
   const sectorColumnSize = Math.ceil(sectors.length / 3);
 
   return (
-    <div ref={rootRef} className="hidden lg:block">
+    <div
+      ref={rootRef}
+      className="hidden lg:block"
+      onMouseLeave={scheduleClose}
+    >
       <nav className="flex items-center justify-center gap-6 xl:gap-8">
         <MenuButton
           label={t("services")}
           open={openMenu === "services"}
+          onMouseEnter={() => openOnHover("services")}
           onClick={() =>
             setOpenMenu((current) => (current === "services" ? null : "services"))
           }
         />
+        <MenuButton
+          label={t("formations")}
+          open={openMenu === "formations"}
+          onMouseEnter={() => openOnHover("formations")}
+          onClick={() =>
+            setOpenMenu((current) =>
+              current === "formations" ? null : "formations",
+            )
+          }
+        />
         <Link
-          href="/#solutions-ia"
+          href="/solutions-ia"
           className="py-7 text-sm font-medium transition hover:text-cobalt"
-          onClick={() => setOpenMenu(null)}
+          onMouseEnter={closeNow}
+          onClick={closeNow}
         >
           {t("solutionsAi")}
         </Link>
         <MenuButton
           label={t("sectors")}
           open={openMenu === "sectors"}
+          onMouseEnter={() => openOnHover("sectors")}
           onClick={() =>
             setOpenMenu((current) => (current === "sectors" ? null : "sectors"))
           }
         />
-        {items.map((item) => (
-          <Link
-            key={item.id}
-            href={item.url}
-            className="py-7 text-sm font-medium transition hover:text-cobalt"
-            onClick={() => setOpenMenu(null)}
-          >
-            {item.label}
-          </Link>
-        ))}
         <Link
           href="/blog"
           className="py-7 text-sm font-medium transition hover:text-cobalt"
-          onClick={() => setOpenMenu(null)}
+          onMouseEnter={closeNow}
+          onClick={closeNow}
         >
           {t("blog")}
         </Link>
         <Link
           href="/contact"
           className="py-7 text-sm font-medium transition hover:text-cobalt"
-          onClick={() => setOpenMenu(null)}
+          onMouseEnter={closeNow}
+          onClick={closeNow}
         >
           {t("contact")}
         </Link>
       </nav>
 
       {openMenu === "services" && (
-        <div className="absolute inset-x-0 top-full border-t border-white/10 bg-accent text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]">
-          <div className="container-shell grid grid-cols-4 border-l border-white/15">
-            <CompactColumn title={t("consulting")} items={consulting} prefix="/services" />
-            <CompactColumn title={t("data")} items={data} prefix="/services" />
+        <div
+          className="absolute inset-x-0 top-full border-t border-white/10 bg-accent text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]"
+          onMouseEnter={cancelClose}
+        >
+          <div className="container-shell grid grid-cols-2 border-l border-white/15">
+            <CompactColumn
+              title={t("consulting")}
+              items={consulting}
+              prefix="/services"
+              onNavigate={closeNow}
+            />
+            <CompactColumn
+              title={t("data")}
+              items={data}
+              prefix="/services"
+              onNavigate={closeNow}
+            />
+          </div>
+        </div>
+      )}
+
+      {openMenu === "formations" && (
+        <div
+          className="absolute inset-x-0 top-full border-t border-white/10 bg-accent text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]"
+          onMouseEnter={cancelClose}
+        >
+          <div className="container-shell grid grid-cols-2 border-l border-white/15">
             <CompactColumn
               title={t("corporateTraining")}
               items={corporate}
               prefix="/formations"
               footer={{ label: t("allCorporateTrainings"), href: "/formations" }}
+              onNavigate={closeNow}
             />
             <CompactColumn
               title={t("individualTraining")}
               items={privateTrainings}
               prefix="/formations"
               footer={{ label: t("allIndividualTrainings"), href: "/formations" }}
+              onNavigate={closeNow}
             />
           </div>
         </div>
       )}
 
       {openMenu === "sectors" && (
-        <div className="absolute inset-x-0 top-full border-t border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]">
+        <div
+          className="absolute inset-x-0 top-full border-t border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]"
+          onMouseEnter={cancelClose}
+        >
           <div className="container-shell grid min-h-[20rem] grid-cols-3 border-l border-white/15">
             <SectorColumn
               title={t("ourSectors")}
               items={sectors.slice(0, sectorColumnSize)}
+              onNavigate={closeNow}
             />
             <SectorColumn
               items={sectors.slice(sectorColumnSize, sectorColumnSize * 2)}
+              onNavigate={closeNow}
             />
-            <SectorColumn items={sectors.slice(sectorColumnSize * 2)} />
+            <SectorColumn
+              items={sectors.slice(sectorColumnSize * 2)}
+              onNavigate={closeNow}
+            />
           </div>
         </div>
       )}
@@ -144,21 +218,29 @@ export function DesktopNav({
 function MenuButton({
   label,
   open,
+  onMouseEnter,
   onClick,
 }: {
   label: string;
   open: boolean;
+  onMouseEnter: () => void;
   onClick: () => void;
 }) {
   return (
     <button
       type="button"
-      className="flex items-center gap-2 py-7 text-sm font-medium transition hover:text-cobalt"
+      className="flex items-center gap-1.5 py-7 text-sm font-medium transition hover:text-cobalt"
+      onMouseEnter={onMouseEnter}
       onClick={onClick}
       aria-expanded={open}
     >
       {label}
-      {open ? <Minus className="size-3.5" /> : <Plus className="size-3.5" />}
+      <ChevronDown
+        aria-hidden="true"
+        className={`size-3.5 shrink-0 transition-transform duration-200 ${
+          open ? "rotate-180" : ""
+        }`}
+      />
     </button>
   );
 }
@@ -168,11 +250,13 @@ function CompactColumn({
   items,
   prefix,
   footer,
+  onNavigate,
 }: {
   title: string;
   items: Array<{ id: string; title: string; slug: string }>;
   prefix: string;
   footer?: { label: string; href: string };
+  onNavigate: () => void;
 }) {
   return (
     <section className="min-h-[19rem] border-r border-white/15 px-7 py-8">
@@ -184,6 +268,7 @@ function CompactColumn({
           <Link
             key={item.id}
             href={`${prefix}/${item.slug}`}
+            onClick={onNavigate}
             className="group flex items-center justify-between gap-4 py-2.5 text-[15px] font-medium text-white/90 transition hover:translate-x-1 hover:text-white"
           >
             {item.title}
@@ -194,6 +279,7 @@ function CompactColumn({
       {footer && (
         <Link
           href={footer.href}
+          onClick={onNavigate}
           className="mt-4 inline-block text-sm font-semibold text-white transition hover:text-cobalt-strong"
         >
           {footer.label}
@@ -206,9 +292,11 @@ function CompactColumn({
 function SectorColumn({
   title,
   items,
+  onNavigate,
 }: {
   title?: string;
   items: NavigationSector[];
+  onNavigate: () => void;
 }) {
   return (
     <section className="border-r border-white/15 px-8 py-10">
@@ -222,6 +310,7 @@ function SectorColumn({
           <Link
             key={sector.id}
             href={`/solutions-par-secteur/${sector.slug}`}
+            onClick={onNavigate}
             className="block w-fit text-base font-semibold transition hover:translate-x-1 hover:text-cobalt-strong"
           >
             {sector.title}

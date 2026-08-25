@@ -34,26 +34,16 @@ export type NavigationSector = {
 export async function Header() {
   const t = await getTranslations("Header");
   const locale = await getLocale();
-  const [menu, services, trainings, sectorServices] = await Promise.all([
-    contentRepository.menu("HEADER", locale),
+  const [services, trainings, sectorServices] = await Promise.all([
     contentRepository.services(false, locale),
     contentRepository.trainings(locale),
     contentRepository.servicesByCategory("secteurs", locale),
   ]);
-  // Nav desktop/mobile suit la structure officielle (M. Bassit) : seuls les
-  // items explicitement listés (Formations) sont repris du menu CMS ;
-  // Solutions IA / Secteurs / Blog / Contact sont ajoutés directement dans
-  // DesktopNav/MobileNav.
-  // Le label CMS (Menu.items, non localisé) est ignoré au profit de la
-  // traduction next-intl pour que la version EN affiche "Training" sans
-  // modifier la donnée Menu FR en base.
-  const items = (menu?.items ?? [])
-    .filter((item) => item.url === "/formations")
-    .map((item) => ({
-      id: item.id,
-      label: t("trainingNavLabel"),
-      url: item.url,
-    }));
+  // Nav desktop/mobile suit la structure officielle (M. Bassit) : Nos
+  // services / Nos formations / Nos solutions et agents IA / Secteurs /
+  // Blog / Contact sont tous construits directement dans DesktopNav /
+  // MobileNav à partir du contenu (services, trainings, secteurs) plutôt
+  // que du menu CMS "HEADER", pour permettre le méga-menu par catégorie.
   const navigationServices: NavigationService[] = services.map((item) => ({
     id: item.id,
     title: item.title,
@@ -90,11 +80,10 @@ export async function Header() {
             className="size-9 shrink-0"
             priority
           />
-          Sapiens-IA<span className="text-cobalt">.</span>
+          Sapiens-IA
         </Link>
 
         <DesktopNav
-          items={items}
           services={navigationServices}
           trainings={navigationTrainings}
           sectors={navigationSectors}
@@ -113,7 +102,6 @@ export async function Header() {
         <ThemeToggle />
 
         <MobileNav
-          items={items}
           services={navigationServices}
           trainings={navigationTrainings}
           sectors={navigationSectors}

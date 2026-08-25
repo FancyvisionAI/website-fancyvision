@@ -50,7 +50,7 @@ export async function Footer() {
                 height={36}
                 className="size-9 shrink-0"
               />
-              Sapiens-IA<span className="font-editorial text-cobalt-strong">.</span>
+              Sapiens-IA
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">
               {t("description")}
