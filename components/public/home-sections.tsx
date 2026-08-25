@@ -1,6 +1,6 @@
 import type { Article, CaseStudy, Faq, Section, Service, Testimonial, Training } from "@prisma/client";
 import { ArrowRight, ArrowUpRight, Check, MoveRight } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import { ArticleCard } from "@/components/public/article-card";
@@ -54,8 +54,14 @@ function EditorialHeading({
   );
 }
 
-export async function HeroSection({ data }: { data: Record<string, unknown> }) {
-  const t = await getTranslations("HomeSections");
+export async function HeroSection({
+  data,
+  locale,
+}: {
+  data: Record<string, unknown>;
+  locale: string;
+}) {
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   const title = text(data.title);
   const [firstLine, ...remaining] = title.split("\n");
   return (
@@ -124,11 +130,13 @@ export function LogosSection({ data }: { data: Record<string, unknown> }) {
 export async function ServicesSection({
   data,
   services,
+  locale,
 }: {
   data: Record<string, unknown>;
   services: HomeService[];
+  locale: string;
 }) {
-  const t = await getTranslations("HomeSections");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   const categorySlug = text(data.categorySlug);
   const visibleServices = categorySlug
     ? services.filter((service) => service.category?.slug === categorySlug)
@@ -188,10 +196,16 @@ export async function ServicesSection({
 // Sélection éditoriale d'agents IA (données réelles, catégorie "agents-ia").
 // Mise en page volontairement non-uniforme : une carte mise en avant +
 // une pile de cartes compactes, plutôt qu'une grille régulière.
-export async function SolutionsAiSection({ agents }: { agents: HomeService[] }) {
+export async function SolutionsAiSection({
+  agents,
+  locale,
+}: {
+  agents: HomeService[];
+  locale: string;
+}) {
   if (!agents.length) return null;
-  const t = await getTranslations("HomeSections");
-  const tCategories = await getTranslations("Categories");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
+  const tCategories = await getTranslations({ locale, namespace: "Categories" });
   const [featured, ...rest] = agents;
   return (
     <section id="solutions-ia" className="section-pad bg-canvas">
@@ -252,9 +266,15 @@ export async function SolutionsAiSection({ agents }: { agents: HomeService[] }) 
 }
 
 // Sélection éditoriale de secteurs (données réelles, catégorie "secteurs").
-export async function SectorsSection({ items }: { items: HomeService[] }) {
+export async function SectorsSection({
+  items,
+  locale,
+}: {
+  items: HomeService[];
+  locale: string;
+}) {
   if (!items.length) return null;
-  const t = await getTranslations("HomeSections");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section id="secteurs" className="section-pad bg-lime">
       <div className="container-shell">
@@ -301,12 +321,14 @@ export async function SectorsSection({ items }: { items: HomeService[] }) {
 export async function TrainingsSection({
   enterprise,
   individual,
+  locale,
 }: {
   enterprise: HomeTraining[];
   individual: HomeTraining[];
+  locale: string;
 }) {
   if (!enterprise.length && !individual.length) return null;
-  const t = await getTranslations("HomeSections");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section id="formations" className="section-pad bg-canvas">
       <div className="container-shell">
@@ -416,8 +438,14 @@ export function SplitFeature({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export async function CtaSection({ data }: { data: Record<string, unknown> }) {
-  const t = await getTranslations("HomeSections");
+export async function CtaSection({
+  data,
+  locale,
+}: {
+  data: Record<string, unknown>;
+  locale: string;
+}) {
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section className="reference-hero relative overflow-hidden py-20 text-center text-white md:py-24">
       <div className="container-shell relative z-10 flex flex-col items-center">
@@ -452,8 +480,14 @@ type Advantage = {
   stats: Array<{ value: string; label: string }>;
 };
 
-export async function AdvantagesSection({ data }: { data: Record<string, unknown> }) {
-  const t = await getTranslations("HomeSections");
+export async function AdvantagesSection({
+  data,
+  locale,
+}: {
+  data: Record<string, unknown>;
+  locale: string;
+}) {
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   const items = list<Advantage>(data.items);
   return (
     <section className="section-pad overflow-hidden bg-bg">
@@ -502,9 +536,15 @@ export async function AdvantagesSection({ data }: { data: Record<string, unknown
   );
 }
 
-export async function CasesSection({ cases }: { cases: CaseStudy[] }) {
+export async function CasesSection({
+  cases,
+  locale,
+}: {
+  cases: CaseStudy[];
+  locale: string;
+}) {
   if (!cases.length) return null;
-  const t = await getTranslations("HomeSections");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section className="section-pad bg-lime">
       <div className="container-shell">
@@ -609,9 +649,14 @@ type EventPreviewItem = {
   href: string;
 };
 
-export async function EventsPreview({ data }: { data: Record<string, unknown> }) {
-  const t = await getTranslations("HomeSections");
-  const locale = await getLocale();
+export async function EventsPreview({
+  data,
+  locale,
+}: {
+  data: Record<string, unknown>;
+  locale: string;
+}) {
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   const intlLocale = locale === "en" ? "en-US" : "fr-FR";
   const items = list<EventPreviewItem>(data.items).slice(0, 3);
   return (
@@ -710,9 +755,15 @@ export function AboutSection({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export async function BlogPreviewSection({ articles }: { articles: HomeArticle[] }) {
+export async function BlogPreviewSection({
+  articles,
+  locale,
+}: {
+  articles: HomeArticle[];
+  locale: string;
+}) {
   if (!articles.length) return null;
-  const t = await getTranslations("HomeSections");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section className="section-pad bg-canvas">
       <div className="container-shell">
@@ -732,7 +783,7 @@ export async function BlogPreviewSection({ articles }: { articles: HomeArticle[]
         </Reveal>
         <div className="grid gap-x-6 gap-y-12 md:grid-cols-3">
           {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+            <ArticleCard key={article.id} article={article} locale={locale} />
           ))}
         </div>
       </div>
@@ -740,9 +791,15 @@ export async function BlogPreviewSection({ articles }: { articles: HomeArticle[]
   );
 }
 
-export async function TestimonialsSection({ items }: { items: Testimonial[] }) {
+export async function TestimonialsSection({
+  items,
+  locale,
+}: {
+  items: Testimonial[];
+  locale: string;
+}) {
   if (!items.length) return null;
-  const t = await getTranslations("HomeSections");
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section className="section-pad bg-canvas">
       <div className="container-shell border-y border-lime py-16 text-center">
@@ -760,8 +817,14 @@ export async function TestimonialsSection({ items }: { items: Testimonial[] }) {
   );
 }
 
-export async function FaqSection({ items }: { items: Faq[] }) {
-  const t = await getTranslations("HomeSections");
+export async function FaqSection({
+  items,
+  locale,
+}: {
+  items: Faq[];
+  locale: string;
+}) {
+  const t = await getTranslations({ locale, namespace: "HomeSections" });
   return (
     <section id="faq" className="section-pad bg-canvas">
       <div className="container-shell grid gap-12 lg:grid-cols-[.75fr_1fr] lg:gap-20">
@@ -796,28 +859,30 @@ export async function FaqSection({ items }: { items: Faq[] }) {
 export function RenderHomeSection({
   section,
   services,
+  locale,
 }: {
   section: Section;
   services: HomeService[];
+  locale: string;
 }) {
   const data = section.data as Record<string, unknown>;
   switch (section.type) {
     case "hero":
-      return <HeroSection data={data} />;
+      return <HeroSection data={data} locale={locale} />;
     case "logos":
       return <LogosSection data={data} />;
     case "services-intro":
-      return <ServicesSection data={data} services={services} />;
+      return <ServicesSection data={data} services={services} locale={locale} />;
     case "split-feature":
       return <SplitFeature data={data} />;
     case "cta":
-      return <CtaSection data={data} />;
+      return <CtaSection data={data} locale={locale} />;
     case "advantages":
-      return <AdvantagesSection data={data} />;
+      return <AdvantagesSection data={data} locale={locale} />;
     case "process":
       return <ProcessSection data={data} />;
     case "events-preview":
-      return <EventsPreview data={data} />;
+      return <EventsPreview data={data} locale={locale} />;
     case "about":
       return <AboutSection data={data} />;
     default:

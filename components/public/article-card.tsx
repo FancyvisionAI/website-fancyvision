@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
 
 export async function ArticleCard({
   article,
+  locale,
 }: {
   article: {
     slug: string;
@@ -17,9 +18,9 @@ export async function ArticleCard({
     readingTime: number;
     category: { name: string; slug: string } | null;
   };
+  locale: string;
 }) {
-  const locale = await getLocale();
-  const tCategories = await getTranslations("Categories");
+  const tCategories = await getTranslations({ locale, namespace: "Categories" });
   const categoryLabel = article.category?.slug
     ? tCategories.has(article.category.slug)
       ? tCategories(article.category.slug)

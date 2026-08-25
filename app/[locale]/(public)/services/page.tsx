@@ -104,7 +104,7 @@ export default async function ServicesPage({
           </div>
         </div>
       </section>
-      <FaqSection items={faqs} />
+      <FaqSection items={faqs} locale={locale} />
     </>
   );
 }

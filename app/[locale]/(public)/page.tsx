@@ -119,13 +119,19 @@ export default async function HomePage({
         <div key={section.id} className="contents">
           {section.id === firstSplitFeatureId && (
             <>
-              <SolutionsAiSection agents={homeAgents} />
-              <SectorsSection items={homeSectors} />
+              <SolutionsAiSection agents={homeAgents} locale={locale} />
+              <SectorsSection items={homeSectors} locale={locale} />
             </>
           )}
-          {section.type === "cta" && <FaqSection items={homeFaqs} />}
+          {section.type === "cta" && (
+            <FaqSection items={homeFaqs} locale={locale} />
+          )}
           {!HIDDEN_SECTION_TYPES.has(section.type) && (
-            <RenderHomeSection section={section} services={services} />
+            <RenderHomeSection
+              section={section}
+              services={services}
+              locale={locale}
+            />
           )}
           {/* Preuve/crédibilité (études de cas + témoignages) : masquée tant
               qu'aucun contenu réel n'est publié (0 étude de cas, 0
@@ -136,8 +142,8 @@ export default async function HomePage({
           {section.type === "hero" &&
             (cases.length > 0 || testimonials.length > 0) && (
               <>
-                <CasesSection cases={cases} />
-                <TestimonialsSection items={testimonials} />
+                <CasesSection cases={cases} locale={locale} />
+                <TestimonialsSection items={testimonials} locale={locale} />
               </>
             )}
           {section.id === lastSplitFeatureId && (
@@ -145,8 +151,9 @@ export default async function HomePage({
               <TrainingsSection
                 enterprise={homeTrainingsEnterprise}
                 individual={homeTrainingsIndividual}
+                locale={locale}
               />
-              <BlogPreviewSection articles={articles} />
+              <BlogPreviewSection articles={articles} locale={locale} />
             </>
           )}
         </div>

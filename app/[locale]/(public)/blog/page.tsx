@@ -32,7 +32,7 @@ export default async function BlogPage() {
       <section className="section-pad bg-canvas pt-0">
         <div className="container-shell grid gap-x-6 gap-y-16 md:grid-cols-2">
           {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+            <ArticleCard key={article.id} article={article} locale={locale} />
           ))}
         </div>
       </section>
