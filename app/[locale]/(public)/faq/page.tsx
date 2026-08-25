@@ -1,21 +1,31 @@
 import type { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { FaqList } from "@/components/public/faq-list";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Pages.faq");
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Pages.faq" });
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
   };
 }
 
-export default async function FaqPage() {
-  const t = await getTranslations("Pages.faq");
-  const locale = await getLocale();
+export default async function FaqPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "Pages.faq" });
   const faqs = await contentRepository.faqs(locale);
 
   return (

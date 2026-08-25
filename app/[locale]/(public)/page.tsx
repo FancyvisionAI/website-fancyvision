@@ -1,4 +1,4 @@
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import {
@@ -56,8 +56,13 @@ const HOME_TRAINING_INDIVIDUAL_SLUGS = [
   "maitriser-outils-ia-quotidien",
 ];
 
-export default async function HomePage() {
-  const locale = await getLocale();
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const [
     page,
     services,

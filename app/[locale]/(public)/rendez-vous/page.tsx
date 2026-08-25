@@ -4,6 +4,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { AppointmentForm } from "@/components/public/appointment-form";
 import { contentRepository } from "@/lib/repositories/content";
 
+// Formulaire de prise de rendez-vous : garde un rendu par requête (le
+// layout parent utilise désormais l'ISR par défaut, voir Lot 2).
+export const dynamic = "force-dynamic";
+
 export default async function AppointmentPage() {
   const t = await getTranslations("Pages.appointment");
   const locale = await getLocale();

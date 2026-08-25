@@ -1,13 +1,13 @@
 import { ArrowUpRight } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
 
-export async function Footer() {
-  const t = await getTranslations("Footer");
-  const locale = await getLocale();
+export async function Footer({ locale }: { locale: string }) {
+  // Locale reçue en prop, voir header.tsx pour la justification (ISR / Lot 2).
+  const t = await getTranslations({ locale, namespace: "Footer" });
   const [settings, services, trainings] = await Promise.all([
     contentRepository.settings(),
     contentRepository.services(false, locale),

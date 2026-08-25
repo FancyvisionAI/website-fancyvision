@@ -1,23 +1,33 @@
 import type { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Pages.training");
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Pages.training" });
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
   };
 }
 
-export default async function TrainingPage() {
-  const t = await getTranslations("Pages.training");
-  const tCategories = await getTranslations("Categories");
-  const locale = await getLocale();
+export default async function TrainingPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "Pages.training" });
+  const tCategories = await getTranslations({ locale, namespace: "Categories" });
   const [page, enterprise, individual] = await Promise.all([
     contentRepository.page("formation", locale),
     contentRepository.trainingsByCategory("entreprise", locale),

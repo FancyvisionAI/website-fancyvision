@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import { DesktopNav } from "@/components/public/desktop-nav";
@@ -31,9 +31,13 @@ export type NavigationSector = {
   slug: string;
 };
 
-export async function Header() {
-  const t = await getTranslations("Header");
-  const locale = await getLocale();
+export async function Header({ locale }: { locale: string }) {
+  // Locale reçue en prop (depuis app/[locale]/(public)/layout.tsx, qui la
+  // lit via params) plutôt que via getLocale() : getLocale() s'appuie sur
+  // headers(), une Dynamic API Next.js qui empêcherait à elle seule l'ISR
+  // sur toute page utilisant ce composant (voir Lot 2 — ne change pas le
+  // texte/contenu affiché, seulement la façon dont la locale est obtenue).
+  const t = await getTranslations({ locale, namespace: "Header" });
   const [services, trainings, sectorServices] = await Promise.all([
     contentRepository.services(false, locale),
     contentRepository.trainings(locale),

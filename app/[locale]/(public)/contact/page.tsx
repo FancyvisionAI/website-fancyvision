@@ -5,6 +5,10 @@ import { ContactForm } from "@/components/public/contact-form";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
 
+// Formulaire de contact : garde un rendu par requête (le layout parent
+// utilise désormais l'ISR par défaut, voir Lot 2).
+export const dynamic = "force-dynamic";
+
 export default async function ContactPage() {
   const t = await getTranslations("Pages.contact");
   const locale = await getLocale();

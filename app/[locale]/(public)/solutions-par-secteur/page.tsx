@@ -1,22 +1,32 @@
 import type { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Pages.secteurs");
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Pages.secteurs" });
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
   };
 }
 
-export default async function SolutionsParSecteurPage() {
-  const t = await getTranslations("Pages.secteurs");
-  const tCategories = await getTranslations("Categories");
-  const locale = await getLocale();
+export default async function SolutionsParSecteurPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "Pages.secteurs" });
+  const tCategories = await getTranslations({ locale, namespace: "Categories" });
   const secteurs = await contentRepository.servicesByCategory(
     "secteurs",
     locale,

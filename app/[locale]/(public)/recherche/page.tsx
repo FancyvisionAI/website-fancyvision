@@ -5,6 +5,12 @@ import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
 
+// Résultats dépendants du paramètre de recherche : garde un rendu par
+// requête (le layout parent utilise désormais l'ISR par défaut, voir
+// Lot 2). searchParams force déjà un rendu dynamique dans Next.js, mais
+// on le déclare explicitement pour que l'intention soit sans ambiguïté.
+export const dynamic = "force-dynamic";
+
 export default async function SearchPage({
   searchParams,
 }: {
