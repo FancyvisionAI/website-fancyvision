@@ -8,6 +8,7 @@ import {
 } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { seedDev2Content } from "./seed-dev2";
+import { seedSapiensOfficialContent } from "./seed-sapiens-official-content";
 
 const prisma = new PrismaClient();
 
@@ -757,6 +758,10 @@ async function main() {
 
   console.info("Sapiens IA seed terminé.");
   await seedDev2Content(prisma, admin.id);
+  // Doit s'exécuter après seedDev2Content : celui-ci archive tout Service/
+  // Training FR absent de ses propres listes, ce qui écraserait ce contenu
+  // s'il était semé avant.
+  await seedSapiensOfficialContent(prisma);
   console.info("Compte administrateur initialisé: admin@fancyvision.fr");
 }
 

@@ -1,0 +1,2612 @@
+[
+  {
+    "locale": "en",
+    "slug": "secteur-immobilier-annonces",
+    "title": "Real estate listing platforms",
+    "excerpt": "A rapidly digitalizing market (Avito, Mubawab, Sarouty…), with a need to quickly qualify a high volume of listings.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Smart property-to-buyer matching based on criteria and budget",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated moderation and quality control of published listings",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI-assisted price-per-m² estimation based on location and market history (Proprietary)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 0,
+    "translationOfId": null,
+    "id": "cmsxgwn6r0011t75wq52vp54f"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-hotellerie-restauration",
+    "title": "Hotels — Food Service",
+    "excerpt": "Fast-growing tourism (target of 26 million tourists, 2030 World Cup), with pressure on the availability of skilled staff.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "24/7 AI concierge agent: bookings, personalized recommendations",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Yield management and dynamic pricing optimization",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automation of guest reviews and online reputation",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 1,
+    "translationOfId": null,
+    "id": "cmsxgwn7g0015t75w3pya3a3p"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-banques",
+    "title": "Banks",
+    "excerpt": "One of the country's most digitalized banking sectors, with strong compliance requirements.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI-augmented credit risk analysis and scoring",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Real-time fraud and transaction anomaly detection",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Customer advisor chatbot and in-branch advisor assistant (SaaS/Proprietary depending on security requirements)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 2,
+    "translationOfId": null,
+    "id": "cmsxgwn860019t75wvpp8kao0"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-assurances",
+    "title": "Insurance",
+    "excerpt": "A growing market, with the progressive digitalization of underwriting and claims management.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated claims processing and estimation from photos",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Insurance contract analysis and compliance control",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Risk scoring and personalized pricing",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 3,
+    "translationOfId": null,
+    "id": "cmsxgwnae001dt75w5jw9ndij"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-gestion-actifs",
+    "title": "Asset management firms",
+    "excerpt": "The growing Casablanca Finance City (CFC) financial hub, with increasing regulatory reporting requirements.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI financial analyst agent: market watch and decision-support reports",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automation of regulatory reporting and performance reports",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Multi-source dashboard consolidating client portfolios",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 4,
+    "translationOfId": null,
+    "id": "cmsxgwnbc001ht75wg14nxmlu"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-communication",
+    "title": "Communication agencies",
+    "excerpt": "A dynamic creative sector, under pressure on content production timelines and budgets.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI marketing agent: content strategy and campaign optimization",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Multi-format content repurposing and automated editorial calendar",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated competitive and industry watch",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 5,
+    "translationOfId": null,
+    "id": "cmsxgwnlb001lt75wqfyur3pd"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-distribution-automobile",
+    "title": "Automotive distribution",
+    "excerpt": "A growing automotive market, with strong competition between dealers and importers.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI sales agent: showroom prospect qualification and follow-up",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Generation of personalized quotes and sales proposals",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated follow-up for servicing and vehicle renewal",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 6,
+    "translationOfId": null,
+    "id": "cmsxgwnxa001pt75w097rodhu"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-promoteurs-immobiliers",
+    "title": "Real estate developers",
+    "excerpt": "A key sector of the national economy, with strong demand for mid-range housing and residential tourism.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Targeting and qualifying buyer prospects by purchase intent",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automatic generation of brochures and sales materials per development",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Real-time sales reporting for management",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 7,
+    "translationOfId": null,
+    "id": "cmsxgwnz7001tt75w4l3jmw0q"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-enseignement-superieur",
+    "title": "Higher education",
+    "excerpt": "Strong growth in private higher education, with increased competition to attract students.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI assistant for applicant guidance and admissions",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Internal knowledge base to answer student and staff questions",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automation of academic tracking and administrative follow-ups",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 8,
+    "translationOfId": null,
+    "id": "cmsxgwo0h001xt75wq8eym9fc"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-industrie-manufacturiere",
+    "title": "Manufacturing industry",
+    "excerpt": "Morocco positioned as a regional industrial hub (automotive, aerospace, textiles).",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Predictive maintenance of production equipment",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI-automated visual quality control",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated extraction and processing of supplier documents and purchase orders",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 9,
+    "translationOfId": null,
+    "id": "cmsxgwo1j0021t75w1hfe7org"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-presse-audiovisuel",
+    "title": "Press — Radio — TV — Audiovisual",
+    "excerpt": "A media landscape undergoing rapid digital transformation, facing strong competition from social media.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI-assisted generation of articles and SEO content",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Repurposing audiovisual content into multiple digital formats",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated industry news monitoring and curation",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 10,
+    "translationOfId": null,
+    "id": "cmsxgwo2v0025t75w4p4b4x00"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-centres-appels",
+    "title": "Call centers",
+    "excerpt": "Morocco is a major hub for French-speaking offshoring, a high-volume, cost-sensitive sector.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "24/7 AI phone agent for inbound and outbound calls",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Call analysis and objection detection to coach call center agents",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Dissatisfied-customer detector for real-time alerts and escalation",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 11,
+    "translationOfId": null,
+    "id": "cmsxgwo420029t75wpk22qf1z"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-collectivites-territoriales",
+    "title": "Local governments",
+    "excerpt": "Advanced regionalization, with strong citizen expectations for digitalized public services.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Citizen chatbot for information and administrative procedures",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated sorting and routing of citizen requests and complaints",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Territorial management dashboards (budget, projects, indicators)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 12,
+    "translationOfId": null,
+    "id": "cmsxgwo50002dt75we0jzl6gw"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-experts-automobile",
+    "title": "Automotive experts",
+    "excerpt": "A growing appraisal sector, driven by the expanding vehicle fleet and insurance market.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Repair quotes and estimates from a photo of the vehicle",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automation of appraisal reports and their transmission to insurers",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Smart scheduling of appraisal appointments",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 13,
+    "translationOfId": null,
+    "id": "cmsxgwo5k002ht75wsxi31878"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-agences-voyage",
+    "title": "Travel agencies",
+    "excerpt": "Strong growth in domestic and international tourism, with competition from online booking platforms.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI agent for personalizing travel offers and quotes",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated follow-up on unconverted quotes",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "24/7 booking and traveler assistance chatbot (adapted Hospitality/Call Center Agent)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 14,
+    "translationOfId": null,
+    "id": "cmsxgwo68002lt75welnumhia"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-avocats-notaires",
+    "title": "Lawyers and notaries",
+    "excerpt": "A regulated profession, facing a growing volume of contractual and regulatory documentation to process.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Contract analysis and risk clause detection",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI-augmented legal research and regulatory watch",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Assisted drafting of standard legal deeds and correspondence (Proprietary)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 15,
+    "translationOfId": null,
+    "id": "cmsxgwocf002pt75w8k2766r6"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-experts-comptables",
+    "title": "Chartered accountants",
+    "excerpt": "Progressive digitalization of the profession, with growing electronic tax filing obligations.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automated extraction and categorization of supplier invoices",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Consolidated financial dashboard for the firm's clients",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Cash-flow alerts and recurring automatic reports for each client",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 16,
+    "translationOfId": null,
+    "id": "cmsxgwodb002tt75wbz9i1zeu"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-immobilier-annonces",
+    "title": "Plateformes d’annonces immobilières",
+    "excerpt": "Un marché en forte digitalisation (Avito, Mubawab, Sarouty…), besoin de qualifier rapidement un volume élevé d’annonces.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Matching intelligent biens/acheteurs selon critères et budget",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Modération et contrôle qualité automatisé des annonces publiées",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Estimation de prix au m² assistée par IA selon la zone et l’historique de marché (Propriétaire)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 0,
+    "translationOfId": null,
+    "id": "cmsw24mo4000lt7ykybpj6d88"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-hotellerie-restauration",
+    "title": "Hôtels — Restauration",
+    "excerpt": "Tourisme en forte croissance (objectif 26 millions de touristes, Coupe du Monde 2030), tension sur la disponibilité du personnel qualifié.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Agent conciergerie IA 24/7 : réservations, recommandations personnalisées",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Optimisation du yield management et de la tarification dynamique",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automatisation des avis clients et de la réputation en ligne",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 1,
+    "translationOfId": null,
+    "id": "cmsw24mod000nt7ykrvm9m5m7"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-banques",
+    "title": "Banques",
+    "excerpt": "Secteur bancaire parmi les plus digitalisés du pays, fort enjeu de conformité.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Analyse de risque crédit et scoring augmentés par IA",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Détection de fraude et d’anomalies transactionnelles en temps réel",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Chatbot conseiller client et assistant conseiller en agence (SaaS/Propriétaire selon exigences de sécurité)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 2,
+    "translationOfId": null,
+    "id": "cmsw24moq000pt7ykqu6cp4yw"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-assurances",
+    "title": "Assurances",
+    "excerpt": "Marché en croissance, digitalisation progressive de la souscription et de la gestion des sinistres.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Traitement et estimation automatisés des sinistres à partir de photos",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Analyse et contrôle de conformité des contrats d’assurance",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Scoring des risques et tarification personnalisée",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 3,
+    "translationOfId": null,
+    "id": "cmsw24mp1000rt7yk2r3c5irw"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-gestion-actifs",
+    "title": "Sociétés de gestion d’actifs",
+    "excerpt": "Place financière de Casablanca (CFC) en développement, exigence croissante de reporting réglementaire.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Agent analyste financier IA : veille marché et rapports d’aide à la décision",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automatisation du reporting réglementaire et des rapports de performance",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Tableau de bord multi-sources consolidant les portefeuilles clients",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 4,
+    "translationOfId": null,
+    "id": "cmsw24mpb000tt7yk7utfqk6t"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-communication",
+    "title": "Sociétés de communication",
+    "excerpt": "Secteur créatif dynamique, pression sur les délais et les budgets de production de contenu.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Agent marketing IA : stratégie de contenu et optimisation de campagnes",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Recyclage de contenu multi-format et calendrier éditorial automatisé",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Veille concurrentielle et sectorielle automatisée",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 5,
+    "translationOfId": null,
+    "id": "cmsw24mpl000vt7yk1fv8a4im"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-distribution-automobile",
+    "title": "La distribution automobile",
+    "excerpt": "Marché automobile en croissance, forte concurrence entre concessionnaires et importateurs.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Agent commercial IA : qualification et suivi des prospects showroom",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Génération de devis et propositions commerciales personnalisées",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Relance automatisée pour l’entretien et le renouvellement de véhicule",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 6,
+    "translationOfId": null,
+    "id": "cmsw24mpw000xt7yk55gxnmcp"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-promoteurs-immobiliers",
+    "title": "Les promoteurs immobiliers",
+    "excerpt": "Secteur clé de l’économie nationale, forte demande sur le logement intermédiaire et le tourisme résidentiel.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Ciblage et qualification des prospects acquéreurs par intention d’achat",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Génération automatique de brochures et supports commerciaux par programme",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Reporting de commercialisation en temps réel pour la direction",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 7,
+    "translationOfId": null,
+    "id": "cmsw24mqi000zt7yky53bqtjr"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-enseignement-superieur",
+    "title": "L’enseignement supérieur",
+    "excerpt": "Forte croissance de l’enseignement supérieur privé, concurrence accrue pour attirer les étudiants.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Assistant IA d’orientation et d’admission des candidats",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Base de connaissances interne pour répondre aux questions étudiants et personnel",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automatisation du suivi de scolarité et des relances administratives",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 8,
+    "translationOfId": null,
+    "id": "cmsw24mqu0011t7ykoh6w96q3"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-industrie-manufacturiere",
+    "title": "Industrie manufacturière",
+    "excerpt": "Maroc positionné comme hub industriel régional (automobile, aéronautique, textile).",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Maintenance prédictive des équipements de production",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Contrôle qualité visuel automatisé par IA",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Extraction et traitement automatisé des documents fournisseurs et bons de commande",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 9,
+    "translationOfId": null,
+    "id": "cmsw24mrl0013t7yk6k1ldl0p"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-presse-audiovisuel",
+    "title": "Presse — Radio — TV — Audiovisuel",
+    "excerpt": "Paysage médiatique en transformation numérique rapide, forte concurrence des réseaux sociaux.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Génération assistée d’articles et de contenus SEO",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Recyclage de contenu audiovisuel en formats multiples pour le digital",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Veille et curation automatisée de l’actualité sectorielle",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 10,
+    "translationOfId": null,
+    "id": "cmsw24msb0015t7ykzptu9ads"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-centres-appels",
+    "title": "Les centres d’appels",
+    "excerpt": "Le Maroc est un hub majeur de l’offshoring francophone, secteur à fort volume et forte sensibilité aux coûts.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Agent téléphonique IA 24/7 pour appels entrants et sortants",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Analyse des appels et détection des objections pour coacher les téléopérateurs",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Détecteur de clients mécontents pour alerte et escalade en temps réel",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 11,
+    "translationOfId": null,
+    "id": "cmsw24mso0017t7ykt7awzxwe"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-collectivites-territoriales",
+    "title": "Collectivités territoriales",
+    "excerpt": "Régionalisation avancée, forte attente citoyenne en matière de services publics digitalisés.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Chatbot citoyen pour l’information et les démarches administratives",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Tri et routage automatisé des demandes et réclamations citoyennes",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Tableaux de bord de pilotage territorial (budget, projets, indicateurs)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 12,
+    "translationOfId": null,
+    "id": "cmsw24mt40019t7yk95k7fgwu"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-experts-automobile",
+    "title": "Experts automobile",
+    "excerpt": "Secteur de l’expertise en croissance avec le développement du parc automobile et de l’assurance.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Devis et estimation de réparation à partir d’une photo du véhicule",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Automatisation des rapports d’expertise et de leur transmission aux assureurs",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Planification intelligente des rendez-vous d’expertise",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 13,
+    "translationOfId": null,
+    "id": "cmsw24mti001bt7ykuem4sp9r"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-agences-voyage",
+    "title": "Agences de voyage",
+    "excerpt": "Tourisme national et international en forte croissance, concurrence des plateformes de réservation en ligne.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Agent IA de personnalisation des offres et devis voyage",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Relance automatisée des devis non convertis",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Chatbot de réservation et d’assistance voyageur 24/7 (Agent Hôtellerie/Call Center adapté)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 14,
+    "translationOfId": null,
+    "id": "cmsw24mtv001dt7ykmmayx67m"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-avocats-notaires",
+    "title": "Les avocats et notaires",
+    "excerpt": "Profession réglementée, volume croissant de documentation contractuelle et réglementaire à traiter.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Analyse de contrats et détection de clauses à risque",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Recherche juridique augmentée et veille réglementaire",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Rédaction assistée d’actes et de courriers juridiques types (Propriétaire)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 15,
+    "translationOfId": null,
+    "id": "cmsw24mu6001ft7yk1vgcrjob"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-experts-comptables",
+    "title": "Experts-comptables",
+    "excerpt": "Digitalisation progressive de la profession, obligations de télédéclaration fiscale croissantes.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Extraction et catégorisation automatisée des factures fournisseurs",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Tableau de bord financier consolidé pour les clients du cabinet",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Alertes de trésorerie et rapports automatiques récurrents pour chaque client",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 16,
+    "translationOfId": null,
+    "id": "cmsw24muq001ht7yk4ytztkzy"
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-a-valider",
+    "title": "Secteur à valider",
+    "excerpt": "Ce secteur est annoncé dans le document source mais son contenu n’a pas encore été transmis.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Contenu à confirmer par Sapiens IA — aucune information disponible pour le moment.",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "DRAFT",
+    "order": 17,
+    "translationOfId": null,
+    "id": "cmsw24mva001jt7ykbhaby2rd"
+  }
+]
