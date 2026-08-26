@@ -145,18 +145,20 @@ export function DesktopNav({
 
       {openMenu === "services" && (
         <div
-          className="absolute inset-x-0 top-full border-t border-white/10 bg-accent text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]"
+          className="absolute left-1/2 top-full z-10 mt-3 w-[42rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-accent text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
           onMouseEnter={cancelClose}
         >
-          <div className="container-shell grid grid-cols-2 border-l border-white/15">
+          <div className="grid grid-cols-2 divide-x divide-white/15">
             <CompactColumn
               title={t("consulting")}
+              titleHref="/services#conseil"
               items={consulting}
               prefix="/services"
               onNavigate={closeNow}
             />
             <CompactColumn
               title={t("data")}
+              titleHref="/services#data"
               items={data}
               prefix="/services"
               onNavigate={closeNow}
@@ -167,10 +169,10 @@ export function DesktopNav({
 
       {openMenu === "formations" && (
         <div
-          className="absolute inset-x-0 top-full border-t border-white/10 bg-accent text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]"
+          className="absolute left-1/2 top-full z-10 mt-3 w-[42rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-accent text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
           onMouseEnter={cancelClose}
         >
-          <div className="container-shell grid grid-cols-2 border-l border-white/15">
+          <div className="grid grid-cols-2 divide-x divide-white/15">
             <CompactColumn
               title={t("corporateTraining")}
               items={corporate}
@@ -191,10 +193,10 @@ export function DesktopNav({
 
       {openMenu === "sectors" && (
         <div
-          className="absolute inset-x-0 top-full border-t border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_12px_32px_rgba(10,17,32,.35)]"
+          className="absolute left-1/2 top-full z-10 mt-3 w-[56rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
           onMouseEnter={cancelClose}
         >
-          <div className="container-shell grid min-h-[20rem] grid-cols-3 border-l border-white/15">
+          <div className="grid grid-cols-3 divide-x divide-white/15">
             <SectorColumn
               title={t("ourSectors")}
               items={sectors.slice(0, sectorColumnSize)}
@@ -247,21 +249,33 @@ function MenuButton({
 
 function CompactColumn({
   title,
+  titleHref,
   items,
   prefix,
   footer,
   onNavigate,
 }: {
   title: string;
+  titleHref?: string;
   items: Array<{ id: string; title: string; slug: string }>;
   prefix: string;
   footer?: { label: string; href: string };
   onNavigate: () => void;
 }) {
   return (
-    <section className="min-h-[19rem] border-r border-white/15 px-7 py-8">
+    <section className="px-7 py-8">
       <h2 className="mb-5 font-mono text-[11px] uppercase tracking-[0.12em] text-cobalt-strong">
-        {title}
+        {titleHref ? (
+          <Link
+            href={titleHref}
+            onClick={onNavigate}
+            className="transition hover:text-white"
+          >
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
       </h2>
       <div className="space-y-0.5">
         {items.map((item) => (
@@ -299,7 +313,7 @@ function SectorColumn({
   onNavigate: () => void;
 }) {
   return (
-    <section className="border-r border-white/15 px-8 py-10">
+    <section className="px-8 py-10">
       {title && (
         <h2 className="mb-6 font-mono text-xs uppercase tracking-[0.1em] text-cobalt-strong">
           {title}

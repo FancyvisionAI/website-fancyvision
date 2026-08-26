@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { FaqSection } from "@/components/public/home-sections";
+import { ScrollToHash } from "@/components/public/scroll-to-hash";
 import { contentRepository } from "@/lib/repositories/content";
 
 export async function generateMetadata({
@@ -28,7 +29,10 @@ export default async function ServicesPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Pages.services" });
-  const tCategories = await getTranslations({ locale, namespace: "Categories" });
+  const tCategories = await getTranslations({
+    locale,
+    namespace: "Categories",
+  });
   const [page, services, faqs] = await Promise.all([
     contentRepository.page("services", locale),
     contentRepository.services(false, locale),
@@ -43,13 +47,14 @@ export default async function ServicesPage({
   );
   return (
     <>
+      <ScrollToHash />
       <PageHero
         eyebrow={t("eyebrow")}
         title={page.headline ?? page.title}
         description={page.description}
         cta={{ label: t("cta"), href: "/rendez-vous" }}
       />
-      <section className="section-pad bg-canvas pt-0">
+      <section id="conseil" className="section-pad scroll-mt-28 bg-canvas pt-0">
         <div className="container-shell">
           <div className="grid gap-10 border-b border-lime pb-12 lg:grid-cols-[.55fr_1fr]">
             <span className="eyebrow text-ink">{t("consultingEyebrow")}</span>
@@ -77,7 +82,7 @@ export default async function ServicesPage({
         </div>
       </section>
 
-      <section className="section-pad bg-lime">
+      <section id="data" className="section-pad scroll-mt-28 bg-lime">
         <div className="container-shell">
           <div className="grid gap-10 border-b border-lime pb-12 lg:grid-cols-[.55fr_1fr]">
             <span className="eyebrow text-ink">{t("dataEyebrow")}</span>

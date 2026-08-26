@@ -110,12 +110,14 @@ export function MobileNav({
               <div className="my-2 rounded-card bg-accent px-5 text-white shadow-[0_12px_32px_rgba(10,17,32,.3)]">
                 <MobileGroup
                   title={t("consulting")}
+                  titleHref="/services#conseil"
                   items={services.filter((item) => item.categorySlug === "conseil")}
                   prefix="/services"
                   close={close}
                 />
                 <MobileGroup
                   title={t("data")}
+                  titleHref="/services#data"
                   items={services.filter((item) => item.categorySlug === "data")}
                   prefix="/services"
                   close={close}
@@ -257,18 +259,28 @@ export function MobileNav({
 
 function MobileGroup({
   title,
+  titleHref,
   items,
   prefix,
   close,
 }: {
   title: string;
+  titleHref?: string;
   items: Array<{ id: string; title: string; slug: string }>;
   prefix: string;
   close: () => void;
 }) {
   return (
     <section className="border-b border-white/15 py-4 last:border-0">
-      <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-cobalt-strong">{title}</p>
+      <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-cobalt-strong">
+        {titleHref ? (
+          <Link href={titleHref} onClick={close}>
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
+      </p>
       {items.map((item) => (
         <Link
           key={item.id}
