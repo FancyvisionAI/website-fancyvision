@@ -344,7 +344,11 @@
       "value3": "Mesure des résultats",
       "value4": "Transfert de compétences",
       "support": "L’accompagnement",
-      "startDiagnostic": "Démarrer un diagnostic"
+      "startDiagnostic": "Démarrer un diagnostic",
+      "auditIaCta": "Demander un Audit Light Gratuit (Une heure)",
+      "developpementCtaHeading": "Planifier un atelier de cadrage",
+      "developpementCtaDescription": "Échangez avec l’un de nos consultants seniors pour cadrer votre projet d’audit. Nous analysons vos besoins, partageons notre méthodologie et vous proposons un accompagnement sur-mesure.",
+      "developpementCtaLabel": "Planifier un atelier de cadrage"
     },
     "solutionsIa": {
       "metaTitle": "Nos solutions et agents IA",

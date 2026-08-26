@@ -344,7 +344,11 @@
       "value3": "Results measurement",
       "value4": "Skills transfer",
       "support": "Our support",
-      "startDiagnostic": "Start a diagnosis"
+      "startDiagnostic": "Start a diagnosis",
+      "auditIaCta": "Request a Free Light Audit (One Hour)",
+      "developpementCtaHeading": "Schedule a scoping workshop",
+      "developpementCtaDescription": "Talk to one of our senior consultants to scope your project. We analyze your needs, share our methodology, and propose a tailored plan.",
+      "developpementCtaLabel": "Schedule a scoping workshop"
     },
     "solutionsIa": {
       "metaTitle": "Our AI solutions and agents",

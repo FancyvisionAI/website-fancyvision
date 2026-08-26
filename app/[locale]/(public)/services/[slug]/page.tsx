@@ -82,11 +82,31 @@ export default async function ServiceDetail({
           <article className="max-w-3xl">
             <span className="eyebrow">{t("support")}</span>
             <RichContent value={item.content} />
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/rendez-vous">
-                {t("startDiagnostic")} <ArrowRight className="ml-3 size-4" />
-              </Link>
-            </Button>
+            {item.slug === "developpement-sur-mesure" ? (
+              <div className="mt-10 rounded-3xl bg-lime p-8">
+                <p className="text-lg font-semibold">
+                  {t("developpementCtaHeading")}
+                </p>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {t("developpementCtaDescription")}
+                </p>
+                <Button asChild size="lg" className="mt-6">
+                  <Link href="/rendez-vous">
+                    {t("developpementCtaLabel")}{" "}
+                    <ArrowRight className="ml-3 size-4" />
+                  </Link>
+                </Button>
+              </div>
+            ) : (
+              <Button asChild size="lg" className="mt-8">
+                <Link href="/rendez-vous">
+                  {item.slug === "audit-ia"
+                    ? t("auditIaCta")
+                    : t("startDiagnostic")}{" "}
+                  <ArrowRight className="ml-3 size-4" />
+                </Link>
+              </Button>
+            )}
           </article>
         </div>
       </section>
