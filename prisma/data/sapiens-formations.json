@@ -3,7 +3,7 @@
     "locale": "en",
     "slug": "piloter-strategie-ia",
     "title": "Steering your organization's AI strategy",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for executives and leadership committees to understand AI’s strategic stakes and decide which priority projects to sponsor.",
     "content": {
       "type": "doc",
       "content": [
@@ -11,7 +11,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for executives, COMEX and CODIR members who want to understand the strategic stakes of AI in order to arbitrate and sponsor their organization’s priority projects.",
               "type": "text"
             }
           ]
@@ -46,7 +46,7 @@
     "locale": "en",
     "slug": "contenu-campagnes-ia-generative",
     "title": "Creating content and campaigns with generative AI",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for marketing and communication teams to produce marketing, visual and social media content using generative AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -54,7 +54,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for marketing and communication teams who want to produce marketing, visual and social media content using generative AI.",
               "type": "text"
             }
           ]
@@ -89,7 +89,7 @@
     "locale": "en",
     "slug": "automatiser-relation-client-agents-ia",
     "title": "Automating customer relations with AI agents",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for customer service and call center teams to deploy chatbots and AI agents that streamline and speed up customer support.",
     "content": {
       "type": "doc",
       "content": [
@@ -97,7 +97,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for customer service and call center teams who want to deploy chatbots and AI agents to streamline and speed up customer support.",
               "type": "text"
             }
           ]
@@ -132,7 +132,7 @@
     "locale": "en",
     "slug": "performance-commerciale-ia",
     "title": "Boosting sales performance with AI",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for sales teams to prospect, qualify and close deals faster using AI tools and an AI-augmented CRM.",
     "content": {
       "type": "doc",
       "content": [
@@ -140,7 +140,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for salespeople and sales teams who want to prospect, qualify and close deals faster using AI tools and an AI-augmented CRM.",
               "type": "text"
             }
           ]
@@ -175,7 +175,7 @@
     "locale": "en",
     "slug": "reporting-analyse-financiere-ia",
     "title": "Automating financial reporting and analysis with AI",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for finance and management control teams to make financial reporting more reliable and faster to produce with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -183,7 +183,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for finance and management control teams who want to make their financial reporting more reliable and faster to produce with AI.",
               "type": "text"
             }
           ]
@@ -218,7 +218,7 @@
     "locale": "en",
     "slug": "recruter-former-ia",
     "title": "Recruiting and training differently with AI",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for HR teams to optimize sourcing, candidate screening and internal training paths with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -226,7 +226,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for HR, recruitment and training teams who want to optimize sourcing, candidate screening and internal training paths with AI.",
               "type": "text"
             }
           ]
@@ -261,7 +261,7 @@
     "locale": "en",
     "slug": "securiser-contrats-conformite-ia",
     "title": "Securing contracts and compliance with AI",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for legal and compliance teams to analyze contracts and monitor regulatory compliance with AI assistance.",
     "content": {
       "type": "doc",
       "content": [
@@ -269,7 +269,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for legal and compliance teams who want to analyze contracts and monitor regulatory compliance with AI assistance.",
               "type": "text"
             }
           ]
@@ -304,7 +304,7 @@
     "locale": "en",
     "slug": "production-supply-chain-data-ia",
     "title": "Optimizing production and the supply chain with Data and AI",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for production, logistics and quality teams to anticipate maintenance and optimize flows using data and AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -312,7 +312,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for production, logistics and quality teams who want to anticipate maintenance, and optimize flows and quality using data and AI.",
               "type": "text"
             }
           ]
@@ -347,7 +347,7 @@
     "locale": "en",
     "slug": "concevoir-deployer-agents-ia-entreprise",
     "title": "Designing and deploying AI agents in the enterprise",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for IT and Data teams to prototype, develop and industrialize custom AI agents.",
     "content": {
       "type": "doc",
       "content": [
@@ -355,7 +355,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for IT, Data teams and developers who want to prototype, develop and industrialize custom AI agents.",
               "type": "text"
             }
           ]
@@ -390,7 +390,7 @@
     "locale": "fr",
     "slug": "piloter-strategie-ia",
     "title": "Piloter la stratégie IA de son organisation",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux dirigeants et comités de direction pour comprendre les enjeux de l’IA et arbitrer les projets prioritaires à sponsoriser.",
     "content": {
       "type": "doc",
       "content": [
@@ -398,7 +398,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux dirigeants, COMEX et CODIR qui souhaitent comprendre les enjeux de l’intelligence artificielle pour arbitrer et sponsoriser les projets prioritaires de leur organisation.",
               "type": "text"
             }
           ]
@@ -433,7 +433,7 @@
     "locale": "fr",
     "slug": "contenu-campagnes-ia-generative",
     "title": "Créer du contenu et des campagnes avec l’IA générative",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes marketing et communication pour produire du contenu marketing, visuel et social media à l’aide de l’IA générative.",
     "content": {
       "type": "doc",
       "content": [
@@ -441,7 +441,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes marketing et communication qui souhaitent produire du contenu marketing, visuel et social media à l’aide de l’IA générative.",
               "type": "text"
             }
           ]
@@ -476,7 +476,7 @@
     "locale": "fr",
     "slug": "automatiser-relation-client-agents-ia",
     "title": "Automatiser la relation client avec les agents IA",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes service client et centres d’appels pour déployer des chatbots et agents IA qui fluidifient et accélèrent le support client.",
     "content": {
       "type": "doc",
       "content": [
@@ -484,7 +484,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes service client et centres d’appels qui souhaitent déployer des chatbots et agents IA pour fluidifier et accélérer le support client.",
               "type": "text"
             }
           ]
@@ -519,7 +519,7 @@
     "locale": "fr",
     "slug": "performance-commerciale-ia",
     "title": "Booster sa performance commerciale avec l’IA",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes commerciales pour prospecter, qualifier et closer plus vite grâce aux outils IA et au CRM augmenté.",
     "content": {
       "type": "doc",
       "content": [
@@ -527,7 +527,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux commerciaux et équipes vente qui souhaitent prospecter, qualifier et closer plus vite grâce aux outils IA et au CRM augmenté.",
               "type": "text"
             }
           ]
@@ -562,7 +562,7 @@
     "locale": "fr",
     "slug": "reporting-analyse-financiere-ia",
     "title": "Automatiser le reporting et l’analyse financière avec l’IA",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes finance et contrôle de gestion pour fiabiliser et accélérer la production des reportings financiers grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -570,7 +570,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes finance et contrôle de gestion qui souhaitent fiabiliser et accélérer la production de leurs reportings financiers grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -605,7 +605,7 @@
     "locale": "fr",
     "slug": "recruter-former-ia",
     "title": "Recruter et former autrement grâce à l’IA",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes RH pour optimiser le sourcing, la présélection des candidats et les parcours de formation interne grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -613,7 +613,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes RH, recrutement et formation qui souhaitent optimiser le sourcing, la présélection des candidats et les parcours de formation interne grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -648,7 +648,7 @@
     "locale": "fr",
     "slug": "securiser-contrats-conformite-ia",
     "title": "Sécuriser ses contrats et sa conformité avec l’IA",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes juridiques et conformité pour analyser des contrats et suivre la conformité réglementaire assistée par l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -656,7 +656,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes juridique et conformité qui souhaitent analyser des contrats et suivre la conformité réglementaire assistée par l’IA.",
               "type": "text"
             }
           ]
@@ -691,7 +691,7 @@
     "locale": "fr",
     "slug": "production-supply-chain-data-ia",
     "title": "Optimiser la production et la supply chain avec la Data et l’IA",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes production, logistique et qualité pour anticiper la maintenance et optimiser les flux grâce à la donnée et à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -699,7 +699,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes production, logistique et qualité qui souhaitent anticiper la maintenance, optimiser les flux et la qualité grâce à la donnée et à l’IA.",
               "type": "text"
             }
           ]
@@ -734,7 +734,7 @@
     "locale": "fr",
     "slug": "concevoir-deployer-agents-ia-entreprise",
     "title": "Concevoir et déployer des agents IA en entreprise",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux équipes IT et Data pour prototyper, développer et industrialiser des agents IA sur-mesure.",
     "content": {
       "type": "doc",
       "content": [
@@ -742,7 +742,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux équipes IT, Data et développeurs qui souhaitent prototyper, développer et industrialiser des agents IA sur-mesure.",
               "type": "text"
             }
           ]
@@ -811,7 +811,7 @@
     "locale": "en",
     "slug": "decouvrir-ia-generative-quotidien",
     "title": "Discovering generative AI in everyday life",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Open to everyone: get to grips with the basics of generative AI (ChatGPT, Claude, Gemini), no technical background required.",
     "content": {
       "type": "doc",
       "content": [
@@ -819,7 +819,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is open to anyone who wants to get to grips with the basics of generative AI (ChatGPT, Claude, Gemini), with no technical background required.",
               "type": "text"
             }
           ]
@@ -854,7 +854,7 @@
     "locale": "en",
     "slug": "ia-avocats-notaires",
     "title": "AI for lawyers and notaries",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for lawyers and notaries to automate legal research and the drafting of deeds and correspondence with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -862,7 +862,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for lawyers, notaries and independent legal professionals who want to automate legal research and the drafting of deeds and correspondence with AI.",
               "type": "text"
             }
           ]
@@ -897,7 +897,7 @@
     "locale": "en",
     "slug": "ia-experts-comptables",
     "title": "AI for chartered accountants",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for chartered accountants to automate data entry, reconciliations and the production of tax reports with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -905,7 +905,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for chartered accountants and independent bookkeepers who want to automate data entry, reconciliations and the production of tax reports with AI.",
               "type": "text"
             }
           ]
@@ -940,7 +940,7 @@
     "locale": "en",
     "slug": "ia-immobilier",
     "title": "AI for real estate",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for real estate professionals to generate listings, match properties with buyers and automate prospect follow-up.",
     "content": {
       "type": "doc",
       "content": [
@@ -948,7 +948,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for real estate agents and independent developers who want to generate listings, match properties with buyers and automate prospect follow-up with AI.",
               "type": "text"
             }
           ]
@@ -983,7 +983,7 @@
     "locale": "en",
     "slug": "ia-professionnels-sante-independants",
     "title": "AI for independent healthcare professionals",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for independent healthcare professionals to optimize appointment scheduling, patient follow-up and medical monitoring.",
     "content": {
       "type": "doc",
       "content": [
@@ -991,7 +991,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for doctors, clinics and allied health practices who want to optimize appointment scheduling, patient follow-up and medical monitoring with AI.",
               "type": "text"
             }
           ]
@@ -1026,7 +1026,7 @@
     "locale": "en",
     "slug": "vendre-communiquer-ia-commercants-tpe",
     "title": "Selling and communicating with AI for shopkeepers and small businesses",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for shopkeepers, tradespeople and small businesses to create marketing content and automate customer relations at low cost.",
     "content": {
       "type": "doc",
       "content": [
@@ -1034,7 +1034,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for shopkeepers, tradespeople and small businesses who want to create marketing content and automate customer relations at low cost with AI.",
               "type": "text"
             }
           ]
@@ -1069,7 +1069,7 @@
     "locale": "en",
     "slug": "ia-agences-voyage",
     "title": "AI for travel agencies",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for travel agencies to personalize customer offers and automate quotes and bookings with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -1077,7 +1077,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for independent travel agents who want to personalize customer offers and automate quotes and bookings with AI.",
               "type": "text"
             }
           ]
@@ -1112,7 +1112,7 @@
     "locale": "en",
     "slug": "productivite-ia-consultants-freelances",
     "title": "AI productivity for consultants and freelancers",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for consultants and freelancers to save time on writing, research and administrative tasks with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -1120,7 +1120,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for consultants, freelancers and independent professionals who want to save time on writing, research and administrative tasks with AI.",
               "type": "text"
             }
           ]
@@ -1155,7 +1155,7 @@
     "locale": "en",
     "slug": "ia-artisans-experts-automobile",
     "title": "AI for tradespeople and automotive experts",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Designed for tradespeople and automotive experts to automate diagnostics, job or repair quotes and customer follow-up with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -1163,7 +1163,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is designed for garage owners, automotive experts and tradespeople who want to automate diagnostics, job or repair quotes and customer follow-up with AI.",
               "type": "text"
             }
           ]
@@ -1198,7 +1198,7 @@
     "locale": "en",
     "slug": "maitriser-outils-ia-quotidien",
     "title": "Mastering everyday AI tools",
-    "excerpt": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases, available at three levels: Awareness, Deep-dive, Expertise.",
+    "excerpt": "Open to everyone: use ChatGPT, Claude and Gemini to save time in everyday professional and personal life.",
     "content": {
       "type": "doc",
       "content": [
@@ -1206,7 +1206,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Practical training combining theoretical input, live demonstrations and hands-on practice on real business cases.",
+              "text": "This training is open to anyone who wants to use ChatGPT, Claude and Gemini to save time in their everyday professional and personal life.",
               "type": "text"
             }
           ]
@@ -1241,7 +1241,7 @@
     "locale": "fr",
     "slug": "decouvrir-ia-generative-quotidien",
     "title": "Découvrir l’IA générative au quotidien",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation ouverte à tous pour s’approprier les bases de l’IA générative (ChatGPT, Claude, Gemini), sans prérequis technique.",
     "content": {
       "type": "doc",
       "content": [
@@ -1249,7 +1249,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse à tout public souhaitant s’approprier les bases de l’IA générative (ChatGPT, Claude, Gemini), sans prérequis technique.",
               "type": "text"
             }
           ]
@@ -1284,7 +1284,7 @@
     "locale": "fr",
     "slug": "ia-avocats-notaires",
     "title": "L’IA au service des avocats et notaires",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux avocats et notaires pour automatiser la recherche juridique, la rédaction d’actes et de courriers grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1292,7 +1292,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux avocats, notaires et juristes indépendants qui souhaitent automatiser la recherche juridique, la rédaction d’actes et de courriers grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1327,7 +1327,7 @@
     "locale": "fr",
     "slug": "ia-experts-comptables",
     "title": "L’IA au service des experts-comptables",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux experts-comptables pour automatiser la saisie, les rapprochements et la production de rapports fiscaux grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1335,7 +1335,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux experts-comptables et comptables indépendants qui souhaitent automatiser la saisie, les rapprochements et la production de rapports fiscaux grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1370,7 +1370,7 @@
     "locale": "fr",
     "slug": "ia-immobilier",
     "title": "L’IA au service de l’immobilier",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux professionnels de l’immobilier pour générer des annonces, matcher biens et acheteurs et automatiser le suivi des prospects.",
     "content": {
       "type": "doc",
       "content": [
@@ -1378,7 +1378,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux agents immobiliers et promoteurs indépendants qui souhaitent générer des annonces, matcher biens et acheteurs et automatiser le suivi de leurs prospects grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1413,7 +1413,7 @@
     "locale": "fr",
     "slug": "ia-professionnels-sante-independants",
     "title": "L’IA au service des professionnels de santé indépendants",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux professionnels de santé indépendants pour optimiser la prise de rendez-vous, le suivi patient et la veille médicale.",
     "content": {
       "type": "doc",
       "content": [
@@ -1421,7 +1421,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux médecins, cliniques et cabinets paramédicaux qui souhaitent optimiser la prise de rendez-vous, le suivi patient et la veille médicale grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1456,7 +1456,7 @@
     "locale": "fr",
     "slug": "vendre-communiquer-ia-commercants-tpe",
     "title": "Vendre et communiquer avec l’IA pour les commerçants et TPE",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux commerçants, artisans et TPE pour créer du contenu marketing et automatiser la relation client à moindre coût.",
     "content": {
       "type": "doc",
       "content": [
@@ -1464,7 +1464,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux commerçants, artisans et TPE qui souhaitent créer du contenu marketing et automatiser leur relation client à moindre coût grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1499,7 +1499,7 @@
     "locale": "fr",
     "slug": "ia-agences-voyage",
     "title": "L’IA au service des agences de voyage",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux agences de voyage pour personnaliser les offres clients et automatiser les devis et réservations grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1507,7 +1507,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux agents de voyage indépendants qui souhaitent personnaliser leurs offres clients et automatiser les devis et réservations grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1542,7 +1542,7 @@
     "locale": "fr",
     "slug": "productivite-ia-consultants-freelances",
     "title": "Productivité IA pour consultants et freelances",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux consultants et freelances pour gagner du temps sur la rédaction, la recherche et la gestion administrative grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1550,7 +1550,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux consultants, freelances et indépendants qui souhaitent gagner du temps sur la rédaction, la recherche et la gestion administrative grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1585,7 +1585,7 @@
     "locale": "fr",
     "slug": "ia-artisans-experts-automobile",
     "title": "L’IA au service des artisans et experts automobile",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation destinée aux artisans et experts automobile pour automatiser diagnostics, devis chantier ou réparation et suivi client grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1593,7 +1593,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse aux garagistes, experts automobile et artisans qui souhaitent automatiser leurs diagnostics, devis chantier ou réparation et le suivi client grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1628,7 +1628,7 @@
     "locale": "fr",
     "slug": "maitriser-outils-ia-quotidien",
     "title": "Maîtriser les outils IA du quotidien",
-    "excerpt": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels, déclinable selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+    "excerpt": "Formation ouverte à tous pour utiliser ChatGPT, Claude et Gemini au quotidien et gagner du temps dans sa vie professionnelle et personnelle.",
     "content": {
       "type": "doc",
       "content": [
@@ -1636,7 +1636,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Formation pratique associant apports théoriques, démonstrations live et mises en pratique sur cas métier réels.",
+              "text": "Cette formation s’adresse à tout public souhaitant utiliser ChatGPT, Claude et Gemini pour gagner du temps dans sa vie professionnelle et personnelle.",
               "type": "text"
             }
           ]

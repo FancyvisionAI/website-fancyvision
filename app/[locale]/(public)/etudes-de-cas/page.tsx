@@ -22,12 +22,18 @@ export default async function CaseStudiesPage() {
     contentRepository.caseStudies(locale),
   ]);
   if (!page) notFound();
+  const heroTitle = page.headline ?? page.title;
+  const heroDescription = page.description;
+  // Rubrique hors de la structure officielle du site (M. Bassit) et sans
+  // contenu publié (0 étude de cas) : désactivée publiquement sans supprimer
+  // les données ni le code de réactivation (voir audit consolidé).
+  notFound();
   return (
     <>
       <PageHero
         eyebrow={t("eyebrow")}
-        title={page.headline ?? page.title}
-        description={page.description}
+        title={heroTitle}
+        description={heroDescription}
       />
       <section className="section-pad bg-canvas pt-0">
         <div className="container-shell grid gap-5 md:grid-cols-2">

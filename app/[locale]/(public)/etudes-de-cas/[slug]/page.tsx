@@ -33,12 +33,17 @@ export default async function CaseStudyDetail({
   const metrics = Array.isArray(item.metrics)
     ? (item.metrics as Array<{ value?: string; label?: string }>)
     : [];
+  const { company, sector, title, excerpt, before, after, content } = item;
+  // Rubrique hors de la structure officielle du site (M. Bassit) : désactivée
+  // publiquement même si une étude de cas venait à être publiée en CMS
+  // pendant que ce lot est actif (voir audit consolidé).
+  notFound();
   return (
     <>
       <PageHero
-        eyebrow={`${item.company} · ${item.sector ?? "Transformation IA"}`}
-        title={item.title}
-        description={item.excerpt}
+        eyebrow={`${company} · ${sector ?? "Transformation IA"}`}
+        title={title}
+        description={excerpt}
       />
       <section className="bg-cobalt py-14 text-white">
         <div className="container-shell grid gap-4 sm:grid-cols-3">
@@ -61,19 +66,19 @@ export default async function CaseStudyDetail({
             <div className="rounded-[2rem] bg-canvas p-8 md:p-12">
               <span className="eyebrow">Avant</span>
               <p className="mt-8 text-3xl font-semibold leading-tight tracking-[-0.04em]">
-                {item.before}
+                {before}
               </p>
             </div>
             <div className="rounded-[2rem] bg-lime p-8 md:p-12">
               <span className="eyebrow">Après</span>
               <p className="mt-8 text-3xl font-semibold leading-tight tracking-[-0.04em]">
-                {item.after}
+                {after}
               </p>
               <ArrowDownRight className="mt-12 size-7" />
             </div>
           </div>
           <article className="mx-auto mt-20 max-w-3xl">
-            <RichContent value={item.content} />
+            <RichContent value={content} />
           </article>
         </div>
       </section>

@@ -145,7 +145,7 @@ export function DesktopNav({
 
       {openMenu === "services" && (
         <div
-          className="absolute left-1/2 top-full z-10 mt-3 w-[42rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-accent text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
+          className="absolute left-1/2 top-full z-10 mt-3 w-[42rem] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-6.5rem)] -translate-x-1/2 overflow-y-auto overflow-x-hidden rounded-card border border-white/10 bg-accent text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
           onMouseEnter={cancelClose}
         >
           <div className="grid grid-cols-2 divide-x divide-white/15">
@@ -169,7 +169,7 @@ export function DesktopNav({
 
       {openMenu === "formations" && (
         <div
-          className="absolute left-1/2 top-full z-10 mt-3 w-[42rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-accent text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
+          className="absolute left-1/2 top-full z-10 mt-3 w-[42rem] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-6.5rem)] -translate-x-1/2 overflow-y-auto overflow-x-hidden rounded-card border border-white/10 bg-accent text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
           onMouseEnter={cancelClose}
         >
           <div className="grid grid-cols-2 divide-x divide-white/15">
@@ -193,7 +193,7 @@ export function DesktopNav({
 
       {openMenu === "sectors" && (
         <div
-          className="absolute left-1/2 top-full z-10 mt-3 w-[56rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
+          className="absolute left-1/2 top-full z-10 mt-3 w-[56rem] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-6.5rem)] -translate-x-1/2 overflow-y-auto overflow-x-hidden rounded-card border border-white/10 bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong text-white shadow-[0_20px_45px_rgba(10,17,32,.35)]"
           onMouseEnter={cancelClose}
         >
           <div className="grid grid-cols-3 divide-x divide-white/15">

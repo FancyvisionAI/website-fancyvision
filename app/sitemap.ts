@@ -41,7 +41,7 @@ const STATIC_PATHS = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [pages, services, trainings, articles, cases] = await Promise.all([
+  const [pages, services, trainings, articles] = await Promise.all([
     db.page.findMany({
       where: { status: "PUBLISHED" },
       select: { slug: true, updatedAt: true },
@@ -62,10 +62,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       where: { status: "PUBLISHED" },
       select: { slug: true, updatedAt: true },
     }),
-    db.caseStudy.findMany({
-      where: { status: "PUBLISHED" },
-      select: { slug: true, updatedAt: true },
-    }),
+    // db.caseStudy volontairement retiré : la rubrique "etudes-de-cas" est
+    // désactivée publiquement, aucune de ses pages ne doit être indexée
+    // (voir audit consolidé). Le modèle CaseStudy et ses données restent
+    // intacts en base.
   ]);
   const pagePaths: Record<string, string> = {
     accueil: "/",
@@ -79,12 +79,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     confidentialite: "/confidentialite",
     conditions: "/conditions",
   };
+  // Rubrique désactivée publiquement (notFound(), voir audit consolidé) :
+  // exclue explicitement de l'indexation, sans toucher au Page CMS ni aux
+  // autres entrées du sitemap.
+  const DISABLED_PAGE_SLUGS = new Set(["etudes-de-cas"]);
   const now = new Date();
   const entries: Array<{ path: string; lastModified: Date }> = [
-    ...pages.map((item) => ({
-      path: pagePaths[item.slug] ?? `/${item.slug}`,
-      lastModified: item.updatedAt,
-    })),
+    ...pages
+      .filter((item) => !DISABLED_PAGE_SLUGS.has(item.slug))
+      .map((item) => ({
+        path: pagePaths[item.slug] ?? `/${item.slug}`,
+        lastModified: item.updatedAt,
+      })),
     ...services.map((item) => ({
       path: `${SERVICE_CATEGORY_PATHS[item.category?.slug ?? ""] ?? "/services"}/${item.slug}`,
       lastModified: item.updatedAt,
@@ -97,10 +103,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: `/blog/${item.slug}`,
       lastModified: item.updatedAt,
     })),
-    ...cases.map((item) => ({
-      path: `/etudes-de-cas/${item.slug}`,
-      lastModified: item.updatedAt,
-    })),
+    // "cases" volontairement exclu : la rubrique "etudes-de-cas" est
+    // désactivée publiquement, ses éventuelles pages détail ne doivent pas
+    // être indexées non plus (voir audit consolidé).
     ...STATIC_PATHS.map((path) => ({ path, lastModified: now })),
   ];
 
