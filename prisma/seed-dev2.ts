@@ -599,7 +599,7 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
       title: "Formations en intelligence artificielle",
       headline: "Formez vos équipes à l’IA.",
       description:
-        "Des parcours par niveau et par métier, conçus autour de situations réelles, partout en France ou à distance.",
+        "Des parcours par niveau et par métier, conçus autour de situations réelles, en présentiel ou à distance.",
     },
     {
       slug: "a-propos",

@@ -630,7 +630,7 @@ async function main() {
       paragraphs: [
         "L’accès au site implique l’acceptation des présentes conditions. Les informations publiées ont une vocation générale et ne constituent pas un conseil juridique ou financier.",
         "L’utilisateur s’engage à ne pas perturber le fonctionnement du site, détourner ses formulaires ou tenter d’accéder à des espaces protégés.",
-        "Sapiens IA peut faire évoluer le site et ces conditions à tout moment. Le droit français est applicable.",
+        "Sapiens IA peut faire évoluer le site et ces conditions à tout moment. Les présentes conditions sont régies par les dispositions légales applicables.",
       ],
     },
   ];

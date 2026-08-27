@@ -77,7 +77,7 @@ const PAGES_EN: SimplePageEn[] = [
     title: "Artificial Intelligence Training",
     headline: "Train your teams in AI.",
     description:
-      "Level- and role-based programs, built around real-world situations, available anywhere in France or remotely.",
+      "Level- and role-based programs, built around real-world situations, delivered on-site or remotely.",
   },
   {
     slug: "mentions-legales",
@@ -125,7 +125,7 @@ const LEGAL_BODIES_EN: Record<string, Prisma.InputJsonValue> = {
         type: "paragraph",
         content: [
           {
-            text: "Sapiens IA may update the site and these terms at any time. French law applies.",
+            text: "Sapiens IA may update the site and these terms at any time. These terms are governed by the applicable legal provisions.",
             type: "text",
           },
         ],
