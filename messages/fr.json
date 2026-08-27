@@ -98,11 +98,11 @@
     "error": "Votre message n’a pas pu être envoyé.",
     "success": "Merci. Notre équipe vous répond sous un jour ouvré.",
     "name": "Nom",
-    "namePlaceholder": "Marie Dupont",
+    "namePlaceholder": "Fatima El Amrani",
     "email": "Email",
-    "emailPlaceholder": "marie@entreprise.fr",
+    "emailPlaceholder": "fatima@entreprise.ma",
     "phone": "Téléphone",
-    "phonePlaceholder": "+33 6…",
+    "phonePlaceholder": "+212 6…",
     "company": "Entreprise",
     "companyPlaceholder": "Votre organisation",
     "subject": "Objet",
@@ -224,7 +224,8 @@
     "contact": {
       "eyebrow": "Contact",
       "firstContactEyebrow": "Un premier échange",
-      "firstContactText": "Nous répondons sous un jour ouvré et vous orientons vers la bonne expertise dès le premier contact."
+      "firstContactText": "Nous répondons sous un jour ouvré et vous orientons vers la bonne expertise dès le premier contact.",
+      "coordinatesTitle": "Coordonnées"
     },
     "faq": {
       "metaTitle": "Questions fréquentes",

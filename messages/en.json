@@ -98,11 +98,11 @@
     "error": "Your message could not be sent.",
     "success": "Thank you. Our team will reply within one business day.",
     "name": "Name",
-    "namePlaceholder": "Jane Doe",
+    "namePlaceholder": "Fatima El Amrani",
     "email": "Email",
-    "emailPlaceholder": "jane@company.com",
+    "emailPlaceholder": "fatima@entreprise.ma",
     "phone": "Phone",
-    "phonePlaceholder": "+1 555…",
+    "phonePlaceholder": "+212 6…",
     "company": "Company",
     "companyPlaceholder": "Your organization",
     "subject": "Subject",
@@ -224,7 +224,8 @@
     "contact": {
       "eyebrow": "Contact",
       "firstContactEyebrow": "A first conversation",
-      "firstContactText": "We reply within one business day and point you to the right expertise from the first contact."
+      "firstContactText": "We reply within one business day and point you to the right expertise from the first contact.",
+      "coordinatesTitle": "Contact details"
     },
     "faq": {
       "metaTitle": "Frequently asked questions",
