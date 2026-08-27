@@ -40,8 +40,7 @@
     "individualTraining": "Target B — Individuals, small businesses and independent professionals",
     "allCorporateTrainings": "View Target A",
     "allIndividualTrainings": "View Target B",
-    "ourSectors": "Our sectors of expertise",
-    "comingSoon": "Coming soon"
+    "ourSectors": "Our sectors of expertise"
   },
   "MobileNav": {
     "navigationAriaLabel": "Main navigation",
@@ -57,20 +56,9 @@
     "blog": "Blog",
     "contact": "Contact",
     "ourSectors": "Our sectors of expertise",
-    "comingSoon": "Coming soon",
     "search": "Search",
     "bookAppointment": "Free audit",
     "openMenu": "Open menu"
-  },
-  "Sectors": {
-    "finance": "Finance",
-    "law": "Law",
-    "health": "Healthcare",
-    "realEstate": "Real estate",
-    "publicSector": "Public sector / Government",
-    "socialHousing": "Social housing",
-    "industry": "Industry and agri-food",
-    "construction": "Construction and public works"
   },
   "Footer": {
     "description": "AI consulting, training and integration, from awareness to deployment.",
@@ -169,7 +157,6 @@
     "teamSize": "{count, plural, one {# team member} other {# team members}}",
     "eventsViewAll": "See the full calendar",
     "testimonialsEyebrow": "What people say about us",
-    "comingSoon": "Coming soon",
     "solutionsAiEyebrow": "AI solutions & agents",
     "solutionsAiTitle": "Ready-to-use AI agents, for every function",
     "solutionsAiDescription": "A library of tailored AI agents, designed to automate low-value tasks and augment your teams every day.",

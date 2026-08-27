@@ -40,8 +40,7 @@
     "individualTraining": "Cible B — Particuliers, TPE et professions libérales",
     "allCorporateTrainings": "Voir la Cible A",
     "allIndividualTrainings": "Voir la Cible B",
-    "ourSectors": "Nos secteurs d’expertise",
-    "comingSoon": "Coming soon"
+    "ourSectors": "Nos secteurs d’expertise"
   },
   "MobileNav": {
     "navigationAriaLabel": "Navigation principale",
@@ -57,20 +56,9 @@
     "blog": "Blog",
     "contact": "Contact",
     "ourSectors": "Nos secteurs d’expertise",
-    "comingSoon": "Coming soon",
     "search": "Rechercher",
     "bookAppointment": "Audit gratuit",
     "openMenu": "Ouvrir le menu"
-  },
-  "Sectors": {
-    "finance": "Finance",
-    "law": "Droit",
-    "health": "Santé",
-    "realEstate": "Immobilier",
-    "publicSector": "Collectivités / Administrations publiques",
-    "socialHousing": "Logement social",
-    "industry": "Industrie et agroalimentaire",
-    "construction": "Bâtiment et travaux publics"
   },
   "Footer": {
     "description": "Conseil, formation et intégration de l’intelligence artificielle, de la sensibilisation au déploiement.",
@@ -169,7 +157,6 @@
     "teamSize": "{count, plural, one {# collaborateur} other {# collaborateurs}}",
     "eventsViewAll": "Voir tout l’agenda",
     "testimonialsEyebrow": "Ils parlent de nous",
-    "comingSoon": "Bientôt disponible",
     "solutionsAiEyebrow": "Solutions & agents IA",
     "solutionsAiTitle": "Des agents IA prêts à l’emploi, pour chaque fonction",
     "solutionsAiDescription": "Une bibliothèque d’agents IA sur mesure, conçus pour automatiser les tâches à faible valeur ajoutée et augmenter vos équipes au quotidien.",

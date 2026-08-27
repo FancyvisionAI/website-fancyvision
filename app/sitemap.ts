@@ -79,10 +79,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     confidentialite: "/confidentialite",
     conditions: "/conditions",
   };
-  // Rubrique désactivée publiquement (notFound(), voir audit consolidé) :
-  // exclue explicitement de l'indexation, sans toucher au Page CMS ni aux
-  // autres entrées du sitemap.
-  const DISABLED_PAGE_SLUGS = new Set(["etudes-de-cas"]);
+  // Pages désactivées publiquement (notFound(), voir audit consolidé) :
+  // exclues explicitement de l'indexation, sans toucher au Page CMS ni aux
+  // autres entrées du sitemap. Les 11 pages formation-ia-{ville} sont des
+  // pages de SEO local jugées non conformes au positionnement officiel
+  // Sapiens IA — décision validée par M. Bassit.
+  const DISABLED_PAGE_SLUGS = new Set([
+    "etudes-de-cas",
+    "formation-ia-angers",
+    "formation-ia-bordeaux",
+    "formation-ia-clermont-ferrand",
+    "formation-ia-formations-dijon",
+    "formation-ia-grenoble",
+    "formation-ia-lille",
+    "formation-ia-lyon",
+    "formation-ia-marseille",
+    "formation-ia-montpellier",
+    "formation-ia-nantes",
+    "formation-ia-paris",
+  ]);
   const now = new Date();
   const entries: Array<{ path: string; lastModified: Date }> = [
     ...pages

@@ -8,6 +8,25 @@ import { contentRepository } from "@/lib/repositories/content";
 
 export const revalidate = 3600;
 
+// Pages de SEO local (ciblage villes françaises) jugées non conformes au
+// positionnement officiel Sapiens IA (Casablanca, Maroc) — décision validée
+// par M. Bassit (voir audit consolidé). Désactivées publiquement sans
+// supprimer les lignes `Page` en base, pour permettre une réactivation
+// future, individuelle ou complète.
+const DISABLED_FORMATION_IA_SLUGS = new Set([
+  "formation-ia-angers",
+  "formation-ia-bordeaux",
+  "formation-ia-clermont-ferrand",
+  "formation-ia-formations-dijon",
+  "formation-ia-grenoble",
+  "formation-ia-lille",
+  "formation-ia-lyon",
+  "formation-ia-marseille",
+  "formation-ia-montpellier",
+  "formation-ia-nantes",
+  "formation-ia-paris",
+]);
+
 export async function generateMetadata({
   params,
 }: {
@@ -15,6 +34,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getLocale();
+  if (DISABLED_FORMATION_IA_SLUGS.has(slug)) return {};
   const page = await contentRepository.page(slug, locale);
   if (!page) return {};
   return {
@@ -31,6 +51,7 @@ export default async function DatabaseLandingPage({
   const t = await getTranslations("Pages.trainingLanding");
   const locale = await getLocale();
   const { slug } = await params;
+  if (DISABLED_FORMATION_IA_SLUGS.has(slug)) notFound();
   const [page, trainings] = await Promise.all([
     contentRepository.page(slug, locale),
     contentRepository.trainings(locale),

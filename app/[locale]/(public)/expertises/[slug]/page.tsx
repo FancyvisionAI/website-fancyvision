@@ -14,13 +14,20 @@ const expertiseKeys = {
   },
 } as const;
 
+// Contenu antérieur au PDF officiel Sapiens IA, sans lien interne actif et
+// absent du sitemap (voir audit consolidé) : désactivé publiquement sans
+// supprimer les traductions Pages.expertise.* ni le code de réactivation.
+const DISABLED_EXPERTISE_SLUGS = new Set(["ia-finance", "ia-droit"]);
+
 export default async function ExpertisePage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const t = await getTranslations("Pages.expertise");
-  const item = expertiseKeys[(await params).slug as keyof typeof expertiseKeys];
+  const slug = (await params).slug;
+  if (DISABLED_EXPERTISE_SLUGS.has(slug)) notFound();
+  const item = expertiseKeys[slug as keyof typeof expertiseKeys];
   if (!item) notFound();
 
   return (
