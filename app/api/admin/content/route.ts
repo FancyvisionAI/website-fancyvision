@@ -641,9 +641,6 @@ export async function DELETE(request: Request) {
     case "appointments":
       await db.appointment.delete({ where: { id } });
       break;
-    case "newsletter":
-      await db.newsletterSubscriber.delete({ where: { id } });
-      break;
     default:
       return NextResponse.json(
         { error: "Module non pris en charge." },

@@ -25,11 +25,6 @@ export const appointmentSchema = z.object({
   website: honeypot,
 });
 
-export const newsletterSchema = z.object({
-  email: z.string().trim().toLowerCase().email().max(200),
-  website: honeypot,
-});
-
 export const eventRegistrationSchema = z.object({
   name: z.string().trim().min(2).max(100),
   email: z.string().trim().toLowerCase().email().max(200),
@@ -56,7 +51,6 @@ export const adminContentSchema = z.object({
     "media",
     "contacts",
     "appointments",
-    "newsletter",
     "settings",
     "menus",
     "seo",

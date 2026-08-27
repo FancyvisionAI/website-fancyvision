@@ -3,7 +3,6 @@ import {
   BookOpen,
   CalendarDays,
   Inbox,
-  Mail,
   Sparkles,
 } from "lucide-react";
 
@@ -11,12 +10,11 @@ import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 
 export default async function AdminHome() {
-  const [articles, contacts, appointments, subscribers, services, recent] =
+  const [articles, contacts, appointments, services, recent] =
     await Promise.all([
       db.article.count({ where: { status: "PUBLISHED" } }),
       db.contactRequest.count({ where: { status: "NEW" } }),
       db.appointment.count({ where: { status: "NEW" } }),
-      db.newsletterSubscriber.count({ where: { unsubscribedAt: null } }),
       db.service.count({ where: { status: "PUBLISHED" } }),
       db.auditLog.findMany({
         orderBy: { createdAt: "desc" },
@@ -41,12 +39,6 @@ export default async function AdminHome() {
       label: "Rendez-vous à traiter",
       value: appointments,
       icon: CalendarDays,
-      color: "bg-canvas",
-    },
-    {
-      label: "Abonnés newsletter",
-      value: subscribers,
-      icon: Mail,
       color: "bg-canvas",
     },
   ];

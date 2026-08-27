@@ -12,7 +12,6 @@ import {
   Home,
   Inbox,
   LayoutDashboard,
-  Mail,
   Menu,
   MessageSquareQuote,
   SearchCheck,
@@ -53,7 +52,6 @@ const groups = [
     items: [
       { href: "/admin/contacts", label: "Contacts", icon: Inbox },
       { href: "/admin/appointments", label: "Rendez-vous", icon: CalendarDays },
-      { href: "/admin/newsletter", label: "Newsletter", icon: Mail },
     ],
   },
   {

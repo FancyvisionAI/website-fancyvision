@@ -605,7 +605,7 @@ async function main() {
       description:
         "Informations relatives à l’éditeur et à l’hébergement du site Sapiens IA.",
       paragraphs: [
-        "Éditeur : Sapiens IA, société de conseil et de formation en intelligence artificielle. Siège social : 24 rue du Sentier, 75002 Paris. Contact : bonjour@fancyvision.fr.",
+        "Éditeur : Sapiens IA, société de conseil et de formation en intelligence artificielle. Siège social : Casablanca, Maroc. Contact : voir notre formulaire de contact.",
         "Le site est hébergé par Vercel Inc. Les contenus, marques, illustrations et éléments graphiques sont protégés. Toute reproduction non autorisée est interdite.",
         "Sapiens IA s’efforce de fournir des informations exactes et à jour, sans pouvoir garantir l’absence complète d’erreurs.",
       ],
@@ -616,9 +616,9 @@ async function main() {
       description:
         "Comment Sapiens IA collecte, utilise et protège vos données personnelles.",
       paragraphs: [
-        "Les données transmises via les formulaires sont utilisées uniquement pour répondre à votre demande, gérer un rendez-vous ou vous adresser la newsletter demandée.",
+        "Les données transmises via les formulaires sont utilisées uniquement pour répondre à votre demande ou gérer un rendez-vous.",
         "La base légale dépend du service concerné : consentement, mesures précontractuelles ou intérêt légitime. Les données ne sont pas revendues.",
-        "Vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou la portabilité de vos données en écrivant à bonjour@fancyvision.fr.",
+        "Vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou la portabilité de vos données via notre formulaire de contact.",
       ],
     },
     {
@@ -675,9 +675,11 @@ async function main() {
       "company",
       {
         name: "Sapiens IA",
-        email: "bonjour@fancyvision.fr",
+        email: "contact@sapiens-ia.com",
+        // Téléphone marocain définitif en attente de confirmation par le
+        // client : ne pas remplacer par un numéro inventé (voir audit PDF).
         phone: "+33 1 84 80 20 26",
-        address: "24 rue du Sentier, 75002 Paris",
+        address: "Casablanca, Maroc",
         linkedin: "https://www.linkedin.com",
       },
       "general",

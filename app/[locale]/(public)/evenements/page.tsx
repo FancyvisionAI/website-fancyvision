@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 import { EventRegistrationForm } from "@/components/public/event-registration-form";
 import { Link } from "@/i18n/navigation";
@@ -115,6 +116,10 @@ export default async function EventsPage({
     ? new Date(requestedYear!, requestedMonthNumber! - 1, 1)
     : (audienceEvents[0]?.startAt ?? now);
   const hasExtraFilters = Boolean(audience || selectedMonth || selectedDay);
+
+  // Page hors structure officielle du site (M. Bassit) : désactivée
+  // publiquement sans supprimer les événements ni les inscriptions en base.
+  notFound();
 
   return (
     <section className="min-h-screen bg-[#06142c] pb-24 pt-28 text-white">

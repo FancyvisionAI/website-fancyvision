@@ -691,7 +691,7 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
           ),
           heading("Vos droits"),
           paragraph(
-            "Vous pouvez demander l’accès, la rectification ou l’effacement de vos données à bonjour@fancyvision.ai.",
+            "Vous pouvez demander l’accès, la rectification ou l’effacement de vos données via notre formulaire de contact.",
           ),
           heading("Propriété intellectuelle"),
           paragraph(
@@ -776,9 +776,11 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
       group: "general",
       value: {
         name: "Sapiens IA",
-        email: "bonjour@fancyvision.ai",
+        email: "contact@sapiens-ia.com",
+        // Téléphone marocain définitif en attente de confirmation par le
+        // client : ne pas remplacer par un numéro inventé (voir audit PDF).
         phone: "07 56 28 77 92",
-        address: "128 rue La Boétie, 75008 Paris",
+        address: "Casablanca, Maroc",
         linkedin: "https://www.linkedin.com",
       },
     },
@@ -787,9 +789,9 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
       group: "general",
       value: {
         name: "Sapiens IA",
-        email: "bonjour@fancyvision.ai",
+        email: "contact@sapiens-ia.com",
         phone: "07 56 28 77 92",
-        address: "128 rue La Boétie, 75008 Paris",
+        address: "Casablanca, Maroc",
         linkedin: "https://www.linkedin.com",
       },
     },

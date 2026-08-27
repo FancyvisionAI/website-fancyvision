@@ -64,19 +64,6 @@ export async function GET(
         item.status,
       ]),
     ];
-  } else if (moduleKey === "newsletter") {
-    const items = await db.newsletterSubscriber.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-    rows = [
-      ["Email", "Source", "Inscription", "Désinscription"],
-      ...items.map((item) => [
-        item.email,
-        item.source,
-        item.createdAt.toISOString(),
-        item.unsubscribedAt?.toISOString(),
-      ]),
-    ];
   } else
     return NextResponse.json(
       { error: "Export non pris en charge." },

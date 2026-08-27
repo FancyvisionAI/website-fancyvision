@@ -89,15 +89,6 @@
     "copyright": "© {year} Sapiens-IA. All rights reserved.",
     "tagline": "AI consulting and training"
   },
-  "Newsletter": {
-    "eyebrow": "Newsletter",
-    "heading": "The newsletter on <em>AI</em>, read by decision-makers.",
-    "success": "Welcome to the Sapiens-IA newsletter.",
-    "error": "Unable to subscribe right now.",
-    "emailPlaceholder": "you@email.com",
-    "subscribe": "Subscribe",
-    "helper": "One useful digest every week. Unsubscribe in one click."
-  },
   "CookieBanner": {
     "learnMore": "Learn more",
     "essentialOnly": "Essential only",
@@ -356,10 +347,7 @@
       "eyebrow": "AI solutions & agents",
       "title": "Our AI solutions and agents",
       "description": "Tailored AI agents, designed to automate low-value tasks and boost the performance of every team, function by function.",
-      "cta": "Talk about your project",
-      "libraryTitle": "Library of 50 AI systems",
-      "libraryDescription": "An extended library of AI systems, beyond our 9 flagship agents, is currently being assembled. Its detailed content will be published once validated.",
-      "libraryBadge": "To be confirmed"
+      "cta": "Talk about your project"
     },
     "solutionsIaDetail": {
       "eyebrow": "AI agent",

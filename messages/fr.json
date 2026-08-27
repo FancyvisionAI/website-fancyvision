@@ -89,15 +89,6 @@
     "copyright": "© {year} Sapiens-IA. Tous droits réservés.",
     "tagline": "Conseil & formation en intelligence artificielle"
   },
-  "Newsletter": {
-    "eyebrow": "Newsletter",
-    "heading": "La newsletter sur l’<em>IA</em>, suivie par les décideurs.",
-    "success": "Bienvenue dans la newsletter Sapiens-IA.",
-    "error": "Impossible de vous inscrire pour le moment.",
-    "emailPlaceholder": "votre@email.fr",
-    "subscribe": "S’inscrire",
-    "helper": "Un décryptage utile chaque semaine. Désinscription en un clic."
-  },
   "CookieBanner": {
     "learnMore": "En savoir plus",
     "essentialOnly": "Essentiels",
@@ -356,10 +347,7 @@
       "eyebrow": "Solutions & agents IA",
       "title": "Nos solutions et agents IA",
       "description": "Des agents IA sur mesure, conçus pour automatiser les tâches à faible valeur ajoutée et augmenter la performance de chaque équipe, fonction par fonction.",
-      "cta": "Parler de votre projet",
-      "libraryTitle": "Bibliothèque de 50 systèmes IA",
-      "libraryDescription": "Une bibliothèque élargie de systèmes IA, au-delà de nos 9 agents phares, est en cours de constitution. Son contenu détaillé sera publié après validation.",
-      "libraryBadge": "À valider"
+      "cta": "Parler de votre projet"
     },
     "solutionsIaDetail": {
       "eyebrow": "Agent IA",

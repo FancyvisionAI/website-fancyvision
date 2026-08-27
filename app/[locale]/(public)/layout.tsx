@@ -3,7 +3,6 @@ import { setRequestLocale } from "next-intl/server";
 
 import { Footer } from "@/components/public/footer";
 import { Header } from "@/components/public/header";
-import { Newsletter } from "@/components/public/newsletter";
 import { CookieBanner } from "@/components/public/cookie-banner";
 import { FancyVisionChat } from "@/components/public/fancyvision-chat";
 import { contentRepository } from "@/lib/repositories/content";
@@ -62,7 +61,6 @@ export default async function PublicLayout({
     <>
       <Header locale={locale} />
       <main>{children}</main>
-      <Newsletter />
       <Footer locale={locale} />
       <Suspense fallback={null}>
         <CookieBannerLoader locale={locale} />

@@ -64,10 +64,6 @@ async function itemsFor(moduleKey: string) {
       return db.contactRequest.findMany({ orderBy: { createdAt: "desc" } });
     case "appointments":
       return db.appointment.findMany({ orderBy: { createdAt: "desc" } });
-    case "newsletter":
-      return db.newsletterSubscriber.findMany({
-        orderBy: { createdAt: "desc" },
-      });
     case "users":
       return db.user.findMany({
         include: { role: true },

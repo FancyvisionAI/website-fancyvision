@@ -314,15 +314,6 @@ export const adminModules: Record<string, AdminModule> = {
     ],
     exportable: true,
   },
-  newsletter: {
-    title: "Newsletter",
-    description: "Abonnés actifs, désinscriptions et export.",
-    singular: "abonné",
-    fields: [],
-    readonly: true,
-    allowDelete: true,
-    exportable: true,
-  },
   users: {
     title: "Utilisateurs",
     description: "Administrateurs, éditeurs, rédacteurs et rôles.",

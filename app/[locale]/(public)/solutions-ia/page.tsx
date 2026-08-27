@@ -56,24 +56,6 @@ export default async function SolutionsIaPage({
           </div>
         </div>
       </section>
-
-      <section className="section-pad bg-lime">
-        <div className="container-shell">
-          <div className="bg-canvas/60 flex flex-col items-start gap-5 rounded-card border border-border p-8 md:p-10">
-            <span className="text-ink/60 w-fit rounded-full bg-canvas px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em]">
-              {t("libraryBadge")}
-            </span>
-            <div>
-              <h2 className="font-display text-2xl font-medium tracking-[-0.02em] text-ink">
-                {t("libraryTitle")}
-              </h2>
-              <p className="mt-3 max-w-2xl leading-7 text-muted">
-                {t("libraryDescription")}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }
