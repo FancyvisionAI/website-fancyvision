@@ -9,6 +9,7 @@ import {
 import { hash } from "bcryptjs";
 import { seedDev2Content } from "./seed-dev2";
 import { seedSapiensOfficialContent } from "./seed-sapiens-official-content";
+import { seedSapiensPagesEn } from "./seed-sapiens-pages-en";
 
 const prisma = new PrismaClient();
 
@@ -669,6 +670,11 @@ async function main() {
       });
     }
   }
+
+  // Doit s'exécuter après les boucles simplePages/legalPages ci-dessus :
+  // consolide en base la traduction anglaise de ces 8 pages, déjà validée
+  // (voir audit consolidé). N'écrit jamais sur les pages FR.
+  await seedSapiensPagesEn(prisma);
 
   for (const [key, value, group] of [
     [
