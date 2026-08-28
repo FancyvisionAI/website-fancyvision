@@ -283,17 +283,53 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
     articleCategoryIds.set(slug, category.id);
   }
 
+  // Lot Blog — réorganisation validée : seuls les 10 premiers articles
+  // (ordre public réel, publishedAt DESC) restent publiés, avec une photo
+  // dédiée fournie par le client. Les 9 suivants sont désactivés (DRAFT,
+  // aucune donnée supprimée, aucune image touchée) pour empêcher qu'un
+  // futur `npm run db:seed` ne les republie ou n'écrase les photos. Les
+  // lignes EN correspondantes (créées hors seed, voir audit) ont été
+  // mises à jour manuellement en base avec les mêmes valeurs.
+  const DISABLED_ARTICLE_SLUGS = new Set([
+    "ia-la-plus-securisee",
+    "ia-marche-emploi-france",
+    "ia-securite-chatgpt-donnees",
+    "introduction-intelligence-artificielle-chatgpt",
+    "peur-mefiance-ia",
+    "risques-ia-entreprise-incidents",
+    "service-client-chatbot-ia",
+    "tribune-du-prompt-au-contexte",
+    "veille-juridique-notaires",
+  ]);
+  const ARTICLE_COVER_IMAGES: Record<string, string> = {
+    "analyse-pdf-notebooklm": "/images/photo0.jfif",
+    "claude-mindmap-projet": "/images/photo1.jpg",
+    "comprendre-ia-definitions": "/images/photo2.jpg",
+    "comptes-rendus-reunion-ia": "/images/photo3.jpg",
+    "creer-images-reseaux-sociaux-chatgpt": "/images/photo4.jfif",
+    "ecrire-emails-chatgpt": "/images/photo5.jpg",
+    "financement-formation-ia": "/images/photo6.jfif",
+    "formation-ia-pme": "/images/photo7.jfif",
+    "ia-consommation-energetique": "/images/photo8.jfif",
+    "ia-drh": "/images/photo9.jfif",
+  };
+
   for (const [index, [slug, title, categoryName]] of dev2Articles.entries()) {
     const categorySlug = categorySlugByName.get(categoryName);
     const categoryId = categorySlug
       ? articleCategoryIds.get(categorySlug)
       : undefined;
-    const image = [
-      dev2Assets.audit,
-      dev2Assets.change,
-      dev2Assets.custom,
-      dev2Assets.training,
-    ][index % 4];
+    const image =
+      ARTICLE_COVER_IMAGES[slug] ??
+      [
+        dev2Assets.audit,
+        dev2Assets.change,
+        dev2Assets.custom,
+        dev2Assets.training,
+      ][index % 4];
+    const articleStatus = DISABLED_ARTICLE_SLUGS.has(slug)
+      ? ContentStatus.DRAFT
+      : ContentStatus.PUBLISHED;
     const excerpt = `${title} : objectifs, méthode et bonnes pratiques pour passer de la curiosité à un usage concret de l’intelligence artificielle.`;
     const content = rich(
       paragraph(
@@ -326,7 +362,7 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
         coverImage: image,
         readingTime: 6,
         featured: index < 3,
-        status: ContentStatus.PUBLISHED,
+        status: articleStatus,
         publishedAt: new Date(now.getTime() - index * 3 * 86_400_000),
       },
       create: {
@@ -340,7 +376,7 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
         coverImage: image,
         readingTime: 6,
         featured: index < 3,
-        status: ContentStatus.PUBLISHED,
+        status: articleStatus,
         publishedAt: new Date(now.getTime() - index * 3 * 86_400_000),
       },
     });
@@ -450,7 +486,9 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
           description:
             "De la stratégie à la Data Science, Sapiens IA construit les fondations et les produits qui transforment vos données en décisions.",
           categorySlug: "data",
-          image: dev2Assets.custom,
+          // Photo fournie par le client pour cette section (voir audit Blog) —
+          // remplace l'illustration générique par défaut.
+          image: "/images/data._.jfif",
         },
       },
       {

@@ -1,6 +1,6 @@
-# FancyVision
+# Sapiens-IA
 
-FancyVision est une plateforme de conseil et de formation en intelligence artificielle, reconstruite avec Next.js 15, React 19, TypeScript, PostgreSQL et Prisma. Le site public et le CMS partagent une source de vérité unique : tout contenu publié est lu depuis PostgreSQL et les modifications sont visibles immédiatement, sans reconstruction ni redéploiement.
+Sapiens-IA est une plateforme de conseil et de formation en intelligence artificielle, reconstruite avec Next.js 15, React 19, TypeScript, PostgreSQL et Prisma. Le site public et le CMS partagent une source de vérité unique : tout contenu publié est lu depuis PostgreSQL et les modifications sont visibles immédiatement, sans reconstruction ni redéploiement.
 
 ## Fonctionnalités
 

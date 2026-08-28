@@ -32,8 +32,12 @@ const ORGANIZATION_SIZES = [
 
 export function AppointmentForm({
   sectorOptions,
+  topic = "Appel découverte",
+  prefillMessage,
 }: {
   sectorOptions: string[];
+  topic?: string;
+  prefillMessage?: string;
 }) {
   const t = useTranslations("AppointmentForm");
   const locale = useLocale();
@@ -254,12 +258,13 @@ export function AppointmentForm({
               <textarea
                 name="message"
                 rows={3}
+                defaultValue={prefillMessage}
                 className="border-ink/15 bg-canvas/70 placeholder:text-ink/40 focus:ring-cobalt/10 w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition focus:border-cobalt focus:ring-2"
               />
             </Field>
           </div>
           {/* Valeur envoyée à l'API volontairement non traduite : identifiant métier interne, cf. Phase 2 */}
-          <input name="topic" type="hidden" value="Appel découverte" />
+          <input name="topic" type="hidden" value={topic} />
           <input name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div className="mt-5 flex min-h-10 items-center justify-between gap-4 rounded-xl bg-lime px-4 py-2 text-xs text-muted">

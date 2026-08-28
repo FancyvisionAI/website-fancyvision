@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { AgentVisual } from "@/components/public/agent-visual";
 import { PageHero } from "@/components/public/page-hero";
 import { RichContent } from "@/components/public/rich-content";
 import { Button } from "@/components/ui/button";
@@ -51,8 +52,18 @@ export default async function SolutionIaDetail({
         cta={{ label: t("cta"), href: "/rendez-vous" }}
       />
       <section className="section-pad bg-canvas">
-        <div className="container-shell">
+        <div className="container-shell grid gap-12 lg:grid-cols-[.4fr_1fr]">
+          <div className="hidden lg:block">
+            <AgentVisual
+              slug={item.slug}
+              className="sticky top-28 aspect-square w-full"
+            />
+          </div>
           <article className="max-w-3xl">
+            <AgentVisual
+              slug={item.slug}
+              className="mb-8 aspect-[2.4/1] w-full lg:hidden"
+            />
             <RichContent value={item.content} />
             <Button asChild size="lg" className="mt-8">
               <Link href="/rendez-vous">

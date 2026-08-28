@@ -171,6 +171,37 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% 86%, 92% 100%, 0 100%);
 }
 
+/* Lot Design — halos et ombres douces réutilisables, alternative aux
+   grilles à bordures systématiques (voir card.tsx, home-sections.tsx). */
+.glow-cobalt {
+  position: relative;
+  isolation: isolate;
+}
+
+.glow-cobalt::before {
+  position: absolute;
+  z-index: -1;
+  inset: -20%;
+  content: "";
+  background: radial-gradient(
+    60% 60% at 30% 20%,
+    rgba(37, 99, 235, 0.14) 0%,
+    rgba(37, 99, 235, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glow-cobalt:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-cobalt::before {
+    transition: none;
+  }
+}
+
 @keyframes hero-drift {
   from {
     transform: translate3d(-3%, -2%, 0) scale(0.92);
@@ -178,6 +209,113 @@ body {
   to {
     transform: translate3d(6%, 4%, 0) scale(1.08);
   }
+}
+
+/* Hero homepage — grille de points en arrière-plan du panneau visuel,
+   très subtile, purement décorative. */
+.hero-grid-dots {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+}
+
+/* Illustration animée du Hero (HeroDataGraphic) — mouvement lent, lié à la
+   donnée/l'IA (tracé, flux, pulsation), jamais permanent au point de
+   distraire. transform/opacity uniquement pour la performance. Respecte
+   prefers-reduced-motion via la règle globale déjà en place plus bas. */
+@keyframes hero-graphic-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-graphic-main-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: hero-graphic-draw 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes hero-graphic-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+.hero-graphic-flow-line {
+  animation: hero-graphic-flow 3.2s linear infinite;
+}
+
+@keyframes hero-graphic-node-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 0.78;
+  }
+}
+
+.hero-graphic-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-graphic-node-pulse 3s ease-in-out infinite;
+}
+
+@keyframes hero-graphic-ring-ping {
+  0% {
+    opacity: 0.45;
+    r: 9;
+  }
+  75%,
+  100% {
+    opacity: 0;
+    r: 24;
+  }
+}
+
+.hero-graphic-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-graphic-ring-ping 2.8s ease-out infinite;
+}
+
+/* Dérive lente pour les éléments décoratifs flottants (badges, halos) —
+   respecte automatiquement prefers-reduced-motion via la règle globale
+   ci-dessous (animation-duration forcée à 0.01ms). */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes float-slow-alt {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 12px, 0);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.animate-float-slow-alt {
+  animation: float-slow-alt 8.5s ease-in-out infinite;
+  animation-delay: -3s;
 }
 
 @media (min-width: 768px) {

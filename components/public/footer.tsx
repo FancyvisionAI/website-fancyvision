@@ -8,40 +8,31 @@ import { contentRepository } from "@/lib/repositories/content";
 export async function Footer({ locale }: { locale: string }) {
   // Locale reçue en prop, voir header.tsx pour la justification (ISR / Lot 2).
   const t = await getTranslations({ locale, namespace: "Footer" });
-  const [settings, services, trainings] = await Promise.all([
-    contentRepository.settings(),
-    contentRepository.services(false, locale),
-    contentRepository.trainings(locale),
-  ]);
+  const settings = await contentRepository.settings();
   const company = settings.find((item) => item.key === "company")?.value as
     | { email?: string; phone?: string; address?: string; linkedin?: string }
     | undefined;
-  const consulting = services.filter((item) => item.category?.slug === "conseil");
-  const data = services.filter((item) => item.category?.slug === "data");
-  const corporate = trainings.filter(
-    (item) => item.category?.slug === "entreprise",
-  );
-  const privateTrainings = trainings.filter(
-    (item) => item.category?.slug === "particuliers",
-  );
-  // Liens structurels de la nouvelle architecture Sapiens IA, à l'image du
-  // header (desktop-nav.tsx) : gérés directement dans le code plutôt que
-  // via le menu CMS "FOOTER", qui reste réservé aux pages éditoriales
-  // (mentions légales, etc.).
-  const discoverLinks: Array<{ id: string; label: string; href: string }> = [
-    { id: "solutions-ia", label: t("solutionsAi"), href: "/solutions-ia" },
-    { id: "secteurs", label: t("sectors"), href: "/solutions-par-secteur" },
+  // Footer volontairement simplifié (Lot Design) : ne reproduit plus
+  // l'arborescence complète du site (tous les Services/Formations) —
+  // seulement une sélection de pages essentielles + les pages légales.
+  const navigationLinks: Array<{ id: string; label: string; href: string }> = [
+    { id: "about", label: t("about"), href: "/a-propos" },
+    { id: "services", label: t("services"), href: "/services" },
+    { id: "training", label: t("training"), href: "/formation" },
     { id: "blog", label: t("blog"), href: "/blog" },
-    { id: "faq", label: t("faq"), href: "/faq" },
     { id: "contact", label: t("contact"), href: "/contact" },
-    { id: "mentions-legales", label: t("legal"), href: "/mentions-legales" },
+  ];
+  const legalLinks: Array<{ id: string; label: string; href: string }> = [
+    { id: "legal", label: t("legal"), href: "/mentions-legales" },
+    { id: "privacy", label: t("privacyPolicy"), href: "/confidentialite" },
+    { id: "terms", label: t("terms"), href: "/conditions" },
   ];
 
   return (
     <footer className="bg-accent text-white">
-      <div className="container-shell py-14 md:py-16">
-        <div className="grid border-l border-t border-white/15 md:grid-cols-2 xl:grid-cols-[1.2fr_repeat(4,1fr)]">
-          <div className="border-b border-r border-white/15 p-7">
+      <div className="container-shell py-16 md:py-20">
+        <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr] md:gap-8">
+          <div className="max-w-sm">
             <Link href="/" className="flex items-center gap-2.5 text-2xl font-semibold tracking-[-0.04em]">
               <Image
                 src="/images/sapiens-ia-logo.png"
@@ -52,9 +43,7 @@ export async function Footer({ locale }: { locale: string }) {
               />
               Sapiens-IA
             </Link>
-            <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">
-              {t("description")}
-            </p>
+            <p className="mt-5 text-sm leading-6 text-white/55">{t("description")}</p>
             <div className="mt-7 space-y-2 text-xs leading-5 text-white/65">
               <p>{company?.address}</p>
               <a href={`tel:${company?.phone}`} className="block hover:text-white">
@@ -73,33 +62,10 @@ export async function Footer({ locale }: { locale: string }) {
             </Link>
           </div>
 
-          <FooterColumn
-            title={t("consulting")}
-            items={consulting.map((item) => ({
-              id: item.id,
-              label: item.title,
-              href: `/services/${item.slug}`,
-            }))}
-          />
-          <FooterColumn
-            title={t("data")}
-            items={data.map((item) => ({
-              id: item.id,
-              label: item.title,
-              href: `/services/${item.slug}`,
-            }))}
-          />
-          <FooterColumn
-            title={t("training")}
-            items={[...corporate, ...privateTrainings].map((item) => ({
-              id: item.id,
-              label: item.title,
-              href: `/formations/${item.slug}`,
-            }))}
-          />
-          <FooterColumn title={t("discover")} items={discoverLinks} />
+          <FooterColumn title={t("navigationHeading")} items={navigationLinks} />
+          <FooterColumn title={t("legalHeading")} items={legalLinks} />
         </div>
-        <div className="flex flex-col gap-4 pt-7 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-7 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
           <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           <p>{t("tagline")}</p>
         </div>
@@ -116,7 +82,7 @@ function FooterColumn({
   items: Array<{ id: string; label: string; href: string }>;
 }) {
   return (
-    <section className="border-b border-r border-white/15 p-7">
+    <section>
       <h2 className="mb-5 font-mono text-[10px] uppercase tracking-[0.15em] text-cobalt-strong">
         {title}
       </h2>

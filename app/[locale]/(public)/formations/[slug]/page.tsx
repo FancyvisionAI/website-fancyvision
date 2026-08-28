@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Clock,
-  Gauge,
-  Info,
-  Users,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Gauge, Users } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -64,25 +57,24 @@ export default async function TrainingDetail({
     ? tCategories(item.category.slug)
     : undefined;
 
+  const hasAudience = item.audience.length > 0;
+  const infoCardCount = hasAudience ? 3 : 2;
+  const trainingRequestHref = `/rendez-vous?context=formation-programme&training=${encodeURIComponent(item.title)}`;
+  const trainingCustomHref = `/rendez-vous?context=formation-personnalisee&training=${encodeURIComponent(item.title)}`;
+
   return (
     <>
       <PageHero
         eyebrow={categoryLabel}
         title={item.title}
         description={item.excerpt}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        cta={{ label: t("cta"), href: trainingRequestHref }}
       />
       <section className="section-pad bg-canvas">
         <div className="container-shell">
-          {!detailsConfirmed && (
-            <div className="bg-lime/60 mb-12 flex items-start gap-4 rounded-card border border-border p-6">
-              <Info className="text-ink/60 mt-0.5 size-5 shrink-0" />
-              <p className="text-ink/70 text-sm leading-6">
-                {t("toBeConfirmedBanner")}
-              </p>
-            </div>
-          )}
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div
+            className={`grid gap-3 ${infoCardCount === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}
+          >
             <div className="rounded-3xl bg-canvas p-6">
               <Clock className="size-5" />
               <p className="text-ink/45 mt-8 text-sm">{t("duration")}</p>
@@ -90,15 +82,15 @@ export default async function TrainingDetail({
                 {item.duration ?? t("custom")}
               </p>
             </div>
-            <div className="rounded-3xl bg-canvas p-6">
-              <Users className="size-5" />
-              <p className="text-ink/45 mt-8 text-sm">{t("audience")}</p>
-              <p className="mt-1 text-xl font-semibold">
-                {item.audience.length > 0
-                  ? item.audience.join(", ")
-                  : t("toBeConfirmed")}
-              </p>
-            </div>
+            {hasAudience && (
+              <div className="rounded-3xl bg-canvas p-6">
+                <Users className="size-5" />
+                <p className="text-ink/45 mt-8 text-sm">{t("audience")}</p>
+                <p className="mt-1 text-xl font-semibold">
+                  {item.audience.join(", ")}
+                </p>
+              </div>
+            )}
             <div className="rounded-3xl bg-lime p-6">
               <Gauge className="size-5" />
               <p className="text-ink/45 mt-8 text-sm">{t("level")}</p>
@@ -156,8 +148,16 @@ export default async function TrainingDetail({
               </div>
             </div>
           )}
-          <Button asChild size="lg" className="mt-12">
-            <Link href="/rendez-vous">
+          {!detailsConfirmed && (
+            <div className="mt-16 max-w-2xl">
+              <h2 className="text-2xl font-semibold tracking-[-0.03em]">
+                {t("moreInfoHeading")}
+              </h2>
+              <p className="text-ink/70 mt-3 leading-6">{t("moreInfoText")}</p>
+            </div>
+          )}
+          <Button asChild size="lg" className="mt-8">
+            <Link href={trainingCustomHref}>
               {t("designTraining")} <ArrowRight className="ml-3 size-4" />
             </Link>
           </Button>

@@ -7,6 +7,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const slug = searchParams.get("slug");
     const featuredParam = searchParams.get("featured");
+    const category = searchParams.get("category");
 
     if (slug) {
       const item = await contentRepository.service(slug);
@@ -17,6 +18,11 @@ export async function GET(request: Request) {
         );
       }
       return NextResponse.json(item);
+    }
+
+    if (category) {
+      const items = await contentRepository.servicesByCategory(category);
+      return NextResponse.json(items);
     }
 
     const featuredOnly = featuredParam === "true";

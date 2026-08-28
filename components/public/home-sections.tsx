@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, Check, MoveRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
+import { AgentVisual } from "@/components/public/agent-visual";
 import { ArticleCard } from "@/components/public/article-card";
 import { FaqList } from "@/components/public/faq-list";
 import { Reveal } from "@/components/public/reveal";
@@ -54,6 +55,60 @@ function EditorialHeading({
   );
 }
 
+// Illustration purement décorative (flux de données abstrait) — pas de
+// contenu CMS, pas de texte inventé. Remplaçable plus tard par une vraie
+// photo sans changer la structure du panneau qui l'entoure.
+function HeroDataGraphic() {
+  return (
+    <svg
+      viewBox="0 0 400 320"
+      fill="none"
+      className="h-auto w-full"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient
+          id="hero-graphic-line"
+          x1="20"
+          y1="280"
+          x2="380"
+          y2="40"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#60A5FA" />
+          <stop offset="1" stopColor="#67E8F9" />
+        </linearGradient>
+      </defs>
+      <path
+        className="hero-graphic-main-line"
+        d="M40 260 L120 190 L170 220 L240 120 L280 170 L360 70"
+        pathLength={1}
+        stroke="url(#hero-graphic-line)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity=".85"
+      />
+      <path
+        className="hero-graphic-flow-line"
+        d="M40 260 L120 190 L170 220 L240 120 L280 170 L360 70"
+        stroke="url(#hero-graphic-line)"
+        strokeWidth="4"
+        strokeDasharray="1 10"
+        strokeLinecap="round"
+        opacity=".35"
+      />
+      <circle className="hero-graphic-node" style={{ animationDelay: "0s" }} cx="40" cy="260" r="5" fill="#60A5FA" />
+      <circle className="hero-graphic-node" style={{ animationDelay: "0.4s" }} cx="120" cy="190" r="6" fill="#60A5FA" />
+      <circle className="hero-graphic-node" style={{ animationDelay: "0.8s" }} cx="170" cy="220" r="4" fill="#93C5FD" />
+      <circle className="hero-graphic-node" style={{ animationDelay: "1.2s" }} cx="240" cy="120" r="7" fill="#67E8F9" />
+      <circle className="hero-graphic-node" style={{ animationDelay: "1.6s" }} cx="280" cy="170" r="4" fill="#93C5FD" />
+      <circle className="hero-graphic-node" style={{ animationDelay: "2s" }} cx="360" cy="70" r="9" fill="#67E8F9" />
+      <circle className="hero-graphic-ring" cx="360" cy="70" r="17" stroke="#67E8F9" strokeOpacity=".3" />
+    </svg>
+  );
+}
+
 export async function HeroSection({
   data,
   locale,
@@ -62,13 +117,16 @@ export async function HeroSection({
   locale: string;
 }) {
   const t = await getTranslations({ locale, namespace: "HomeSections" });
+  const graphicCaption = t("heroGraphicCaption");
   const title = text(data.title);
   const [firstLine, ...remaining] = title.split("\n");
+  const eyebrow = text(data.eyebrow);
   return (
-    <section className="reference-hero relative flex min-h-[75svh] items-center overflow-hidden pb-16 pt-28 text-white">
-      <div className="container-shell relative z-10 flex flex-col items-center text-center">
-        <Reveal className="flex w-full flex-col items-center">
-          <h1 className="font-display max-w-[950px] text-[clamp(2.75rem,5vw,4rem)] font-normal leading-[1.2] tracking-[-0.025em]">
+    <section className="reference-hero relative min-h-[86svh] overflow-hidden pb-20 pt-32 text-white lg:pb-16">
+      <div className="container-shell relative z-10 grid gap-16 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
+        <Reveal>
+          {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+          <h1 className="font-display mt-7 max-w-xl text-[clamp(2.75rem,5vw,4.25rem)] font-normal leading-[1.15] tracking-[-0.025em]">
             <EditorialHeading>{firstLine || title}</EditorialHeading>
             {remaining.length > 0 && (
               <>
@@ -77,26 +135,45 @@ export async function HeroSection({
               </>
             )}
           </h1>
-          <p className="mt-8 max-w-[680px] text-base leading-6 text-white/90">
+          <p className="mt-7 max-w-lg text-base leading-6 text-white/85">
             {text(data.description)}
           </p>
-          <Button asChild variant="accent" className="mt-8 h-12 px-6">
-            <Link href={text(data.primaryHref, "/rendez-vous")}>
-              {text(data.primaryLabel, t("heroPrimaryCta"))}
-              <ArrowRight className="ml-5 size-4" />
-            </Link>
-          </Button>
-          {text(data.secondaryHref) && (
-            <Button
-              asChild
-              variant="outline"
-              className="mt-3 border-white/30 bg-transparent text-white hover:bg-white/10"
-            >
-              <Link href={text(data.secondaryHref)}>
-                {text(data.secondaryLabel, t("heroSecondaryCta"))}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button asChild variant="accent" className="h-12 px-6">
+              <Link href={text(data.primaryHref, "/rendez-vous")}>
+                {text(data.primaryLabel, t("heroPrimaryCta"))}
+                <ArrowRight className="ml-5 size-4" />
               </Link>
             </Button>
-          )}
+            {text(data.secondaryHref) && (
+              <Button
+                asChild
+                variant="outline"
+                className="h-12 border-white/30 bg-transparent text-white hover:bg-white/10"
+              >
+                <Link href={text(data.secondaryHref)}>
+                  {text(data.secondaryLabel, t("heroSecondaryCta"))}
+                </Link>
+              </Button>
+            )}
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.12} className="relative hidden lg:block">
+          <div
+            aria-hidden="true"
+            className="animate-float-slow absolute -left-8 -top-8 size-24 rounded-full bg-cobalt/30 blur-2xl"
+          />
+          <div
+            aria-hidden="true"
+            className="animate-float-slow-alt absolute -bottom-10 -right-6 size-32 rounded-full bg-[#67E8F9]/20 blur-3xl"
+          />
+          <div className="hero-grid-dots relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0a1120] via-[#101b33] to-[#152241] p-10 shadow-[0_30px_90px_rgba(6,13,32,.55)]">
+            <HeroDataGraphic />
+            <p className="font-display relative mt-6 text-left text-2xl font-semibold leading-tight tracking-[-0.02em] text-white">
+              {graphicCaption}
+            </p>
+          </div>
         </Reveal>
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-[-4rem] h-28 bg-gradient-to-b from-white/0 via-white/70 to-white blur-xl" />
@@ -143,8 +220,10 @@ export async function ServicesSection({
     : services;
   return (
     <section className="section-pad bg-canvas">
-      <div className="container-shell grid border-l border-t border-lime lg:grid-cols-[.5fr_1fr]">
-        <Reveal className="flex min-h-64 flex-col justify-between border-b border-r border-lime p-7 lg:min-h-full lg:p-9">
+      <div className="container-shell grid gap-5 lg:grid-cols-[.5fr_1fr]">
+        <Reveal
+          className="flex min-h-64 flex-col justify-between rounded-card bg-lime/50 p-7 shadow-soft lg:min-h-full lg:p-9"
+        >
           <div>
             <span className="eyebrow text-ink">{text(data.eyebrow)}</span>
             <h2 className="font-display mt-5 max-w-sm text-4xl font-normal leading-[1.18] tracking-[-0.025em]">
@@ -166,12 +245,12 @@ export async function ServicesSection({
             />
           </div>
         </Reveal>
-        <div className="grid md:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2">
           {visibleServices.map((service, index) => (
             <Reveal key={service.id} delay={index * 0.05} className="h-full">
               <Link
                 href={`/services/${service.slug}`}
-                className="group flex h-full min-h-48 items-center gap-5 border-b border-r border-lime p-6 transition hover:bg-lime/40 lg:p-8"
+                className="group flex h-full min-h-48 items-center gap-5 rounded-card bg-canvas p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(16,27,51,.1)] lg:p-8"
               >
                 <div className="min-w-0 flex-1">
                   <h3 className="font-display text-xl font-medium tracking-[-0.025em] text-ink">
@@ -181,7 +260,7 @@ export async function ServicesSection({
                     {service.excerpt}
                   </p>
                 </div>
-                <span className="grid size-10 shrink-0 place-items-center transition group-hover:translate-x-1">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-lime/60 transition group-hover:translate-x-1 group-hover:bg-lime">
                   <ArrowRight className="size-5" />
                 </span>
               </Link>
@@ -208,8 +287,12 @@ export async function SolutionsAiSection({
   const tCategories = await getTranslations({ locale, namespace: "Categories" });
   const [featured, ...rest] = agents;
   return (
-    <section id="solutions-ia" className="section-pad bg-canvas">
-      <div className="container-shell">
+    <section id="solutions-ia" className="section-pad relative overflow-hidden bg-canvas">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 top-0 size-[30rem] rounded-full bg-cobalt/[.05] blur-3xl"
+      />
+      <div className="container-shell relative">
         <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <span className="eyebrow text-cobalt">{t("solutionsAiEyebrow")}</span>
@@ -228,35 +311,48 @@ export async function SolutionsAiSection({
           </Button>
         </Reveal>
         <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
-          <Link
-            href={`/solutions-ia/${featured.slug}`}
-            className="group flex min-h-[340px] flex-col justify-between rounded-card border border-border bg-accent p-8 text-white transition hover:-translate-y-1 hover:shadow-card md:p-10"
-          >
-            <span className="eyebrow text-white/70">{tCategories("agents-ia")}</span>
-            <div>
-              <h3 className="font-display mt-5 text-3xl font-medium leading-[1.2] tracking-[-0.025em] md:text-4xl">
-                {featured.title}
-              </h3>
-              <p className="mt-5 max-w-md leading-7 text-white/75">{featured.excerpt}</p>
-            </div>
-            <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold">
-              {t("solutionsAiViewAll")}
-              <ArrowUpRight className="size-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-            </span>
-          </Link>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
-            {rest.map((agent) => (
-              <Link
-                key={agent.id}
-                href={`/solutions-ia/${agent.slug}`}
-                className="group flex flex-col justify-between rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
-              >
-                <h3 className="font-display text-xl font-medium tracking-[-0.02em] text-ink">
-                  {agent.title}
+          <Reveal>
+            <Link
+              href={`/solutions-ia/${featured.slug}`}
+              className="group flex h-full min-h-[340px] flex-col justify-between rounded-card bg-accent p-8 text-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(10,17,32,.4)] md:p-10"
+            >
+              <div className="flex items-start justify-between gap-6">
+                <span className="eyebrow text-white/70">{tCategories("agents-ia")}</span>
+                <AgentVisual slug={featured.slug} className="size-14 shrink-0 md:size-16" />
+              </div>
+              <div>
+                <h3 className="font-display mt-5 text-3xl font-medium leading-[1.2] tracking-[-0.025em] md:text-4xl">
+                  {featured.title}
                 </h3>
-                <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted">{agent.excerpt}</p>
-                <ArrowUpRight className="mt-4 size-4 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </Link>
+                <p className="mt-5 max-w-md leading-7 text-white/75">{featured.excerpt}</p>
+              </div>
+              <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold">
+                {t("solutionsAiViewAll")}
+                <ArrowUpRight className="size-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </span>
+            </Link>
+          </Reveal>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            {rest.map((agent, index) => (
+              <Reveal key={agent.id} delay={index * 0.06}>
+                <Link
+                  href={`/solutions-ia/${agent.slug}`}
+                  className="group flex h-full flex-col justify-between gap-4 rounded-card bg-canvas p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(16,27,51,.12)]"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-display text-xl font-medium tracking-[-0.02em] text-ink">
+                        {agent.title}
+                      </h3>
+                      <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted">
+                        {agent.excerpt}
+                      </p>
+                    </div>
+                    <AgentVisual slug={agent.slug} className="size-12 shrink-0" />
+                  </div>
+                  <ArrowUpRight className="size-4 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -398,9 +494,9 @@ export function SplitFeature({ data }: { data: Record<string, unknown> }) {
   const reverse = data.reverse === true;
   return (
     <section className="bg-canvas">
-      <div className="container-shell grid border-l border-t border-lime lg:grid-cols-2">
+      <div className="container-shell grid gap-5 lg:grid-cols-2">
         <Reveal
-          className={`flex min-h-[380px] flex-col justify-center border-b border-r border-lime p-7 lg:p-12 ${
+          className={`flex min-h-[380px] flex-col justify-center rounded-card bg-lime/40 p-7 lg:p-12 ${
             reverse ? "lg:order-2" : ""
           }`}
         >
@@ -419,14 +515,14 @@ export function SplitFeature({ data }: { data: Record<string, unknown> }) {
           </Button>
         </Reveal>
         <div
-          className={`flex min-h-[340px] items-center border-b border-r border-lime p-7 lg:min-h-[440px] lg:p-12 ${
+          className={`flex min-h-[340px] items-center p-2 lg:min-h-[440px] lg:p-4 ${
             reverse ? "lg:order-1" : ""
           }`}
         >
-          <div className="relative aspect-[1.57/1] w-full overflow-hidden">
+          <div className="relative aspect-[1.57/1] w-full overflow-hidden rounded-card shadow-soft">
             <Image
               src={text(data.image, "/images/fancyvision-ai-strategy.webp")}
-              alt=""
+              alt={text(data.title)}
               fill
               className="masked-image object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -720,17 +816,36 @@ export async function EventsPreview({
 
 export function AboutSection({ data }: { data: Record<string, unknown> }) {
   return (
-    <section className="section-pad bg-canvas">
-      <div className="container-shell grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+    <section className="section-pad relative overflow-hidden bg-canvas">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-1/2 size-[26rem] -translate-y-1/2 rounded-full bg-cobalt/[.06] blur-3xl"
+      />
+      <div className="container-shell relative grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
         <Reveal>
-          <div className="relative aspect-[4/3] max-h-[430px] overflow-hidden rounded-card">
-            <Image
-              src={text(data.image)}
-              alt=""
-              fill
-              className="masked-image object-cover"
-              sizes="(max-width: 1024px) 100vw, 40vw"
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-4 -right-4 hidden aspect-[4/3] max-h-[430px] w-full rounded-card bg-gradient-to-br from-cobalt/25 to-lime sm:block"
             />
+            <div className="relative aspect-[4/3] max-h-[430px] overflow-hidden rounded-card shadow-soft">
+              <Image
+                src={text(data.image)}
+                alt=""
+                fill
+                className="masked-image object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+            </div>
+            {/* Repère décoratif flottant — purement graphique, aucune donnée
+                inventée (pas de chiffre, pas de nom). Prêt à accueillir une
+                vraie photo d'équipe sans changer cette structure. */}
+            <div
+              aria-hidden="true"
+              className="glow-cobalt animate-float-slow absolute -bottom-6 -left-6 hidden size-20 items-center justify-center rounded-full border border-white/40 bg-accent shadow-soft sm:flex"
+            >
+              <span className="size-2.5 rounded-full bg-lime" />
+            </div>
           </div>
         </Reveal>
         <Reveal className="flex flex-col justify-between py-8 lg:items-end lg:px-10">

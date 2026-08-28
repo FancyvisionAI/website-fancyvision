@@ -19,13 +19,16 @@ export default async function ContactPage() {
   ]);
   if (!page) notFound();
   const company = settings.find((item) => item.key === "company")?.value as
-    | { email?: string; address?: string }
-    | undefined;
+    { email?: string; address?: string } | undefined;
   // Téléphone volontairement exclu : Setting.company.phone n'est pas encore
   // un numéro marocain validé (voir Lot Nettoyage / audit coordonnées).
   const coordinates = [
     company?.email && { key: "email", Icon: Mail, value: company.email },
-    company?.address && { key: "address", Icon: MapPin, value: company.address },
+    company?.address && {
+      key: "address",
+      Icon: MapPin,
+      value: company.address,
+    },
   ].filter(Boolean) as Array<{ key: string; Icon: typeof Mail; value: string }>;
 
   return (
@@ -51,9 +54,9 @@ export default async function ContactPage() {
                   {coordinates.map(({ key, Icon, value }) => (
                     <div
                       key={key}
-                      className="flex items-center gap-3 text-sm text-ink/70"
+                      className="text-ink/70 flex items-center gap-3 text-sm"
                     >
-                      <Icon className="text-cobalt size-4 shrink-0" />
+                      <Icon className="size-4 shrink-0 text-cobalt" />
                       <span>{value}</span>
                     </div>
                   ))}

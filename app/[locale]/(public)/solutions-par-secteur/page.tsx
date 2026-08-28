@@ -26,7 +26,10 @@ export default async function SolutionsParSecteurPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Pages.secteurs" });
-  const tCategories = await getTranslations({ locale, namespace: "Categories" });
+  const tCategories = await getTranslations({
+    locale,
+    namespace: "Categories",
+  });
   const secteurs = await contentRepository.servicesByCategory(
     "secteurs",
     locale,

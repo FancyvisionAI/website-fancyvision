@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
+import { cardVariants } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export function ContentCard({
   href,
@@ -20,7 +22,10 @@ export function ContentCard({
   return (
     <Link
       href={href}
-      className="group flex min-h-[390px] flex-col rounded-[2rem] border border-ink/15 bg-canvas p-7 transition duration-500 hover:-translate-y-1 hover:bg-lime hover:shadow-soft md:p-9"
+      className={cn(
+        cardVariants({ variant: "interactive", padding: "none" }),
+        "group flex min-h-[390px] flex-col rounded-[2rem] p-7 duration-500 hover:bg-lime md:p-9",
+      )}
     >
       <div className="flex items-start justify-between">
         <div>

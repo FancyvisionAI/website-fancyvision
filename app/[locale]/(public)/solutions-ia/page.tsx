@@ -26,7 +26,10 @@ export default async function SolutionsIaPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Pages.solutionsIa" });
-  const tCategories = await getTranslations({ locale, namespace: "Categories" });
+  const tCategories = await getTranslations({
+    locale,
+    namespace: "Categories",
+  });
   const agents = await contentRepository.servicesByCategory(
     "agents-ia",
     locale,

@@ -27,7 +27,10 @@ export default async function TrainingPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Pages.training" });
-  const tCategories = await getTranslations({ locale, namespace: "Categories" });
+  const tCategories = await getTranslations({
+    locale,
+    namespace: "Categories",
+  });
   const [page, enterprise, individual] = await Promise.all([
     contentRepository.page("formation", locale),
     contentRepository.trainingsByCategory("entreprise", locale),
@@ -65,7 +68,7 @@ export default async function TrainingPage({
                 eyebrow={tCategories("entreprise")}
                 title={item.title}
                 description={item.excerpt}
-                meta={item.duration ?? t("toBeConfirmed")}
+                meta={item.duration}
               />
             ))}
           </div>
@@ -94,7 +97,7 @@ export default async function TrainingPage({
                 eyebrow={tCategories("particuliers")}
                 title={item.title}
                 description={item.excerpt}
-                meta={item.duration ?? t("toBeConfirmed")}
+                meta={item.duration}
               />
             ))}
           </div>

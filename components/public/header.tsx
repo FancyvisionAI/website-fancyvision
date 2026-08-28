@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import { DesktopNav } from "@/components/public/desktop-nav";
+import { HeaderShell } from "@/components/public/header-shell";
 import { LocaleSwitcher } from "@/components/public/locale-switcher";
 import { MobileNav } from "@/components/public/mobile-nav";
 import { ThemeToggle } from "@/components/public/theme-toggle";
@@ -69,8 +70,7 @@ export async function Header({ locale }: { locale: string }) {
   }));
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-canvas text-ink shadow-[0_1px_2px_rgba(16,27,51,.05)]">
-      <div className="container-shell flex h-[4.875rem] items-center justify-between gap-5">
+    <HeaderShell>
         <Link
           href="/"
           className="focus-visible:ring-cobalt focus-visible:ring-offset-canvas flex shrink-0 items-center gap-2.5 rounded-control text-xl font-display font-semibold tracking-[-0.03em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -110,7 +110,6 @@ export async function Header({ locale }: { locale: string }) {
           trainings={navigationTrainings}
           sectors={navigationSectors}
         />
-      </div>
-    </header>
+    </HeaderShell>
   );
 }
