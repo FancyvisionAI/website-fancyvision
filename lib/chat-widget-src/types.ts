@@ -5,6 +5,8 @@ export interface ChatMessage {
   role: ChatRole;
   text: string;
   buttons?: RasaButton[];
+  /** Validated image URL (http/https/relative only) — see parse-rasa-response.ts */
+  image?: string;
 }
 
 export interface RasaButton {
@@ -34,7 +36,7 @@ export interface ChatWidgetProps {
   locale?: ChatLocale;
 }
 
-export type ChatErrorKind = "network" | "http" | "parse" | "empty";
+export type ChatErrorKind = "network" | "http" | "parse" | "empty" | "timeout";
 
 export interface ChatError {
   kind: ChatErrorKind;

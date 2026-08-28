@@ -80,6 +80,122 @@
   border: 2px solid var(--fv-surface);
 }
 
+/* Halo très discret derrière le lanceur — attire l'oeil sans "gaming". */
+.launcherGlow {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 59;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 1.25rem;
+  background: radial-gradient(
+    60% 60% at 50% 50%,
+    rgba(96, 165, 250, 0.45) 0%,
+    rgba(96, 165, 250, 0) 75%
+  );
+  pointer-events: none;
+  animation: fv-pulse 3.6s ease-in-out infinite;
+}
+
+@keyframes fv-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.15;
+  }
+}
+
+/* Bulle d'invitation — discrète, dismissible, non intrusive. */
+.inviteBubble {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.5rem;
+  z-index: 60;
+  display: flex;
+  max-width: 17.5rem;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border: 1px solid var(--fv-border);
+  border-radius: var(--fv-radius);
+  background: var(--fv-surface);
+  padding: 0.75rem 0.75rem 0.75rem 0.9rem;
+  box-shadow: var(--fv-shadow);
+  animation:
+    fv-bubble-in 0.35s ease,
+    fv-bubble-pulse 0.5s ease 0.45s;
+}
+
+@keyframes fv-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Micro-pulsation unique juste après l'apparition — pas de mouvement
+   permanent, purement un accent d'entrée. */
+@keyframes fv-bubble-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+.inviteBubbleText {
+  margin: 0;
+  padding-top: 0.1rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--fv-ink);
+}
+
+.inviteDismiss {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fv-muted);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.inviteDismiss:hover {
+  background: var(--fv-hover-overlay);
+}
+
+.inviteDismiss:focus-visible {
+  outline: 2px solid var(--fv-cobalt);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launcherGlow {
+    animation: none;
+    opacity: 0.25;
+  }
+
+  .inviteBubble {
+    animation: none;
+  }
+}
+
 .panel {
   position: fixed;
   right: 1.25rem;
@@ -218,6 +334,15 @@
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.messageImage {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .bubbleUser {

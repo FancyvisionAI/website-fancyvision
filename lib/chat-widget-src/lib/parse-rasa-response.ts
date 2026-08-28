@@ -1,5 +1,27 @@
 import type { ChatMessage, RasaBotResponseItem } from "../types";
 
+/**
+ * Valide une URL d'image renvoyée par Rasa avant de la rendre en <img> —
+ * uniquement http(s) absolu ou chemin relatif du site (jamais javascript:,
+ * data:, ni une chaîne arbitraire). N'invente jamais d'image à partir d'une
+ * URL texte ordinaire : seul le champ dédié `item.image` est concerné.
+ */
+function safeImageUrl(url: string): string | null {
+  const trimmed = url.trim();
+  if (trimmed.startsWith("/") && !trimmed.startsWith("//")) {
+    return trimmed;
+  }
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      return parsed.toString();
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 function createId(prefix: string): string {
   if (
     typeof crypto !== "undefined" &&
@@ -21,15 +43,13 @@ export function parseRasaResponse(items: RasaBotResponseItem[]): ChatMessage[] {
       parts.push(item.text.trim());
     }
 
-    if (item.image?.trim()) {
-      parts.push(item.image.trim());
-    }
+    const image = item.image?.trim() ? safeImageUrl(item.image.trim()) : null;
 
-    if (parts.length === 0 && item.custom) {
+    if (parts.length === 0 && !image && item.custom) {
       parts.push(JSON.stringify(item.custom));
     }
 
-    if (parts.length === 0) {
+    if (parts.length === 0 && !image) {
       continue;
     }
 
@@ -38,6 +58,7 @@ export function parseRasaResponse(items: RasaBotResponseItem[]): ChatMessage[] {
       role: "bot",
       text: parts.join("\n"),
       buttons: item.buttons?.filter((btn) => btn.title && btn.payload),
+      image: image ?? undefined,
     });
   }
 

@@ -33,6 +33,14 @@ function ChatMessageItem({
         className={`${styles.bubble} ${isUser ? styles.bubbleUser : styles.bubbleBot}`}
       >
         {message.text}
+        {!isUser && message.image ? (
+          <img
+            src={message.image}
+            alt=""
+            loading="lazy"
+            className={styles.messageImage}
+          />
+        ) : null}
         {!isUser && message.buttons && message.buttons.length > 0 ? (
           <div className={styles.buttons}>
             {message.buttons.map((button) => (
@@ -144,6 +152,7 @@ export function ChatWidget({
   const resolvedSubtitle = subtitle ?? strings.subtitle;
   const resolvedRasaUrl = normalizeRasaUrl(rasaUrl);
   const [isOpen, setIsOpen] = useState(false);
+  const [showInvite, setShowInvite] = useState(false);
   const [draft, setDraft] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -162,20 +171,49 @@ export function ChatWidget({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading, error]);
 
+  // Bulle d'invitation : purement visuelle, ne touche jamais Rasa ni la
+  // logique conversationnelle. Affichée une fois, après un court délai,
+  // tant que l'utilisateur ne l'a pas fermée (mémorisé en local).
   useEffect(() => {
-    if (!isOpen) {
+    let dismissed = false;
+    try {
+      dismissed =
+        window.localStorage.getItem("fv-chat-invite-dismissed") === "1";
+    } catch {
+      dismissed = false;
+    }
+    if (dismissed) return;
+    const timer = window.setTimeout(() => setShowInvite(true), 2500);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const dismissInvite = () => {
+    setShowInvite(false);
+    try {
+      window.localStorage.setItem("fv-chat-invite-dismissed", "1");
+    } catch {
+      // Stockage indisponible (mode privé, etc.) : rien de bloquant, la
+      // bulle pourra simplement réapparaître à la prochaine visite.
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen && !showInvite) {
       return;
     }
 
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key !== "Escape") return;
+      if (isOpen) {
         setIsOpen(false);
+      } else if (showInvite) {
+        dismissInvite();
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isOpen]);
+  }, [isOpen, showInvite]);
 
   const handleSubmit = async (event?: FormEvent) => {
     event?.preventDefault();
@@ -292,12 +330,33 @@ export function ChatWidget({
         </section>
       ) : null}
 
+      {!isOpen && showInvite ? (
+        <div className={styles.inviteBubble} role="status">
+          <p className={styles.inviteBubbleText}>{strings.inviteBubble}</p>
+          <button
+            type="button"
+            className={styles.inviteDismiss}
+            aria-label={strings.dismissInvite}
+            onClick={dismissInvite}
+          >
+            <CloseIcon />
+          </button>
+        </div>
+      ) : null}
+
+      {!isOpen ? (
+        <div className={styles.launcherGlow} aria-hidden="true" />
+      ) : null}
+
       <button
         type="button"
         className={styles.launcher}
         aria-label={isOpen ? strings.closeChat : strings.openChat}
         aria-expanded={isOpen}
-        onClick={() => setIsOpen((open: boolean) => !open)}
+        onClick={() => {
+          setIsOpen((open: boolean) => !open);
+          if (!isOpen) dismissInvite();
+        }}
       >
         {isOpen ? <CloseIcon /> : <BrandIcon />}
         {!isOpen ? (

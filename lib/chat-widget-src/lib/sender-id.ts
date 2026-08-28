@@ -14,18 +14,32 @@ function createUuid(): string {
   });
 }
 
-/** Returns a stable sender id persisted in localStorage for the Rasa session. */
+// Repli mémoire (non persisté) utilisé uniquement si localStorage est
+// inaccessible (mode privé strict, politique navigateur, etc.) — garantit
+// que l'utilisateur peut toujours discuter avec le chatbot dans ce cas,
+// simplement sans continuité d'identifiant entre deux rafraîchissements.
+let inMemorySenderId: string | null = null;
+
+/** Returns a stable sender id persisted in localStorage for the Rasa session.
+ * Falls back to an in-memory id (stable for the current page load only) if
+ * localStorage throws or is unavailable — never blocks the conversation. */
 export function getOrCreateSenderId(): string {
   if (typeof window === "undefined") {
     return "";
   }
 
-  const existing = localStorage.getItem(STORAGE_KEY);
-  if (existing) {
-    return existing;
+  try {
+    const existing = localStorage.getItem(STORAGE_KEY);
+    if (existing) {
+      return existing;
+    }
+    const id = createUuid();
+    localStorage.setItem(STORAGE_KEY, id);
+    return id;
+  } catch {
+    if (!inMemorySenderId) {
+      inMemorySenderId = createUuid();
+    }
+    return inMemorySenderId;
   }
-
-  const id = createUuid();
-  localStorage.setItem(STORAGE_KEY, id);
-  return id;
 }
