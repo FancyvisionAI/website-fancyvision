@@ -302,16 +302,16 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
     "veille-juridique-notaires",
   ]);
   const ARTICLE_COVER_IMAGES: Record<string, string> = {
-    "analyse-pdf-notebooklm": "/images/photo0.jfif",
+    "analyse-pdf-notebooklm": "/images/photo0.jpg",
     "claude-mindmap-projet": "/images/photo1.jpg",
     "comprendre-ia-definitions": "/images/photo2.jpg",
     "comptes-rendus-reunion-ia": "/images/photo3.jpg",
-    "creer-images-reseaux-sociaux-chatgpt": "/images/photo4.jfif",
+    "creer-images-reseaux-sociaux-chatgpt": "/images/photo4.jpg",
     "ecrire-emails-chatgpt": "/images/photo5.jpg",
-    "financement-formation-ia": "/images/photo6.jfif",
-    "formation-ia-pme": "/images/photo7.jfif",
-    "ia-consommation-energetique": "/images/photo8.jfif",
-    "ia-drh": "/images/photo9.jfif",
+    "financement-formation-ia": "/images/photo6.jpg",
+    "formation-ia-pme": "/images/photo7.jpg",
+    "ia-consommation-energetique": "/images/photo8.jpg",
+    "ia-drh": "/images/photo9.jpg",
   };
 
   for (const [index, [slug, title, categoryName]] of dev2Articles.entries()) {
@@ -488,7 +488,7 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
           categorySlug: "data",
           // Photo fournie par le client pour cette section (voir audit Blog) —
           // remplace l'illustration générique par défaut.
-          image: "/images/data._.jfif",
+          image: "/images/data.jpg",
         },
       },
       {
