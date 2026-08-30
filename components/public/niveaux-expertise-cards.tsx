@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/lib/utils";
 import {
   NIVEAU_EXPERTISE_INFO,
@@ -14,19 +18,29 @@ import {
  * `selected`/`onSelect` sont optionnels : sans eux, le composant est un
  * simple bloc informatif (utilisé sur les pages de formation) ; avec eux,
  * les cartes deviennent cliquables pour servir de filtre (catalogue).
+ *
+ * `counts` (optionnel) affiche, sous chaque description, le nombre de
+ * formations disponibles pour ce niveau dans le contexte de filtres courant
+ * (catalogue) ; un niveau à 0 résultat reste cliquable (pas de blocage de
+ * parcours) mais s'affiche visuellement atténué.
  */
 export function NiveauxExpertiseCards({
   selected,
   onSelect,
+  counts,
 }: {
   selected?: NiveauExpertise | null;
   onSelect?: (niveau: NiveauExpertise) => void;
+  counts?: Partial<Record<NiveauExpertise, number>>;
 }) {
+  const t = useTranslations("FormationsCatalogue");
   const interactive = typeof onSelect === "function";
   return (
     <div className="grid gap-4 sm:grid-cols-3">
       {NIVEAU_EXPERTISE_ORDER.map((niveau, index) => {
         const isSelected = selected === niveau;
+        const count = counts?.[niveau];
+        const isEmpty = count === 0;
         const Comp = interactive ? "button" : "div";
         return (
           <Comp
@@ -40,6 +54,7 @@ export function NiveauxExpertiseCards({
               isSelected
                 ? "border-accent bg-accent text-white"
                 : "border-lime bg-canvas hover:border-cobalt",
+              isEmpty && !isSelected && "opacity-50",
             )}
           >
             <span
@@ -59,6 +74,16 @@ export function NiveauxExpertiseCards({
             >
               {NIVEAU_EXPERTISE_INFO[niveau].description}
             </p>
+            {count !== undefined && (
+              <p
+                className={cn(
+                  "mt-3 text-xs font-semibold uppercase tracking-[0.08em]",
+                  isSelected ? "text-white/70" : "text-cobalt-strong",
+                )}
+              >
+                {t("resultsCount", { count })}
+              </p>
+            )}
           </Comp>
         );
       })}

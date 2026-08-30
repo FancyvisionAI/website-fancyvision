@@ -11,6 +11,7 @@ import {
   TYPE_ORGANISATION_LABELS,
   formationsCatalogue,
   getPopulationFilterOptions,
+  populationTagLabel,
   type Cible,
   type NiveauExpertise,
   type TypeOrganisation,
@@ -54,7 +55,9 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
     return all.filter((option) => present.has(option.key));
   }, [byCibleAndType]);
 
-  const filtered = useMemo(() => {
+  // Filtré par Cible + Type + Population, sans le Niveau : sert de base au
+  // compteur par niveau (le niveau ne doit pas se filtrer lui-même).
+  const byCibleTypePopulation = useMemo(() => {
     return byCibleAndType.filter((entry) => {
       if (
         population &&
@@ -62,13 +65,37 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
       ) {
         return false;
       }
+      return true;
+    });
+  }, [byCibleAndType, population]);
+
+  const niveauCounts = useMemo(() => {
+    const counts: Record<NiveauExpertise, number> = {
+      Sensibilisation: 0,
+      Approfondissement: 0,
+      Expertise: 0,
+    };
+    for (const entry of byCibleTypePopulation) counts[entry.niveau]++;
+    return counts;
+  }, [byCibleTypePopulation]);
+
+  const filtered = useMemo(() => {
+    return byCibleTypePopulation.filter((entry) => {
       if (niveau && entry.niveau !== niveau) return false;
       return true;
     });
-  }, [byCibleAndType, population, niveau]);
+  }, [byCibleTypePopulation, niveau]);
 
   function resetBelowCible() {
     setType(null);
+    setPopulation(null);
+    setNiveau(null);
+  }
+
+  // Un changement de Type d'organisation invalide potentiellement la
+  // Population/le Niveau déjà choisis (options recalculées) : on les
+  // réinitialise pour éviter un filtre actif mais invisible.
+  function resetBelowType() {
     setPopulation(null);
     setNiveau(null);
   }
@@ -110,7 +137,10 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
               <button
                 key={value}
                 type="button"
-                onClick={() => setType(type === value ? null : value)}
+                onClick={() => {
+                  setType(type === value ? null : value);
+                  resetBelowType();
+                }}
                 className={cn(
                   "rounded-pill border px-4 py-1.5 text-sm font-medium transition",
                   type === value
@@ -162,6 +192,7 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
           <NiveauxExpertiseCards
             selected={niveau}
             onSelect={(value) => setNiveau(niveau === value ? null : value)}
+            counts={niveauCounts}
           />
         </div>
       </div>
@@ -215,6 +246,18 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
                     {entry.niveau}
                   </span>
                 </div>
+                {entry.populations.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {entry.populations.map((tag, tagIndex) => (
+                      <span
+                        key={tagIndex}
+                        className="text-ink/70 rounded-pill bg-lime px-2.5 py-0.5 text-xs font-medium"
+                      >
+                        {populationTagLabel(tag)}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div className="text-ink/55 mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm">
                   <span>
                     {t("duree")} : {t("joursCount", { count: entry.dureeJours })}

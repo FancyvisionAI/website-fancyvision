@@ -914,6 +914,19 @@ export function parsePopulationCibleBrute(raw: string): PopulationTag[] {
     });
 }
 
+/**
+ * Libellé d'affichage d'un tag de population : la grande population
+ * normalisée (dénomination complète), enrichie du qualificatif d'origine
+ * quand il existe (ex. "Fonctions support — RH"), sans jamais remplacer la
+ * population principale par le qualificatif seul. Pour les populations
+ * hors standard (ex. "Tous publics"), le libellé brut est déjà complet.
+ */
+export function populationTagLabel(tag: PopulationTag): string {
+  if (!tag.code) return tag.rawLabel;
+  const label = POPULATION_LABELS[tag.code];
+  return tag.qualifier ? `${label} — ${tag.qualifier}` : label;
+}
+
 // ---------------------------------------------------------------------------
 // Niveaux d'expertise (descriptions demandées par M. Bassit)
 // ---------------------------------------------------------------------------
@@ -938,7 +951,7 @@ export const NIVEAU_EXPERTISE_INFO: Record<
   },
   Expertise: {
     description:
-      "Maîtrise technique et opérationnelle, conception/déploiement de solutions. Prérequis : bases techniques (programmation, statistiques) ou module Approfondissement.",
+      "Maîtrise technique et opérationnelle, conception et déploiement de solutions. Prérequis : bases techniques (programmation, statistiques) ou module Approfondissement.",
   },
 };
 
