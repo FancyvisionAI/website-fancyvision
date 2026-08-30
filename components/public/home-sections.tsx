@@ -8,6 +8,7 @@ import { ArticleCard } from "@/components/public/article-card";
 import { FaqList } from "@/components/public/faq-list";
 import { Reveal } from "@/components/public/reveal";
 import { SectorVisual } from "@/components/public/sector-visual";
+import { TrainingIconTile } from "@/components/public/training-icon-tile";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
@@ -456,17 +457,19 @@ export async function TrainingsSection({
               {t("trainingsEnterprise")}
             </h3>
             <div className="mt-5 space-y-4">
-              {enterprise.map((training) => (
-                <Link
-                  key={training.id}
-                  href={`/formations/${training.slug}`}
-                  className="group flex items-center justify-between gap-4 rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
-                >
-                  <span className="text-lg font-medium leading-[1.3] text-ink">
-                    {training.title}
-                  </span>
-                  <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </Link>
+              {enterprise.map((training, index) => (
+                <Reveal key={training.id} delay={(index % 4) * 0.06}>
+                  <Link
+                    href={`/formations/${training.slug}`}
+                    className="group flex items-center gap-4 rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+                  >
+                    <TrainingIconTile slug={training.slug} className="mb-0 size-11 shrink-0" />
+                    <span className="flex-1 text-lg font-medium leading-[1.3] text-ink">
+                      {training.title}
+                    </span>
+                    <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Link>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -475,17 +478,19 @@ export async function TrainingsSection({
               {t("trainingsIndividual")}
             </h3>
             <div className="mt-5 space-y-4">
-              {individual.map((training) => (
-                <Link
-                  key={training.id}
-                  href={`/formations/${training.slug}`}
-                  className="group flex items-center justify-between gap-4 rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
-                >
-                  <span className="text-lg font-medium leading-[1.3] text-ink">
-                    {training.title}
-                  </span>
-                  <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </Link>
+              {individual.map((training, index) => (
+                <Reveal key={training.id} delay={(index % 4) * 0.06}>
+                  <Link
+                    href={`/formations/${training.slug}`}
+                    className="group flex items-center gap-4 rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+                  >
+                    <TrainingIconTile slug={training.slug} className="mb-0 size-11 shrink-0" />
+                    <span className="flex-1 text-lg font-medium leading-[1.3] text-ink">
+                      {training.title}
+                    </span>
+                    <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Link>
+                </Reveal>
               ))}
             </div>
           </div>
