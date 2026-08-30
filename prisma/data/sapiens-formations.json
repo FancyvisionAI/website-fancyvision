@@ -37,7 +37,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 0,
+    "order": 1,
     "translationOfId": null,
     "id": "cmsxhuw490001t75wiajx6y39",
     "category_slug": "entreprise"
@@ -80,7 +80,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 1,
+    "order": 6,
     "translationOfId": null,
     "id": "cmsxhuwof0005t75w8xm4ry9i",
     "category_slug": "entreprise"
@@ -123,7 +123,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 2,
+    "order": 3,
     "translationOfId": null,
     "id": "cmsxhuwyo0009t75whtfe96rh",
     "category_slug": "entreprise"
@@ -166,7 +166,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 3,
+    "order": 2,
     "translationOfId": null,
     "id": "cmsxhux2l000dt75wz642siyi",
     "category_slug": "entreprise"
@@ -209,7 +209,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 4,
+    "order": 5,
     "translationOfId": null,
     "id": "cmsxhux9m000ht75w844r74al",
     "category_slug": "entreprise"
@@ -251,7 +251,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 5,
     "translationOfId": null,
     "id": "cmsxhuxcd000lt75wnlywmph8",
@@ -294,7 +294,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 6,
     "translationOfId": null,
     "id": "cmsxhuxj5000pt75wutkc73ah",
@@ -338,7 +338,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 7,
+    "order": 4,
     "translationOfId": null,
     "id": "cmsxhuxma000tt75wtxv1x7io",
     "category_slug": "entreprise"
@@ -381,7 +381,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 8,
+    "order": 7,
     "translationOfId": null,
     "id": "cmsxhuxp6000xt75wbdevba97",
     "category_slug": "entreprise"
@@ -389,7 +389,7 @@
   {
     "locale": "fr",
     "slug": "piloter-strategie-ia",
-    "title": "Piloter la stratégie IA de son organisation",
+    "title": "Concevoir une stratégie IA pour son organisation",
     "excerpt": "Formation destinée aux dirigeants et comités de direction pour comprendre les enjeux de l’IA et arbitrer les projets prioritaires à sponsoriser.",
     "content": {
       "type": "doc",
@@ -424,7 +424,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 0,
+    "order": 1,
     "translationOfId": null,
     "id": "cmsw3kyc80001t75spockcwz4",
     "category_slug": "entreprise"
@@ -467,7 +467,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 1,
+    "order": 6,
     "translationOfId": null,
     "id": "cmsw3kyd40003t75se4ukhvjq",
     "category_slug": "entreprise"
@@ -510,7 +510,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 2,
+    "order": 3,
     "translationOfId": null,
     "id": "cmsw3kydu0005t75s660v3k63",
     "category_slug": "entreprise"
@@ -553,7 +553,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 3,
+    "order": 2,
     "translationOfId": null,
     "id": "cmsw3kye60007t75si6ehusnl",
     "category_slug": "entreprise"
@@ -596,7 +596,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 4,
+    "order": 5,
     "translationOfId": null,
     "id": "cmsw3kyf60009t75sq3e9his8",
     "category_slug": "entreprise"
@@ -638,7 +638,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 5,
     "translationOfId": null,
     "id": "cmsw3kyfi000bt75s3de06tif",
@@ -681,7 +681,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 6,
     "translationOfId": null,
     "id": "cmsw3kyfx000dt75svmtl7y57",
@@ -725,7 +725,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 7,
+    "order": 4,
     "translationOfId": null,
     "id": "cmsw3kyg8000ft75suj2a6qfz",
     "category_slug": "entreprise"
@@ -768,7 +768,7 @@
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 8,
+    "order": 7,
     "translationOfId": null,
     "id": "cmsw3kygt000ht75sydgawdzz",
     "category_slug": "entreprise"
