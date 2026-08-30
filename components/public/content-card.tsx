@@ -14,6 +14,7 @@ export function ContentCard({
   description,
   meta,
   visual,
+  compact,
 }: {
   href: string;
   index: number;
@@ -25,13 +26,19 @@ export function ContentCard({
   // Non fourni par défaut, donc aucun changement pour les pages qui
   // utilisent déjà ContentCard (services, secteurs, études de cas...).
   visual?: ReactNode;
+  // Optionnel : variante plus resserrée pour les grilles à 3 colonnes+
+  // (ex. /services#data) où le format par défaut (min-h 390px) rend les
+  // cartes disproportionnées. Défaut à false : aucun changement pour les
+  // pages existantes qui n'utilisent pas cette prop.
+  compact?: boolean;
 }) {
   return (
     <Link
       href={href}
       className={cn(
         cardVariants({ variant: "interactive", padding: "none" }),
-        "group flex min-h-[390px] flex-col rounded-[2rem] p-7 duration-500 hover:bg-lime md:p-9",
+        "group flex flex-col rounded-[2rem] duration-500 hover:bg-lime",
+        compact ? "min-h-[260px] p-6 md:p-7" : "min-h-[390px] p-7 md:p-9",
       )}
     >
       <div className="flex items-start justify-between">
@@ -45,7 +52,7 @@ export function ContentCard({
       </div>
       {visual}
       <div className="mt-auto">
-        <h2 className="text-3xl font-semibold tracking-[-0.05em] md:text-4xl">{title}</h2>
+        <h2 className={cn("font-semibold tracking-[-0.05em]", compact ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl")}>{title}</h2>
         <p className="mt-5 line-clamp-3 leading-7 text-ink/55">{description}</p>
         {meta && <p className="mt-6 text-xs font-semibold uppercase tracking-[0.1em] text-ink/45">{meta}</p>}
       </div>

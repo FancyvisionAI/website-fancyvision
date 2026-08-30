@@ -38,8 +38,8 @@
     "data": "Conseil Data IA",
     "corporateTraining": "Grandes entreprises et PME",
     "individualTraining": "Particuliers, TPE et professions libérales",
-    "allCorporateTrainings": "Voir les formations entreprises",
-    "allIndividualTrainings": "Voir les formations particuliers",
+    "allCorporateTrainings": "Autres thèmes de formations pertinents",
+    "allIndividualTrainings": "Autres thèmes de formations pertinents",
     "ourSectors": "Nos secteurs d’expertise"
   },
   "MobileNav": {
@@ -128,18 +128,34 @@
     "lastName": "Nom",
     "email": "E-mail professionnel",
     "phone": "Téléphone",
-    "company": "Entreprise / Activité",
+    "company": "Entreprise",
     "sector": "Secteur d’activité",
     "sectorPlaceholder": "Sélectionnez votre secteur",
-    "organizationSize": "Taille de l’organisation",
-    "organizationSizePlaceholder": "Sélectionnez une taille",
-    "sizeIndividual": "Particulier / TPE",
-    "sizeSme": "PME",
+    "sectorOther": "Autre secteur",
+    "sectorOtherPlaceholder": "Précisez votre secteur (facultatif)",
+    "organizationSize": "Profil de l’organisation",
+    "organizationSizePlaceholder": "Sélectionnez un profil",
     "sizeLarge": "Grande entreprise",
+    "sizeSme": "PME",
+    "sizeLiberal": "Profession libérale",
+    "sizeTpeArtisan": "TPE / Artisan",
+    "sizeIndividual": "Particulier",
     "message": "Message (facultatif)",
     "slotSummary": "{date} à {time}",
     "selectSlot": "Sélectionnez votre créneau",
     "confirm": "Confirmer le rendez-vous"
+  },
+  "FormationsCatalogue": {
+    "step2": "Type d'organisation",
+    "step3": "Population cible",
+    "step4": "Niveau d'expertise",
+    "results": "Formations correspondantes",
+    "resultsCount": "{count, plural, =0 {Aucune formation} one {# formation} other {# formations}}",
+    "empty": "Aucune formation ne correspond à cette combinaison de filtres pour le moment.",
+    "reset": "Réinitialiser",
+    "duree": "Durée",
+    "prerequis": "Prérequis",
+    "joursCount": "{count, plural, one {# jour} other {# jours}}"
   },
   "NotFound": {
     "eyebrow": "Erreur 404",
@@ -191,7 +207,7 @@
       "title": "Demander mon Audit IA gratuit",
       "leadText": "Découvrez en 60 minutes où l’IA peut faire la différence dans votre activité. Échangez gratuitement et sans engagement avec un consultant Sapiens-IA. Nous identifions avec vous 2 à 3 cas d’usage prioritaires, adaptés à votre métier et à votre secteur, et nous vous indiquons la marche à suivre concrète pour démarrer.",
       "reassurance": "Sans engagement · Réponse sous 48h · Échange confidentiel",
-      "videoCall": "Visioconférence · 30 minutes",
+      "videoCall": "Visioconférence · 60 minutes",
       "noCommitment": "Sans engagement",
       "eyebrowFormationProgramme": "Formation",
       "titleFormationProgramme": "Demandez le programme de cette formation",
@@ -269,6 +285,7 @@
       "enterpriseEyebrow": "Formations en entreprise",
       "enterpriseTitle": "Grandes entreprises et PME",
       "enterpriseDescription": "Des parcours conçus pour les équipes et dirigeants qui veulent piloter, déployer et sécuriser l’intelligence artificielle dans leur organisation.",
+      "seeMore": "Autres thèmes de formations pertinents",
       "individualEyebrow": "Formations pour particuliers",
       "individualTitle": "Particuliers, TPE et professions libérales",
       "individualDescription": "Des parcours adaptés aux indépendants, artisans, commerçants et professions libérales pour intégrer l’IA à leur activité au quotidien."
@@ -295,7 +312,9 @@
       "levelBeginner": "Sensibilisation",
       "levelIntermediate": "Approfondissement",
       "levelAdvanced": "Expertise",
-      "levelAllLevels": "Sensibilisation, Approfondissement, Expertise"
+      "levelAllLevels": "Sensibilisation, Approfondissement, Expertise",
+      "allLevelsHeading": "Trois niveaux",
+      "notGenericNotice": "Les formations ne sont pas génériques et sont conçues selon le niveau de maturité de chaque entreprise."
     },
     "trainingCity": {
       "eyebrow": "Formation à {city}",
@@ -309,6 +328,14 @@
       "adaptedTitle": "Un programme adapté",
       "adaptedDescription": "Le niveau, les outils et les cas d’usage sont ajustés à vos objectifs.",
       "organize": "Organiser une formation à {city}"
+    },
+    "formationsAutresThemes": {
+      "metaTitle": "Autres thèmes de formations pertinents",
+      "metaDescription": "Explorez les formations DATA & IA classées par cible, type d'organisation, population et niveau d'expertise.",
+      "eyebrow": "Formations IA",
+      "title": "Autres thèmes de formations pertinents",
+      "description": "Au-delà des 7 formations phares, ce catalogue rassemble des thématiques sectorielles et transversales : filtrez-les selon votre organisation, votre métier et votre niveau.",
+      "planAheadNotice": "Pour ces formations spécifiques, il est impératif de les planifier quelques semaines à l'avance."
     },
     "search": {
       "eyebrow": "Recherche globale",
@@ -336,9 +363,9 @@
       "value2": "Livrables sur mesure",
       "value3": "Mesure des résultats",
       "value4": "Transfert de compétences",
-      "support": "L’accompagnement",
+      "support": "Description",
       "startDiagnostic": "Démarrer un diagnostic",
-      "auditIaCta": "Demander un Audit Light Gratuit (Une heure)",
+      "auditIaCta": "Demander un Audit Light Gratuit (Deux heures)",
       "developpementCtaHeading": "Planifier un atelier de cadrage",
       "developpementCtaDescription": "Échangez avec l’un de nos consultants seniors pour cadrer votre projet d’audit. Nous analysons vos besoins, partageons notre méthodologie et vous proposons un accompagnement sur-mesure.",
       "developpementCtaLabel": "Planifier un atelier de cadrage"

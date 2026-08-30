@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -6,6 +7,7 @@ import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { Reveal } from "@/components/public/reveal";
 import { TrainingIconTile } from "@/components/public/training-icon-tile";
+import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
 
 export async function generateMetadata({
@@ -76,6 +78,12 @@ export default async function TrainingPage({
               </Reveal>
             ))}
           </div>
+          <Link
+            href="/formations/autres-themes?cible=cible-1"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-cobalt-strong hover:underline"
+          >
+            {t("seeMore")} <ArrowRight className="size-4" />
+          </Link>
         </div>
       </section>
 
@@ -107,6 +115,12 @@ export default async function TrainingPage({
               </Reveal>
             ))}
           </div>
+          <Link
+            href="/formations/autres-themes?cible=cible-2"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-cobalt-strong hover:underline"
+          >
+            {t("seeMore")} <ArrowRight className="size-4" />
+          </Link>
         </div>
       </section>
     </>

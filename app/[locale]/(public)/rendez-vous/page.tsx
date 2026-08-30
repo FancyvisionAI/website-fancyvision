@@ -64,6 +64,9 @@ export default async function AppointmentPage({
   const prefillMessage = training
     ? t("trainingPrefill", { training })
     : undefined;
+  // Le titre nommé embarque le nom de la formation (potentiellement long) :
+  // une taille plus réduite évite un H1 surdimensionné sur cette variante.
+  const isNamedTitle = Boolean(training);
 
   return (
     <section className="min-h-screen bg-lime pb-20 pt-32">
@@ -71,7 +74,9 @@ export default async function AppointmentPage({
         <div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
           <div>
             <span className="eyebrow text-ink">{eyebrow}</span>
-            <h1 className="mt-4 text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.15] tracking-[-0.035em]">
+            <h1
+              className={`mt-4 font-normal leading-[1.15] tracking-[-0.035em] ${isNamedTitle ? "text-[clamp(1.5rem,2.6vw,2.1rem)]" : "text-[clamp(2rem,4vw,3rem)]"}`}
+            >
               {title}
             </h1>
             <p className="mt-5 max-w-xl leading-7 text-muted">{leadText}</p>

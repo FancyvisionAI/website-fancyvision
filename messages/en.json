@@ -38,8 +38,8 @@
     "data": "AI & Data Consulting",
     "corporateTraining": "Large companies and SMEs",
     "individualTraining": "Individuals, small businesses and independent professionals",
-    "allCorporateTrainings": "View corporate trainings",
-    "allIndividualTrainings": "View individual trainings",
+    "allCorporateTrainings": "Other relevant training topics",
+    "allIndividualTrainings": "Other relevant training topics",
     "ourSectors": "Our sectors of expertise"
   },
   "MobileNav": {
@@ -128,18 +128,34 @@
     "lastName": "Last name",
     "email": "Professional email",
     "phone": "Phone",
-    "company": "Company / Activity",
+    "company": "Company",
     "sector": "Industry sector",
     "sectorPlaceholder": "Select your sector",
-    "organizationSize": "Organization size",
-    "organizationSizePlaceholder": "Select a size",
-    "sizeIndividual": "Individual / Small business",
-    "sizeSme": "SME",
+    "sectorOther": "Other sector",
+    "sectorOtherPlaceholder": "Please specify (optional)",
+    "organizationSize": "Organization profile",
+    "organizationSizePlaceholder": "Select a profile",
     "sizeLarge": "Large company",
+    "sizeSme": "SME",
+    "sizeLiberal": "Independent professional",
+    "sizeTpeArtisan": "Micro-business / Artisan",
+    "sizeIndividual": "Individual",
     "message": "Message (optional)",
     "slotSummary": "{date} at {time}",
     "selectSlot": "Select your time slot",
     "confirm": "Confirm appointment"
+  },
+  "FormationsCatalogue": {
+    "step2": "Organization type",
+    "step3": "Target population",
+    "step4": "Expertise level",
+    "results": "Matching trainings",
+    "resultsCount": "{count, plural, =0 {No training} one {# training} other {# trainings}}",
+    "empty": "No training matches this combination of filters yet.",
+    "reset": "Reset",
+    "duree": "Duration",
+    "prerequis": "Prerequisites",
+    "joursCount": "{count, plural, one {# day} other {# days}}"
   },
   "NotFound": {
     "eyebrow": "Error 404",
@@ -191,7 +207,7 @@
       "title": "Request my free AI audit",
       "leadText": "Discover in 60 minutes where AI can make a difference in your business. Talk to a Sapiens-IA consultant, free and with no obligation. Together, we identify 2 to 3 priority use cases tailored to your business and industry, and show you exactly how to get started.",
       "reassurance": "No obligation · Response within 48h · Confidential conversation",
-      "videoCall": "Video call · 30 minutes",
+      "videoCall": "Video call · 60 minutes",
       "noCommitment": "No commitment",
       "eyebrowFormationProgramme": "Training",
       "titleFormationProgramme": "Request the program for this training",
@@ -269,6 +285,7 @@
       "enterpriseEyebrow": "Corporate training",
       "enterpriseTitle": "Large companies and SMEs",
       "enterpriseDescription": "Learning paths designed for teams and leaders who want to steer, deploy and secure artificial intelligence across their organization.",
+      "seeMore": "Other relevant training topics",
       "individualEyebrow": "Individual training",
       "individualTitle": "Individuals, small businesses and independent professionals",
       "individualDescription": "Learning paths tailored to freelancers, tradespeople, shopkeepers and independent professionals to bring AI into their day-to-day activity."
@@ -295,7 +312,9 @@
       "levelBeginner": "Awareness",
       "levelIntermediate": "Deep-dive",
       "levelAdvanced": "Expertise",
-      "levelAllLevels": "Awareness, Deep-dive, Expertise"
+      "levelAllLevels": "Awareness, Deep-dive, Expertise",
+      "allLevelsHeading": "Three levels",
+      "notGenericNotice": "These trainings are not generic — each one is tailored to the maturity level of the organization taking it."
     },
     "trainingCity": {
       "eyebrow": "Training in {city}",
@@ -309,6 +328,14 @@
       "adaptedTitle": "A tailored program",
       "adaptedDescription": "The level, tools and use cases are adjusted to your goals.",
       "organize": "Organize training in {city}"
+    },
+    "formationsAutresThemes": {
+      "metaTitle": "Other relevant training topics",
+      "metaDescription": "Explore DATA & AI trainings filtered by target, organization type, population and expertise level.",
+      "eyebrow": "AI trainings",
+      "title": "Other relevant training topics",
+      "description": "Beyond the 7 flagship trainings, this catalogue gathers sector-specific and cross-functional topics: filter them by your organization, role and level.",
+      "planAheadNotice": "For these specific trainings, it is essential to plan several weeks in advance."
     },
     "search": {
       "eyebrow": "Global search",
@@ -336,9 +363,9 @@
       "value2": "Tailored deliverables",
       "value3": "Results measurement",
       "value4": "Skills transfer",
-      "support": "Our support",
+      "support": "Description",
       "startDiagnostic": "Start a diagnosis",
-      "auditIaCta": "Request a Free Light Audit (One Hour)",
+      "auditIaCta": "Request a Free Light Audit (Two Hours)",
       "developpementCtaHeading": "Schedule a scoping workshop",
       "developpementCtaDescription": "Talk to one of our senior consultants to scope your project. We analyze your needs, share our methodology, and propose a tailored plan.",
       "developpementCtaLabel": "Schedule a scoping workshop"

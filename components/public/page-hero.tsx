@@ -16,12 +16,12 @@ export function PageHero({
   cta?: { label: string; href: string };
 }) {
   return (
-    <section className="reference-hero relative flex min-h-[56svh] items-center overflow-hidden pb-16 pt-28 text-white">
+    <section className="reference-hero relative flex min-h-[42svh] items-center overflow-hidden pb-14 pt-20 text-white">
       <div className="container-shell relative z-10 w-full">
         <Reveal>
           {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-          <h1 className="mt-7 max-w-3xl text-[clamp(2.75rem,5vw,4rem)] font-normal leading-[1.2] tracking-[-0.025em]">{title}</h1>
-          <div className="mt-8 max-w-xl lg:ml-[38%]">
+          <h1 className="mt-5 max-w-3xl text-[clamp(2.75rem,5vw,4rem)] font-normal leading-[1.2] tracking-[-0.025em]">{title}</h1>
+          <div className="mt-6 max-w-2xl">
             {description && <p className="text-base leading-6 text-white/80">{description}</p>}
             {cta && (
               <Button asChild size="lg" className="mt-7">
@@ -33,7 +33,7 @@ export function PageHero({
           </div>
         </Reveal>
       </div>
-      <ArrowDown className="absolute bottom-10 left-8 size-5 animate-bounce text-white md:left-16" />
+      <ArrowDown className="absolute bottom-6 left-8 size-5 animate-bounce text-white md:left-16" />
     </section>
   );
 }

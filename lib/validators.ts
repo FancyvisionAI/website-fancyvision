@@ -18,6 +18,7 @@ export const appointmentSchema = z.object({
   phone: z.string().trim().max(40).optional(),
   company: z.string().trim().max(150).optional(),
   sector: z.string().trim().max(120).optional(),
+  sectorOther: z.string().trim().max(120).optional(),
   organizationSize: z.string().trim().max(60).optional(),
   topic: z.string().trim().min(2).max(160),
   preferredDate: z.string().datetime().optional().or(z.literal("")),

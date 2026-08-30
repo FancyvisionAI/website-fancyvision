@@ -177,14 +177,20 @@ export function DesktopNav({
               title={t("corporateTraining")}
               items={corporate}
               prefix="/formations"
-              footer={{ label: t("allCorporateTrainings"), href: "/formations" }}
+              footer={{
+                label: t("allCorporateTrainings"),
+                href: "/formations/autres-themes?cible=cible-1",
+              }}
               onNavigate={closeNow}
             />
             <CompactColumn
               title={t("individualTraining")}
               items={privateTrainings}
               prefix="/formations"
-              footer={{ label: t("allIndividualTrainings"), href: "/formations" }}
+              footer={{
+                label: t("allIndividualTrainings"),
+                href: "/formations/autres-themes?cible=cible-2",
+              }}
               onNavigate={closeNow}
             />
           </div>

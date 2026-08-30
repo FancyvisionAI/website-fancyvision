@@ -146,6 +146,11 @@ export const adminModules: Record<string, AdminModule> = {
         options: statusOptions,
       },
       { name: "featured", label: "Mis en avant", type: "boolean" },
+      {
+        name: "order",
+        label: "Ordre d'affichage",
+        type: "number",
+      },
     ],
   },
   articles: {

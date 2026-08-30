@@ -15,7 +15,9 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const slots = ["09:30", "11:00", "14:00", "15:30", "17:00"];
+// Créneaux disponibles : uniquement lundi, mercredi et vendredi, 16h et 17h.
+const slots = ["16:00", "17:00"];
+const BOOKABLE_WEEKDAYS = [1, 3, 5]; // 0=dimanche ... 6=samedi (Date#getDay)
 
 function dateKey(date: Date) {
   const year = date.getFullYear();
@@ -25,9 +27,11 @@ function dateKey(date: Date) {
 }
 
 const ORGANIZATION_SIZES = [
-  "sizeIndividual",
-  "sizeSme",
   "sizeLarge",
+  "sizeSme",
+  "sizeLiberal",
+  "sizeTpeArtisan",
+  "sizeIndividual",
 ] as const;
 
 export function AppointmentForm({
@@ -54,6 +58,8 @@ export function AppointmentForm({
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [pending, setPending] = useState(false);
+  const [sector, setSector] = useState("");
+  const sectorOtherValue = t("sectorOther");
 
   const calendarDays = useMemo(() => {
     const first = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
@@ -147,7 +153,7 @@ export function AppointmentForm({
             {calendarDays.map((date, index) => {
               if (!date) return <span key={`empty-${index}`} />;
               const key = dateKey(date);
-              const disabled = date < today || date.getDay() === 0;
+              const disabled = date < today || !BOOKABLE_WEEKDAYS.includes(date.getDay());
               const selected = selectedDate === key;
               return (
                 <button
@@ -177,7 +183,7 @@ export function AppointmentForm({
             <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">
               {t("availableSlots")}
             </p>
-            <div className="mt-3 grid grid-cols-3 gap-2">
+            <div className="mt-3 grid grid-cols-2 gap-2">
               {slots.map((slot) => (
                 <button
                   key={slot}
@@ -225,19 +231,26 @@ export function AppointmentForm({
             <Field label={t("sector")}>
               <select
                 name="sector"
-                defaultValue=""
+                value={sector}
+                onChange={(event) => setSector(event.target.value)}
                 className="border-ink/15 bg-canvas/70 focus:ring-cobalt/10 flex h-10 w-full rounded-lg border px-4 text-sm outline-none transition focus:border-cobalt focus:ring-2"
               >
                 <option value="" disabled>
                   {t("sectorPlaceholder")}
                 </option>
-                {sectorOptions.map((sector) => (
-                  <option key={sector} value={sector}>
-                    {sector}
+                {sectorOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
                   </option>
                 ))}
+                <option value={sectorOtherValue}>{sectorOtherValue}</option>
               </select>
             </Field>
+            {sector === sectorOtherValue && (
+              <Field label={t("sectorOtherPlaceholder")}>
+                <Input name="sectorOther" className="h-10 rounded-lg" />
+              </Field>
+            )}
             <Field label={t("organizationSize")}>
               <select
                 name="organizationSize"

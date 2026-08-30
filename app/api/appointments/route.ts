@@ -18,13 +18,21 @@ export async function POST(request: Request) {
     );
   const payload = { ...parsed.data };
   delete payload.website;
-  const { preferredDate, sector, organizationSize, message, ...data } = payload;
+  const {
+    preferredDate,
+    sector,
+    sectorOther,
+    organizationSize,
+    message,
+    ...data
+  } = payload;
   // Le modèle Appointment n'a pas de colonne dédiée pour ces champs
   // (formulaire Audit gratuit) : on les intègre au message plutôt que
   // d'ajouter une migration Prisma pour cette phase.
   const composedMessage = [
     sector ? `Secteur d'activité : ${sector}` : null,
-    organizationSize ? `Taille de l'organisation : ${organizationSize}` : null,
+    sectorOther ? `Précision secteur : ${sectorOther}` : null,
+    organizationSize ? `Profil de l'organisation : ${organizationSize}` : null,
     message ? message : null,
   ]
     .filter(Boolean)

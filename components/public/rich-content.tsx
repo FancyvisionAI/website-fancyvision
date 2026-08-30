@@ -25,7 +25,7 @@ export function RichContent({ value }: { value: unknown }) {
         if (node.type === "bulletList" || node.type === "orderedList") {
           const Comp = node.type === "bulletList" ? "ul" : "ol";
           return (
-            <Comp key={index} className="my-6 space-y-2 pl-6">
+            <Comp key={index} className="my-6 space-y-2 pl-6 marker:font-medium">
               {node.content?.map((item, itemIndex) => (
                 <li key={itemIndex}>{nodeText(item)}</li>
               ))}
