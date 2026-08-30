@@ -314,7 +314,8 @@
       "levelAdvanced": "Expertise",
       "levelAllLevels": "Awareness, Deep-dive, Expertise",
       "allLevelsHeading": "Three levels",
-      "notGenericNotice": "These trainings are not generic — each one is tailored to the maturity level of the organization taking it."
+      "notGenericNotice": "These trainings are not generic — each one is tailored to the maturity level of the organization taking it.",
+      "pdfCta": "View the training sheet (PDF)"
     },
     "trainingCity": {
       "eyebrow": "Training in {city}",

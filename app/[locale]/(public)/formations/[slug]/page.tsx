@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { ArrowRight, CheckCircle2, Clock, Gauge, Users } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  FileText,
+  Gauge,
+  Users,
+} from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -106,6 +113,13 @@ export default async function TrainingDetail({
               </div>
             )}
           </div>
+          {item.pdfUrl && (
+            <Button asChild variant="outline" size="lg" className="mt-6">
+              <a href={item.pdfUrl} target="_blank" rel="noopener noreferrer">
+                <FileText className="mr-3 size-4" /> {t("pdfCta")}
+              </a>
+            </Button>
+          )}
           {isAllLevels && (
             <div className="mt-10">
               <div className="flex items-center gap-2">

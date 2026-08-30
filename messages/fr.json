@@ -314,7 +314,8 @@
       "levelAdvanced": "Expertise",
       "levelAllLevels": "Sensibilisation, Approfondissement, Expertise",
       "allLevelsHeading": "Trois niveaux",
-      "notGenericNotice": "Les formations ne sont pas génériques et sont conçues selon le niveau de maturité de chaque entreprise."
+      "notGenericNotice": "Les formations ne sont pas génériques et sont conçues selon le niveau de maturité de chaque entreprise.",
+      "pdfCta": "Consulter la fiche de formation (PDF)"
     },
     "trainingCity": {
       "eyebrow": "Formation à {city}",
