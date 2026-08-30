@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
+import { Reveal } from "@/components/public/reveal";
+import { SectorVisual } from "@/components/public/sector-visual";
 import { contentRepository } from "@/lib/repositories/content";
 
 export async function generateMetadata({
@@ -47,14 +49,16 @@ export default async function SolutionsParSecteurPage({
         <div className="container-shell">
           <div className="grid gap-5 md:grid-cols-2">
             {secteurs.map((item, index) => (
-              <ContentCard
-                key={item.id}
-                href={`/solutions-par-secteur/${item.slug}`}
-                index={index}
-                eyebrow={tCategories("secteurs")}
-                title={item.title}
-                description={item.excerpt}
-              />
+              <Reveal key={item.id} delay={(index % 3) * 0.08}>
+                <ContentCard
+                  href={`/solutions-par-secteur/${item.slug}`}
+                  index={index}
+                  eyebrow={tCategories("secteurs")}
+                  title={item.title}
+                  description={item.excerpt}
+                  visual={<SectorVisual slug={item.slug} />}
+                />
+              </Reveal>
             ))}
           </div>
         </div>

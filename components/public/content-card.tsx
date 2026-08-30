@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ArrowUpRight } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
@@ -11,6 +13,7 @@ export function ContentCard({
   title,
   description,
   meta,
+  visual,
 }: {
   href: string;
   index: number;
@@ -18,6 +21,10 @@ export function ContentCard({
   title: string;
   description: string;
   meta?: string | null;
+  // Optionnel : rendu au-dessus du titre, sous la ligne index/eyebrow.
+  // Non fourni par défaut, donc aucun changement pour les pages qui
+  // utilisent déjà ContentCard (services, secteurs, études de cas...).
+  visual?: ReactNode;
 }) {
   return (
     <Link
@@ -36,6 +43,7 @@ export function ContentCard({
           <ArrowUpRight className="size-4" />
         </span>
       </div>
+      {visual}
       <div className="mt-auto">
         <h2 className="text-3xl font-semibold tracking-[-0.05em] md:text-4xl">{title}</h2>
         <p className="mt-5 line-clamp-3 leading-7 text-ink/55">{description}</p>

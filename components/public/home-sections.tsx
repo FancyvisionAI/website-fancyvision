@@ -7,6 +7,7 @@ import { AgentVisual } from "@/components/public/agent-visual";
 import { ArticleCard } from "@/components/public/article-card";
 import { FaqList } from "@/components/public/faq-list";
 import { Reveal } from "@/components/public/reveal";
+import { SectorVisual } from "@/components/public/sector-visual";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
@@ -392,18 +393,22 @@ export async function SectorsSection({
           </Button>
         </Reveal>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((sector) => (
-            <Link
-              key={sector.id}
-              href={`/solutions-par-secteur/${sector.slug}`}
-              className="group flex min-h-40 flex-col justify-between rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
-            >
-              <span className="text-lg font-medium text-ink">{sector.title}</span>
-              <div className="mt-3 flex items-end justify-between gap-3">
-                <p className="line-clamp-2 text-sm leading-6 text-muted">{sector.excerpt}</p>
-                <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </div>
-            </Link>
+          {items.map((sector, index) => (
+            <Reveal key={sector.id} delay={(index % 3) * 0.08}>
+              <Link
+                href={`/solutions-par-secteur/${sector.slug}`}
+                className="group flex min-h-40 flex-col rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
+              >
+                <SectorVisual slug={sector.slug} className="mb-5" />
+                <div className="mt-auto">
+                  <span className="text-lg font-medium text-ink">{sector.title}</span>
+                  <div className="mt-3 flex items-end justify-between gap-3">
+                    <p className="line-clamp-2 text-sm leading-6 text-muted">{sector.excerpt}</p>
+                    <ArrowUpRight className="size-5 shrink-0 text-cobalt transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </div>

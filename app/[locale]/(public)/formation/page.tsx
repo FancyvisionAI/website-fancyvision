@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
+import { Reveal } from "@/components/public/reveal";
+import { TrainingIconTile } from "@/components/public/training-icon-tile";
 import { contentRepository } from "@/lib/repositories/content";
 
 export async function generateMetadata({
@@ -61,15 +63,17 @@ export default async function TrainingPage({
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {enterprise.map((item, index) => (
-              <ContentCard
-                key={item.id}
-                href={`/formations/${item.slug}`}
-                index={index}
-                eyebrow={tCategories("entreprise")}
-                title={item.title}
-                description={item.excerpt}
-                meta={item.duration}
-              />
+              <Reveal key={item.id} delay={(index % 3) * 0.08}>
+                <ContentCard
+                  href={`/formations/${item.slug}`}
+                  index={index}
+                  eyebrow={tCategories("entreprise")}
+                  title={item.title}
+                  description={item.excerpt}
+                  meta={item.duration}
+                  visual={<TrainingIconTile slug={item.slug} />}
+                />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -90,15 +94,17 @@ export default async function TrainingPage({
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {individual.map((item, index) => (
-              <ContentCard
-                key={item.id}
-                href={`/formations/${item.slug}`}
-                index={index}
-                eyebrow={tCategories("particuliers")}
-                title={item.title}
-                description={item.excerpt}
-                meta={item.duration}
-              />
+              <Reveal key={item.id} delay={(index % 3) * 0.08}>
+                <ContentCard
+                  href={`/formations/${item.slug}`}
+                  index={index}
+                  eyebrow={tCategories("particuliers")}
+                  title={item.title}
+                  description={item.excerpt}
+                  meta={item.duration}
+                  visual={<TrainingIconTile slug={item.slug} />}
+                />
+              </Reveal>
             ))}
           </div>
         </div>
