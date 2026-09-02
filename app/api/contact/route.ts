@@ -34,6 +34,6 @@ export async function POST(request: Request) {
   await notifyTeam(
     `Nouveau contact Sapiens IA — ${data.name}`,
     `${data.name} (${data.email})\n${data.company ?? ""}\n\n${data.message}`,
-  ).catch(() => undefined);
+  ).catch((error) => console.error("notifyTeam failed", error));
   return NextResponse.json({ id: contact.id }, { status: 201 });
 }

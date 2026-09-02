@@ -65,6 +65,6 @@ export async function POST(request: Request) {
   await notifyTeam(
     `Nouvelle demande de rendez-vous — ${data.name}`,
     `${data.name} (${data.email})\nSujet : ${data.topic}\nDate souhaitée : ${preferredDate || "non précisée"}${composedMessage ? `\n\n${composedMessage}` : ""}`,
-  ).catch(() => undefined);
+  ).catch((error) => console.error("notifyTeam failed", error));
   return NextResponse.json({ id: appointment.id }, { status: 201 });
 }

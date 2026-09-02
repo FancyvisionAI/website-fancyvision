@@ -71,7 +71,7 @@ export async function POST(
   await notifyTeam(
     `Nouvelle inscription — ${event.title}`,
     `${data.name} (${data.email})\nTéléphone : ${data.phone || "non précisé"}\nÉvénement : ${event.title}`,
-  ).catch(() => undefined);
+  ).catch((error) => console.error("notifyTeam failed", error));
 
   return NextResponse.json({ id: registration.id }, { status: 201 });
 }

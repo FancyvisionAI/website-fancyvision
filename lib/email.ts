@@ -15,7 +15,7 @@ export async function notifyTeam(subject: string, body: string) {
   });
   await transporter.sendMail({
     from: process.env.SMTP_FROM,
-    to: process.env.SMTP_USER,
+    to: process.env.CONTACT_NOTIFICATION_EMAIL || process.env.SMTP_USER,
     subject,
     text: body,
   });
