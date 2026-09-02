@@ -30,7 +30,8 @@ const ORGANIZATION_SIZES = [
   "sizeLarge",
   "sizeSme",
   "sizeLiberal",
-  "sizeTpeArtisan",
+  "sizeTpe",
+  "sizeArtisan",
   "sizeIndividual",
 ] as const;
 
@@ -38,10 +39,22 @@ export function AppointmentForm({
   sectorOptions,
   topic = "Appel découverte",
   prefillMessage,
+  training,
+  durationCaption,
 }: {
   sectorOptions: string[];
   topic?: string;
   prefillMessage?: string;
+  // Transmis indépendamment du champ message (qui reste librement
+  // modifiable par l'utilisateur) : garantit que le nom de la formation
+  // n'est jamais perdu même si le texte pré-rempli est effacé/modifié.
+  training?: string;
+  // Optionnel : libellé + durée affichés au-dessus du formulaire, calculés
+  // par la page appelante selon le contexte réel du rendez-vous (Audit IA
+  // gratuit = 60 min, autres réunions = 30 min). Par défaut (non fourni),
+  // conserve l'ancien texte statique "Appel découverte · 30 min" — aucun
+  // changement pour un éventuel autre appelant qui ne le fournirait pas.
+  durationCaption?: string;
 }) {
   const t = useTranslations("AppointmentForm");
   const locale = useLocale();
@@ -206,7 +219,7 @@ export function AppointmentForm({
         <div className="p-5 sm:p-6">
           <div className="mb-5">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-cobalt">
-              {t("discoveryCall")}
+              {durationCaption ?? t("discoveryCall")}
             </p>
             <h2 className="mt-2 text-2xl font-medium tracking-[-0.03em]">
               {t("yourDetails")}
@@ -278,6 +291,7 @@ export function AppointmentForm({
           </div>
           {/* Valeur envoyée à l'API volontairement non traduite : identifiant métier interne, cf. Phase 2 */}
           <input name="topic" type="hidden" value={topic} />
+          {training && <input name="training" type="hidden" value={training} />}
           <input name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div className="mt-5 flex min-h-10 items-center justify-between gap-4 rounded-xl bg-lime px-4 py-2 text-xs text-muted">

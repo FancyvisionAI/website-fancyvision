@@ -1141,8 +1141,8 @@
   },
   {
     "locale": "en",
-    "slug": "secteur-avocats-notaires",
-    "title": "Lawyers and notaries",
+    "slug": "secteur-avocats",
+    "title": "Lawyers",
     "excerpt": "A regulated profession, facing a growing volume of contractual and regulatory documentation to process.",
     "content": {
       "type": "doc",
@@ -2433,8 +2433,8 @@
   },
   {
     "locale": "fr",
-    "slug": "secteur-avocats-notaires",
-    "title": "Les avocats et notaires",
+    "slug": "secteur-avocats",
+    "title": "Les avocats",
     "excerpt": "Profession réglementée, volume croissant de documentation contractuelle et réglementaire à traiter.",
     "content": {
       "type": "doc",
@@ -2608,5 +2608,155 @@
     "order": 17,
     "translationOfId": null,
     "id": "cmsw24mva001jt7ykbhaby2rd"
+  },
+  {
+    "locale": "en",
+    "slug": "secteur-notaires",
+    "title": "Notaries",
+    "excerpt": "A regulated profession, facing a growing volume of legal deeds and contractual documentation to secure.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "High-value use cases",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Contract analysis and risk clause detection",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "AI-augmented legal research and regulatory watch",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Assisted drafting of standard legal deeds and correspondence (Proprietary)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 18,
+    "translationOfId": null
+  },
+  {
+    "locale": "fr",
+    "slug": "secteur-notaires",
+    "title": "Les notaires",
+    "excerpt": "Profession réglementée, volume croissant d'actes et de documentation contractuelle à sécuriser.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "level": 2
+          },
+          "content": [
+            {
+              "text": "Cas d’usage à valeur ajoutée",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Analyse de contrats et détection de clauses à risque",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Recherche juridique augmentée et veille réglementaire",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Rédaction assistée d’actes et de courriers juridiques types (Propriétaire)",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "icon": null,
+    "image": null,
+    "status": "PUBLISHED",
+    "order": 18,
+    "translationOfId": null
   }
 ]

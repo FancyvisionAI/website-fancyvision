@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import { NiveauxExpertiseCards } from "@/components/public/niveaux-expertise-cards";
 import { PageHero } from "@/components/public/page-hero";
 import { RichContent } from "@/components/public/rich-content";
+import { TrainingRequestTrigger } from "@/components/public/training-request-trigger";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
@@ -35,6 +36,43 @@ export async function generateMetadata({
       languages: languageAlternates(path),
     },
   };
+}
+
+// Le contenu CMS contient systématiquement un paragraphe redondant avec le
+// bloc "Trois niveaux" (cartes) juste au-dessus : "Cette formation peut être
+// déclinée selon trois niveaux : ...". Retiré partout (FR/EN, avec ou sans
+// PDF) — seules les 3 cartes de niveaux doivent rester. Repéré par son texte
+// (pas par sa position) pour rester fiable même si l'ordre des paragraphes
+// change. Pour les formations avec PDF, le premier paragraphe générique
+// ("Cette formation s'adresse à...") reste en plus masqué (correction
+// précédente).
+const THREE_LEVELS_SENTENCE_MARKERS = [
+  "peut être déclinée selon trois niveaux",
+  "can be delivered at three levels",
+];
+
+function isThreeLevelsSentence(node: {
+  content?: Array<{ text?: string }>;
+}): boolean {
+  const text = node.content?.[0]?.text ?? "";
+  return THREE_LEVELS_SENTENCE_MARKERS.some((marker) => text.includes(marker));
+}
+
+function filterFormationContent(
+  value: unknown,
+  hideIntroParagraph: boolean,
+): unknown {
+  const doc = value as {
+    content?: Array<{ content?: Array<{ text?: string }> }>;
+  } | null;
+  if (!doc?.content) return value;
+  const withoutThreeLevelsSentence = doc.content.filter(
+    (node) => !isThreeLevelsSentence(node),
+  );
+  const result = hideIntroParagraph
+    ? withoutThreeLevelsSentence.slice(1)
+    : withoutThreeLevelsSentence;
+  return { ...doc, content: result };
 }
 
 const LEVEL_LABEL_KEYS = {
@@ -67,11 +105,16 @@ export default async function TrainingDetail({
 
   const hasAudience = item.audience.length > 0;
   const isAllLevels = item.difficulty === "ALL_LEVELS";
+  // Quand un PDF existe et qu'aucune durée réelle n'est renseignée, la carte
+  // "Durée" n'affichait que la valeur de repli "Sur mesure" : masquée dans
+  // ce cas précis (une vraie durée, si elle existe un jour pour une
+  // formation avec PDF, continuerait à s'afficher normalement).
+  const showDuration = Boolean(item.duration) || !item.pdfUrl;
   // Pour ALL_LEVELS, les trois niveaux sont présentés dans un bloc dédié à
   // trois cartes plus bas (cf. NiveauxExpertiseCards) plutôt que compressés
   // dans une carte étroite au même format que Durée/Public.
-  const infoCardCount = (hasAudience ? 2 : 1) + (isAllLevels ? 0 : 1);
-  const trainingRequestHref = `/rendez-vous?context=formation-programme&training=${encodeURIComponent(item.title)}`;
+  const infoCardCount =
+    (showDuration ? 1 : 0) + (hasAudience ? 1 : 0) + (isAllLevels ? 0 : 1);
   const trainingCustomHref = `/rendez-vous?context=formation-personnalisee&training=${encodeURIComponent(item.title)}`;
 
   return (
@@ -80,20 +123,21 @@ export default async function TrainingDetail({
         eyebrow={categoryLabel}
         title={item.title}
         description={item.excerpt}
-        cta={{ label: t("cta"), href: trainingRequestHref }}
       />
       <section className="section-pad bg-canvas">
         <div className="container-shell">
           <div
             className={`grid gap-3 ${infoCardCount === 3 ? "sm:grid-cols-3" : infoCardCount === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}
           >
-            <div className="rounded-3xl bg-canvas p-6">
-              <Clock className="size-5" />
-              <p className="text-ink/45 mt-8 text-sm">{t("duration")}</p>
-              <p className="mt-1 text-xl font-semibold">
-                {item.duration ?? t("custom")}
-              </p>
-            </div>
+            {showDuration && (
+              <div className="rounded-3xl bg-canvas p-6">
+                <Clock className="size-5" />
+                <p className="text-ink/45 mt-8 text-sm">{t("duration")}</p>
+                <p className="mt-1 text-xl font-semibold">
+                  {item.duration ?? t("custom")}
+                </p>
+              </div>
+            )}
             {hasAudience && (
               <div className="rounded-3xl bg-canvas p-6">
                 <Users className="size-5" />
@@ -113,12 +157,25 @@ export default async function TrainingDetail({
               </div>
             )}
           </div>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {item.pdfUrl && (
+              <Button asChild variant="outline" size="lg">
+                <a href={item.pdfUrl} target="_blank" rel="noopener noreferrer">
+                  <FileText className="mr-3 size-4" /> {t("pdfCta")}
+                </a>
+              </Button>
+            )}
+            <TrainingRequestTrigger
+              training={item.title}
+              label={t("consultCta")}
+              variant={item.pdfUrl ? "ghost" : "default"}
+              size="lg"
+            />
+          </div>
           {item.pdfUrl && (
-            <Button asChild variant="outline" size="lg" className="mt-6">
-              <a href={item.pdfUrl} target="_blank" rel="noopener noreferrer">
-                <FileText className="mr-3 size-4" /> {t("pdfCta")}
-              </a>
-            </Button>
+            <p className="text-ink/55 mt-4 max-w-2xl text-sm leading-6">
+              {t("pdfAdaptationNotice")}
+            </p>
           )}
           {isAllLevels && (
             <div className="mt-10">
@@ -151,15 +208,32 @@ export default async function TrainingDetail({
                 </ul>
               </div>
               <article>
-                <span className="eyebrow">{t("curriculum")}</span>
-                <RichContent value={item.content} />
+                {/* Redondant avec le bouton PDF déjà proposé plus haut sur
+                    la fiche (qui annonce déjà "le programme") : masqué
+                    uniquement quand un PDF existe, cf. audit dédié. */}
+                {!item.pdfUrl && (
+                  <span className="eyebrow">{t("curriculum")}</span>
+                )}
+                <RichContent
+                  value={filterFormationContent(
+                    item.content,
+                    Boolean(item.pdfUrl),
+                  )}
+                />
               </article>
             </div>
           )}
           {item.objectives.length === 0 && (
             <article className="mt-16 max-w-3xl">
-              <span className="eyebrow">{t("curriculum")}</span>
-              <RichContent value={item.content} />
+              {!item.pdfUrl && (
+                <span className="eyebrow">{t("curriculum")}</span>
+              )}
+              <RichContent
+                value={filterFormationContent(
+                  item.content,
+                  Boolean(item.pdfUrl),
+                )}
+              />
             </article>
           )}
           {modules.length > 0 && (

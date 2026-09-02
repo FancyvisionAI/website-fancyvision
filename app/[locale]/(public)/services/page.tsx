@@ -1,30 +1,36 @@
 import type { Metadata } from "next";
 import type { StaticImageData } from "next/image";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { FaqSection } from "@/components/public/home-sections";
 import { ScrollToHash } from "@/components/public/scroll-to-hash";
+import { cardVariants } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
+import { cn } from "@/lib/utils";
 
 // Images de section (mêmes fichiers que sur la Home, cf. Section
 // "services-intro" catégories "conseil"/"data" en base — réutilisées à
 // l'identique, pas de nouvel asset créé).
 import consultingImage from "@/public/images/fancyvision-ai-strategy.webp";
-import dataImage from "@/public/images/fancyvision-data-systems.webp";
+// Photo réelle fournie par le client pour la section Data (cf. commentaire
+// équivalent dans prisma/seed-dev2.ts) : remplace l'ancienne illustration
+// générique fancyvision-data-systems.webp.
+import dataImage from "@/public/images/data.jpg";
 
 // Photos des sous-services, ajoutées par l'équipe le 30/08 dans
 // public/images/. Noms de fichiers conservés tels quels (accents/espaces
 // inclus) : l'import statique gère ces caractères sans souci d'encodage URL.
-import auditIaImage from "@/public/images/audit_ia.jpg";
-import conduiteChangementImage from "@/public/images/conduit_changement_ia.jpg";
-import developpementSurMesureImage from "@/public/images/développement sur mesure.jpg";
-import dataMarketingImage from "@/public/images/data Marketing & digital.jpg";
-import plateformeDataImage from "@/public/images/platforme data et architecture.jpg";
-import strategieDataImage from "@/public/images/stratégie data & gouvernance.jpg";
+import auditIaImage from "@/public/images/services/audit_ia.jpg";
+import conduiteChangementImage from "@/public/images/services/conduit_changement_ia.jpg";
+import developpementSurMesureImage from "@/public/images/services/développement sur mesure.jpg";
+import dataMarketingImage from "@/public/images/services/data Marketing & digital.jpg";
+import plateformeDataImage from "@/public/images/services/platforme data et architecture.jpg";
+import strategieDataImage from "@/public/images/services/stratégie data & gouvernance.jpg";
 
 const SUB_SERVICE_IMAGES: Record<string, StaticImageData> = {
   "audit-ia": auditIaImage,
@@ -35,19 +41,71 @@ const SUB_SERVICE_IMAGES: Record<string, StaticImageData> = {
   "strategie-gouvernance": strategieDataImage,
 };
 
-function subServiceVisual(slug: string, title: string) {
+// Carte "photo à gauche, texte à droite" pour les sous-services #conseil et
+// #data : remplace l'ancien format "photo pleine largeur au-dessus du
+// titre" (cartes jugées trop hautes/imposantes) par une mise en page plus
+// compacte en largeur, sans toucher au composant partagé ContentCard
+// (utilisé par 7 autres pages) — celles qui n'ont pas de photo gardent une
+// mise en page texte seule, sans bloc image vide.
+function SubServiceCard({
+  href,
+  index,
+  eyebrow,
+  title,
+  description,
+  slug,
+}: {
+  href: string;
+  index: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  slug: string;
+}) {
   const image = SUB_SERVICE_IMAGES[slug];
-  if (!image) return undefined;
   return (
-    <div className="relative my-4 aspect-[1.6/1] w-full overflow-hidden rounded-2xl">
-      <Image
-        src={image}
-        alt={title}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      />
-    </div>
+    <Link
+      href={href}
+      className={cn(
+        cardVariants({ variant: "interactive", padding: "none" }),
+        "group flex flex-col overflow-hidden rounded-[2rem] duration-500 hover:bg-lime sm:flex-row",
+      )}
+    >
+      {image && (
+        <div className="relative aspect-[1.6/1] w-full shrink-0 sm:aspect-auto sm:w-[42%]">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 20vw"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-6 md:p-7">
+        <div className="flex items-start justify-between">
+          <div>
+            <span className="text-ink/40 text-xs tabular-nums">
+              0{index + 1}
+            </span>
+            <span className="ml-4 text-xs font-bold uppercase tracking-[0.12em]">
+              {eyebrow}
+            </span>
+          </div>
+          <span className="border-ink/20 grid size-11 shrink-0 place-items-center rounded-full border transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-white">
+            <ArrowUpRight className="size-4" />
+          </span>
+        </div>
+        <div className="mt-auto pt-5">
+          <h2 className="text-xl font-semibold tracking-[-0.03em] md:text-2xl">
+            {title}
+          </h2>
+          <p className="text-ink/55 mt-3 line-clamp-2 text-sm leading-6">
+            {description}
+          </p>
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -95,7 +153,7 @@ export default async function ServicesPage({
         eyebrow={t("eyebrow")}
         title={page.headline ?? page.title}
         description={page.description}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        cta={{ label: t("cta"), href: "/rendez-vous?context=consultation" }}
       />
       <section id="conseil" className="section-pad scroll-mt-28 bg-canvas pt-0">
         <div className="container-shell">
@@ -119,17 +177,16 @@ export default async function ServicesPage({
               </p>
             </div>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
             {consulting.map((item, index) => (
-              <ContentCard
+              <SubServiceCard
                 key={item.id}
                 href={`/services/${item.slug}`}
                 index={index}
                 eyebrow={tCategories("conseil")}
                 title={item.title}
                 description={item.excerpt}
-                visual={subServiceVisual(item.slug, item.title)}
-                compact
+                slug={item.slug}
               />
             ))}
           </div>
@@ -158,17 +215,16 @@ export default async function ServicesPage({
               </p>
             </div>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
             {dataServices.map((item, index) => (
-              <ContentCard
+              <SubServiceCard
                 key={item.id}
                 href={`/services/${item.slug}`}
                 index={index}
                 eyebrow={tCategories("data")}
                 title={item.title}
                 description={item.excerpt}
-                visual={subServiceVisual(item.slug, item.title)}
-                compact
+                slug={item.slug}
               />
             ))}
           </div>

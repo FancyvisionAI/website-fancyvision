@@ -64,7 +64,7 @@ export default async function DatabaseLandingPage({
         eyebrow={t("eyebrow")}
         title={page.headline ?? page.title}
         description={page.description}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        cta={{ label: t("cta"), href: "/rendez-vous?context=consultation" }}
       />
       <section className="section-pad bg-bg">
         <div className="container-shell">

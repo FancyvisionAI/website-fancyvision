@@ -1,5 +1,8 @@
-import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
-export default function AboutAlias() {
-  redirect("/a-propos");
+import { redirect } from "@/i18n/navigation";
+
+export default async function AboutAlias() {
+  const locale = await getLocale();
+  redirect({ href: "/a-propos", locale });
 }

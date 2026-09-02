@@ -378,7 +378,7 @@ async function main() {
           description:
             "Nous aidons les entreprises, les administrations et les professionnels à intégrer l’IA générative dans leur quotidien, de la stratégie à l’usage.",
           primaryLabel: "Échangeons sur votre projet",
-          primaryHref: "/rendez-vous",
+          primaryHref: "/rendez-vous?context=consultation",
         },
       },
       {
@@ -681,10 +681,8 @@ async function main() {
       "company",
       {
         name: "Sapiens IA",
-        email: "contact@sapiens-ia.com",
-        // Téléphone marocain définitif en attente de confirmation par le
-        // client : ne pas remplacer par un numéro inventé (voir audit PDF).
-        phone: "+33 1 84 80 20 26",
+        email: "contact@sapiens-ia.com, hbassit@sapiens-ia.com",
+        phone: "+212 6 07 01 23 45",
         address: "Casablanca, Maroc",
         linkedin: "https://www.linkedin.com",
       },

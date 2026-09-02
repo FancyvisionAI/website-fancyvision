@@ -1,6 +1,22 @@
 "use client";
 
 import { useId } from "react";
+import Image, { type StaticImageData } from "next/image";
+
+// Photos réelles des 9 Agents IA, ajoutées par l'équipe dans
+// public/images/agent/ — utilisées uniquement sur la fiche individuelle de
+// chaque agent (prop `photo`, opt-in). Ne jamais activer par défaut : ce
+// composant est aussi utilisé par la Home (home-sections.tsx) en tuile
+// décorative miniature, qui doit continuer à afficher le motif SVG.
+import agentCallCenterPhoto from "@/public/images/agent/agent call centre agent telephonique IA.jpg";
+import agentCommercialPhoto from "@/public/images/agent/agent commercial force de vente augmentée.jpg";
+import agentDirectionPhoto from "@/public/images/agent/agent direction assistant executif IA.jpg";
+import agentFinancePhoto from "@/public/images/agent/agent finance  analyste financier ia.jpg";
+import agentHotelleriePhoto from "@/public/images/agent/agent hôtelier conciergerie ia.jpg";
+import agentJuridiquePhoto from "@/public/images/agent/agent juridique conseil juridique IA.jpg";
+import agentMarketingPhoto from "@/public/images/agent/agent marketing strategie marketing ia.jpg";
+import agentMediaPhoto from "@/public/images/agent/agent média gestionnaire de publicité ia.jpg";
+import agentRhPhoto from "@/public/images/agent/agent RH recrutement IA.jpg";
 
 // Identité visuelle des 9 Agents IA (Offre 3) : une famille de motifs
 // abstraits géométriques partageant le même dégradé de marque (cobalt/
@@ -115,12 +131,29 @@ function Motif({ slug, gradientId }: { slug: AgentSlug; gradientId: string }) {
   }
 }
 
+const AGENT_PHOTOS: Partial<Record<AgentSlug, StaticImageData>> = {
+  "agent-call-center": agentCallCenterPhoto,
+  "agent-commercial": agentCommercialPhoto,
+  "agent-direction": agentDirectionPhoto,
+  "agent-finance": agentFinancePhoto,
+  "agent-hotellerie": agentHotelleriePhoto,
+  "agent-juridique": agentJuridiquePhoto,
+  "agent-marketing": agentMarketingPhoto,
+  "agent-media": agentMediaPhoto,
+  "agent-rh": agentRhPhoto,
+};
+
 export function AgentVisual({
   slug,
   className = "",
+  photo = false,
 }: {
   slug: string;
   className?: string;
+  // Opt-in uniquement : la fiche individuelle de l'agent (seule consommatrice
+  // de cette prop) affiche la vraie photo ; tous les autres appels (Home)
+  // continuent d'afficher le motif SVG décoratif sans rien changer.
+  photo?: boolean;
 }) {
   const gradientId = useId();
   const validSlug = (
@@ -138,6 +171,24 @@ export function AgentVisual({
   ).includes(slug as AgentSlug)
     ? (slug as AgentSlug)
     : "agent-direction";
+
+  const photoSrc = photo ? AGENT_PHOTOS[validSlug] : undefined;
+  if (photoSrc) {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-card ${className}`}
+        aria-hidden="true"
+      >
+        <Image
+          src={photoSrc}
+          alt=""
+          fill
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 40vw"
+        />
+      </div>
+    );
+  }
 
   return (
     <div

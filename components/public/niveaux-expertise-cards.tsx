@@ -4,10 +4,22 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 import {
-  NIVEAU_EXPERTISE_INFO,
   NIVEAU_EXPERTISE_ORDER,
   type NiveauExpertise,
 } from "@/lib/content/formations-catalogue";
+
+// Les 3 niveaux sont génériques (pas liés à une formation précise) : leur
+// libellé et leur description viennent des traductions Pages.trainingDetail
+// (déjà utilisées pour la carte "Niveau" des formations non ALL_LEVELS)
+// plutôt que des constantes françaises de formations-catalogue.ts.
+export const LEVEL_TRANSLATION_KEYS: Record<
+  NiveauExpertise,
+  { label: string; description: string }
+> = {
+  Sensibilisation: { label: "levelBeginner", description: "levelBeginnerDescription" },
+  Approfondissement: { label: "levelIntermediate", description: "levelIntermediateDescription" },
+  Expertise: { label: "levelAdvanced", description: "levelAdvancedDescription" },
+};
 
 /**
  * Présentation des 3 niveaux d'expertise (Sensibilisation, Approfondissement,
@@ -34,6 +46,7 @@ export function NiveauxExpertiseCards({
   counts?: Partial<Record<NiveauExpertise, number>>;
 }) {
   const t = useTranslations("FormationsCatalogue");
+  const tLevel = useTranslations("Pages.trainingDetail");
   const interactive = typeof onSelect === "function";
   return (
     <div className="grid gap-4 sm:grid-cols-3">
@@ -65,14 +78,16 @@ export function NiveauxExpertiseCards({
             >
               0{index + 1}
             </span>
-            <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em]">{niveau}</h3>
+            <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em]">
+              {tLevel(LEVEL_TRANSLATION_KEYS[niveau].label)}
+            </h3>
             <p
               className={cn(
                 "mt-3 text-sm leading-6",
                 isSelected ? "text-white/80" : "text-ink/60",
               )}
             >
-              {NIVEAU_EXPERTISE_INFO[niveau].description}
+              {tLevel(LEVEL_TRANSLATION_KEYS[niveau].description)}
             </p>
             {count !== undefined && (
               <p

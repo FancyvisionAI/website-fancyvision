@@ -93,7 +93,15 @@ export default async function ArticlePage({
       </article>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        // Échappe `<` (notamment la séquence `</script>`) : sans cela, un
+        // champ du contenu (titre, description...) contenant littéralement
+        // "</script>" pourrait clore prématurément la balise et injecter du
+        // HTML/JS arbitraire dans la page. Technique standard recommandée
+        // pour l'injection de JSON dans un <script> — ne modifie pas la
+        // donnée JSON-LD elle-même, uniquement son encodage à l'affichage.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
       />
     </>
   );

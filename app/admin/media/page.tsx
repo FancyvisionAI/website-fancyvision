@@ -32,6 +32,7 @@ export default async function MediaPage() {
                   alt={item.alt}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 />
               ) : (
                 <div className="grid h-full place-items-center text-3xl font-black text-cobalt">

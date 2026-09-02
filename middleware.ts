@@ -9,7 +9,8 @@ const { auth } = NextAuth(authConfig);
 const intlMiddleware = createIntlMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/admin")) {
+  const { pathname } = request.nextUrl;
+  if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
     return (
       auth as unknown as (req: NextRequest) => ReturnType<typeof intlMiddleware>
     )(request);
@@ -18,5 +19,9 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/((?!api|_next|connexion|.*\\..*).*)"],
+  matcher: [
+    "/admin/:path*",
+    "/api/admin/:path*",
+    "/((?!api|_next|connexion|.*\\..*).*)",
+  ],
 };

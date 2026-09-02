@@ -36,7 +36,7 @@ export default async function ExpertisePage({
         eyebrow={t("eyebrow")}
         title={t(item.titleKey)}
         description={t("description")}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        cta={{ label: t("cta"), href: "/rendez-vous?context=consultation" }}
       />
       <section className="section-pad bg-canvas pt-0">
         <div className="container-shell">

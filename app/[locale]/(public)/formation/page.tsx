@@ -48,7 +48,10 @@ export default async function TrainingPage({
         eyebrow={t("eyebrow")}
         title={page.headline ?? page.title}
         description={page.description}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        cta={{
+          label: t("cta"),
+          href: "/rendez-vous?context=formation-personnalisee",
+        }}
       />
       <section className="section-pad bg-canvas pt-0">
         <div className="container-shell">

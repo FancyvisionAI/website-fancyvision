@@ -7,3 +7,11 @@ coverage
 *.log
 prisma/*.db
 tsconfig.tsbuildinfo
+
+# Dumps SQL bruts à la racine ou dans database/ (peuvent contenir des
+# données réelles issues d'un export Preview/Production, ex. hash de mot
+# de passe) — ne jamais les ajouter accidentellement via `git add -A`.
+# Les migrations Prisma versionnées (prisma/migrations/**/*.sql) ne sont
+# pas concernées par ces deux règles ancrées à la racine.
+/*.sql
+/database/*.sql

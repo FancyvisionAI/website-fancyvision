@@ -319,6 +319,34 @@ export const adminModules: Record<string, AdminModule> = {
     ],
     exportable: true,
   },
+  "event-registrations": {
+    title: "Inscriptions événements",
+    description:
+      "Inscriptions reçues pour les événements et sessions publiques.",
+    singular: "inscription",
+    allowCreate: false,
+    allowDelete: false,
+    fields: [
+      { name: "eventTitle", label: "Événement" },
+      { name: "name", label: "Nom" },
+      { name: "email", label: "Email" },
+      { name: "phone", label: "Téléphone" },
+      { name: "company", label: "Entreprise" },
+      { name: "message", label: "Message", type: "textarea" },
+      {
+        name: "status",
+        label: "Statut",
+        type: "select",
+        options: [
+          { label: "Nouveau", value: "NEW" },
+          { label: "En cours", value: "IN_PROGRESS" },
+          { label: "Terminé", value: "COMPLETED" },
+          { label: "Spam", value: "SPAM" },
+          { label: "Archivé", value: "ARCHIVED" },
+        ],
+      },
+    ],
+  },
   users: {
     title: "Utilisateurs",
     description: "Administrateurs, éditeurs, rédacteurs et rôles.",

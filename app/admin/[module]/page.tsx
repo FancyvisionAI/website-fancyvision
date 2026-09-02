@@ -64,6 +64,16 @@ async function itemsFor(moduleKey: string) {
       return db.contactRequest.findMany({ orderBy: { createdAt: "desc" } });
     case "appointments":
       return db.appointment.findMany({ orderBy: { createdAt: "desc" } });
+    case "event-registrations":
+      return (
+        await db.eventRegistration.findMany({
+          include: { event: true },
+          orderBy: { createdAt: "desc" },
+        })
+      ).map((registration) => ({
+        ...registration,
+        eventTitle: registration.event?.title ?? "",
+      }));
     case "users":
       return db.user.findMany({
         include: { role: true },

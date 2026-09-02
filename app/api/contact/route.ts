@@ -10,7 +10,16 @@ export async function POST(request: Request) {
   if (!rateLimit(`contact:${ip}`, 4, 60_000).allowed) {
     return NextResponse.json({ error: "Trop de tentatives." }, { status: 429 });
   }
-  const parsed = contactSchema.safeParse(await request.json());
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { error: "Corps de requête invalide." },
+      { status: 400 },
+    );
+  }
+  const parsed = contactSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       { error: "Informations invalides.", fields: parsed.error.flatten() },

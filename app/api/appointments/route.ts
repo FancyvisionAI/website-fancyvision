@@ -10,10 +10,19 @@ export async function POST(request: Request) {
   if (!rateLimit(`appointment:${ip}`, 4, 60_000).allowed) {
     return NextResponse.json({ error: "Trop de tentatives." }, { status: 429 });
   }
-  const parsed = appointmentSchema.safeParse(await request.json());
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { error: "Corps de requête invalide." },
+      { status: 400 },
+    );
+  }
+  const parsed = appointmentSchema.safeParse(body);
   if (!parsed.success)
     return NextResponse.json(
-      { error: "Informations invalides." },
+      { error: "Informations invalides.", fields: parsed.error.flatten() },
       { status: 400 },
     );
   const payload = { ...parsed.data };
@@ -23,13 +32,22 @@ export async function POST(request: Request) {
     sector,
     sectorOther,
     organizationSize,
+    training,
+    role,
+    participants,
+    needs,
     message,
     ...data
   } = payload;
   // Le modèle Appointment n'a pas de colonne dédiée pour ces champs
-  // (formulaire Audit gratuit) : on les intègre au message plutôt que
-  // d'ajouter une migration Prisma pour cette phase.
+  // (formulaire Audit gratuit, puis demandes du catalogue de formations) :
+  // on les intègre au message plutôt que d'ajouter une migration Prisma
+  // pour cette phase.
   const composedMessage = [
+    training ? `Formation sélectionnée : ${training}` : null,
+    role ? `Fonction / poste : ${role}` : null,
+    participants ? `Nombre de participants : ${participants}` : null,
+    needs ? `Besoins / objectifs spécifiques : ${needs}` : null,
     sector ? `Secteur d'activité : ${sector}` : null,
     sectorOther ? `Précision secteur : ${sectorOther}` : null,
     organizationSize ? `Profil de l'organisation : ${organizationSize}` : null,

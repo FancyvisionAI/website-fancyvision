@@ -43,11 +43,11 @@ export default async function SolutionsParSecteurPage({
         eyebrow={t("eyebrow")}
         title={t("title")}
         description={t("description")}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        cta={{ label: t("cta"), href: "/rendez-vous?context=consultation" }}
       />
       <section className="section-pad bg-canvas pt-0">
         <div className="container-shell">
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {secteurs.map((item, index) => (
               <Reveal key={item.id} delay={(index % 3) * 0.08}>
                 <ContentCard
@@ -56,7 +56,8 @@ export default async function SolutionsParSecteurPage({
                   eyebrow={tCategories("secteurs")}
                   title={item.title}
                   description={item.excerpt}
-                  visual={<SectorVisual slug={item.slug} />}
+                  visual={<SectorVisual slug={item.slug} className="size-14" />}
+                  compact
                 />
               </Reveal>
             ))}

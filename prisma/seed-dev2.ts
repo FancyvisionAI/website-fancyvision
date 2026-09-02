@@ -458,7 +458,7 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
           description:
             "Sapiens IA aide les entreprises, administrations et professionnels à transformer l’intelligence artificielle en usages concrets.",
           primaryLabel: "Échangeons sur votre projet",
-          primaryHref: "/rendez-vous",
+          primaryHref: "/rendez-vous?context=consultation",
           secondaryLabel: "Voir les prochaines sessions",
           secondaryHref: "/evenements",
         },
@@ -814,10 +814,8 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
       group: "general",
       value: {
         name: "Sapiens IA",
-        email: "contact@sapiens-ia.com",
-        // Téléphone marocain définitif en attente de confirmation par le
-        // client : ne pas remplacer par un numéro inventé (voir audit PDF).
-        phone: "07 56 28 77 92",
+        email: "contact@sapiens-ia.com, hbassit@sapiens-ia.com",
+        phone: "+212 6 07 01 23 45",
         address: "Casablanca, Maroc",
         linkedin: "https://www.linkedin.com",
       },
@@ -827,8 +825,8 @@ export async function seedDev2Content(prisma: PrismaClient, adminId: string) {
       group: "general",
       value: {
         name: "Sapiens IA",
-        email: "contact@sapiens-ia.com",
-        phone: "07 56 28 77 92",
+        email: "contact@sapiens-ia.com, hbassit@sapiens-ia.com",
+        phone: "+212 6 07 01 23 45",
         address: "Casablanca, Maroc",
         linkedin: "https://www.linkedin.com",
       },

@@ -63,7 +63,9 @@ export default async function ServiceDetail({
         eyebrow={categoryLabel}
         title={item.title}
         description={item.excerpt}
-        cta={{ label: t("cta"), href: "/rendez-vous" }}
+        // Contexte explicite (pas le fallback implicite "audit") : ce CTA
+        // n'est pas l'Audit IA gratuit, la réunion doit rester à 30 minutes.
+        cta={{ label: t("cta"), href: "/rendez-vous?context=consultation" }}
       />
       <section className="section-pad bg-canvas">
         <div className="container-shell grid gap-16 lg:grid-cols-[.65fr_1.35fr]">
@@ -82,7 +84,39 @@ export default async function ServiceDetail({
           <article className="max-w-3xl">
             <span className="eyebrow">{t("support")}</span>
             <RichContent value={item.content} />
-            {item.slug === "developpement-sur-mesure" ? (
+            {item.slug !== "developpement-sur-mesure" && (
+              // Repositionné en bas de l'article (et non plus juste sous
+              // "Description") : la position remontée chevauchait
+              // visuellement cette section sur Audit IA / Conduite du
+              // changement / les 3 services Data. `whitespace-normal` évite
+              // que le libellé long d'Audit IA ("Demander un Audit Light
+              // Gratuit (Deux heures)") ne force une largeur de bouton
+              // excessive — classe ajoutée uniquement sur cette instance, le
+              // composant Button partagé n'est pas modifié.
+              <Button
+                asChild
+                size="lg"
+                className="mt-8 h-auto whitespace-normal py-3 text-center"
+              >
+                {/* Seul audit-ia mène réellement à l'Audit IA gratuit (60
+                    min, contexte implicite conservé) ; "Démarrer un
+                    diagnostic" (4 autres services) n'est pas un audit et
+                    doit rester à 30 min via un contexte explicite. */}
+                <Link
+                  href={
+                    item.slug === "audit-ia"
+                      ? "/rendez-vous"
+                      : "/rendez-vous?context=consultation"
+                  }
+                >
+                  {item.slug === "audit-ia"
+                    ? t("auditIaCta")
+                    : t("startDiagnostic")}{" "}
+                  <ArrowRight className="ml-3 size-4 shrink-0" />
+                </Link>
+              </Button>
+            )}
+            {item.slug === "developpement-sur-mesure" && (
               <div className="mt-10 rounded-3xl bg-lime p-8">
                 <p className="text-lg font-semibold">
                   {t("developpementCtaHeading")}
@@ -91,21 +125,12 @@ export default async function ServiceDetail({
                   {t("developpementCtaDescription")}
                 </p>
                 <Button asChild size="lg" className="mt-6">
-                  <Link href="/rendez-vous">
+                  <Link href="/rendez-vous?context=consultation">
                     {t("developpementCtaLabel")}{" "}
                     <ArrowRight className="ml-3 size-4" />
                   </Link>
                 </Button>
               </div>
-            ) : (
-              <Button asChild size="lg" className="mt-8">
-                <Link href="/rendez-vous">
-                  {item.slug === "audit-ia"
-                    ? t("auditIaCta")
-                    : t("startDiagnostic")}{" "}
-                  <ArrowRight className="ml-3 size-4" />
-                </Link>
-              </Button>
             )}
           </article>
         </div>

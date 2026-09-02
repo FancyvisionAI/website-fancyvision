@@ -33,7 +33,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_Concevoir_Strategie_IA_Sapiens_IA_1.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -119,7 +119,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_Automatiser_Relation_Client_Agents_IA_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -162,7 +162,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_Booster_Performance_Commerciale_IA_Sapiens_IA (1).pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -420,7 +420,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": "/documents/Fiche_Concevoir_Strategie_IA_Sapiens_IA_1 (1).pdf",
+    "pdfUrl": "/documents/Fiche_Concevoir_Strategie_IA_Sapiens_IA_1.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -506,7 +506,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_Automatiser_Relation_Client_Agents_IA_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -844,7 +844,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 0,
     "translationOfId": null,
     "id": "cmsxhuxv40011t75wcwqc77lv",
@@ -852,9 +852,9 @@
   },
   {
     "locale": "en",
-    "slug": "ia-avocats-notaires",
-    "title": "AI for lawyers and notaries",
-    "excerpt": "Designed for lawyers and notaries to automate legal research and the drafting of deeds and correspondence with AI.",
+    "slug": "ia-avocats",
+    "title": "AI for lawyers",
+    "excerpt": "Designed for lawyers and their teams to speed up legal research, drafting and contract review with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -862,7 +862,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "This training is designed for lawyers, notaries and independent legal professionals who want to automate legal research and the drafting of deeds and correspondence with AI.",
+              "text": "This training is designed for lawyers and their teams who want to speed up legal research, drafting and contract review with AI.",
               "type": "text"
             }
           ]
@@ -884,11 +884,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Avocats_AR_Sapiens_IA_1.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 1,
+    "order": 6,
     "translationOfId": null,
     "id": "cmsxhuxzj0015t75w0yas3jyt",
     "category_slug": "particuliers"
@@ -927,11 +927,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Experts_Comptables_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 2,
+    "order": 8,
     "translationOfId": null,
     "id": "cmsxhuy290019t75writ4o8sp",
     "category_slug": "particuliers"
@@ -970,11 +970,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Immobilier_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 3,
+    "order": 1,
     "translationOfId": null,
     "id": "cmsxhuy9c001dt75wlb0t2f5v",
     "category_slug": "particuliers"
@@ -1013,11 +1013,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Professionnels_Sante_Independants_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 4,
+    "order": 3,
     "translationOfId": null,
     "id": "cmsxhuyav001ht75woqzo4wlz",
     "category_slug": "particuliers"
@@ -1056,7 +1056,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_Vendre_Communiquer_IA_Commercants_TPE_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -1099,11 +1099,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Agences_Voyage_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 6,
+    "order": 4,
     "translationOfId": null,
     "id": "cmsxhuyi2001pt75w6yn8sed7",
     "category_slug": "particuliers"
@@ -1145,7 +1145,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 7,
     "translationOfId": null,
     "id": "cmsxhuyj7001tt75wmq0ig08w",
@@ -1154,8 +1154,8 @@
   {
     "locale": "en",
     "slug": "ia-artisans-experts-automobile",
-    "title": "AI for tradespeople and automotive experts",
-    "excerpt": "Designed for tradespeople and automotive experts to automate diagnostics, job or repair quotes and customer follow-up with AI.",
+    "title": "AI for auto damage assessors (Claims)",
+    "excerpt": "Designed for independent auto damage assessors to analyze damage, draft expert reports and detect fraud with AI.",
     "content": {
       "type": "doc",
       "content": [
@@ -1163,7 +1163,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "This training is designed for garage owners, automotive experts and tradespeople who want to automate diagnostics, job or repair quotes and customer follow-up with AI.",
+              "text": "This training is designed for independent auto damage assessors who want to analyze damage, draft expert reports and detect insurance fraud with AI.",
               "type": "text"
             }
           ]
@@ -1185,11 +1185,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Experts_Automobile_Sinistres_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 8,
+    "order": 2,
     "translationOfId": null,
     "id": "cmsxhuykp001xt75wtzpcg5ql",
     "category_slug": "particuliers"
@@ -1231,7 +1231,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 9,
     "translationOfId": null,
     "id": "cmsxhuyq70021t75wvold9rnq",
@@ -1274,7 +1274,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 0,
     "translationOfId": null,
     "id": "cmsw3kyi0000lt75su50d5plv",
@@ -1282,9 +1282,9 @@
   },
   {
     "locale": "fr",
-    "slug": "ia-avocats-notaires",
-    "title": "L’IA au service des avocats et notaires",
-    "excerpt": "Formation destinée aux avocats et notaires pour automatiser la recherche juridique, la rédaction d’actes et de courriers grâce à l’IA.",
+    "slug": "ia-avocats",
+    "title": "L’IA au service des avocats",
+    "excerpt": "Formation destinée aux avocats et à leurs collaborateurs pour accélérer la recherche juridique, la rédaction d’actes et la revue de contrats grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1292,7 +1292,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Cette formation s’adresse aux avocats, notaires et juristes indépendants qui souhaitent automatiser la recherche juridique, la rédaction d’actes et de courriers grâce à l’IA.",
+              "text": "Cette formation s’adresse aux avocats et à leurs collaborateurs qui souhaitent accélérer la recherche juridique, la rédaction d’actes et la revue de contrats grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1314,11 +1314,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Avocats_AR_Sapiens_IA_1.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 1,
+    "order": 6,
     "translationOfId": null,
     "id": "cmsw3kyi9000nt75sxpjdrsfu",
     "category_slug": "particuliers"
@@ -1357,11 +1357,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Experts_Comptables_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 2,
+    "order": 8,
     "translationOfId": null,
     "id": "cmsw3kyik000pt75sv9y2cc7l",
     "category_slug": "particuliers"
@@ -1400,11 +1400,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Immobilier_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 3,
+    "order": 1,
     "translationOfId": null,
     "id": "cmsw3kyix000rt75suf32u337",
     "category_slug": "particuliers"
@@ -1443,11 +1443,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Professionnels_Sante_Independants_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 4,
+    "order": 3,
     "translationOfId": null,
     "id": "cmsw3kyj7000tt75sufplga2m",
     "category_slug": "particuliers"
@@ -1486,7 +1486,7 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_Vendre_Communiquer_IA_Commercants_TPE_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
@@ -1529,11 +1529,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Agences_Voyage_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 6,
+    "order": 4,
     "translationOfId": null,
     "id": "cmsw3kyjw000xt75sbbblx54s",
     "category_slug": "particuliers"
@@ -1575,7 +1575,7 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 7,
     "translationOfId": null,
     "id": "cmsw3kyk5000zt75sddgt7fm3",
@@ -1584,8 +1584,8 @@
   {
     "locale": "fr",
     "slug": "ia-artisans-experts-automobile",
-    "title": "L’IA au service des artisans et experts automobile",
-    "excerpt": "Formation destinée aux artisans et experts automobile pour automatiser diagnostics, devis chantier ou réparation et suivi client grâce à l’IA.",
+    "title": "L’IA au service des experts automobile (Activité sinistres)",
+    "excerpt": "Formation destinée aux experts automobile indépendants pour analyser les dommages, rédiger les rapports d’expertise et détecter la fraude grâce à l’IA.",
     "content": {
       "type": "doc",
       "content": [
@@ -1593,7 +1593,7 @@
           "type": "paragraph",
           "content": [
             {
-              "text": "Cette formation s’adresse aux garagistes, experts automobile et artisans qui souhaitent automatiser leurs diagnostics, devis chantier ou réparation et le suivi client grâce à l’IA.",
+              "text": "Cette formation s’adresse aux experts automobile indépendants qui souhaitent analyser les dommages, rédiger des rapports d’expertise et détecter la fraude à l’assurance grâce à l’IA.",
               "type": "text"
             }
           ]
@@ -1615,11 +1615,11 @@
     "duration": null,
     "priceCents": null,
     "image": null,
-    "pdfUrl": null,
+    "pdfUrl": "/documents/Fiche_IA_Experts_Automobile_Sinistres_Sapiens_IA.pdf",
     "instructor": null,
     "difficulty": "ALL_LEVELS",
     "status": "PUBLISHED",
-    "order": 8,
+    "order": 2,
     "translationOfId": null,
     "id": "cmsw3kykl0011t75s0ujuvnrc",
     "category_slug": "particuliers"
@@ -1661,10 +1661,96 @@
     "pdfUrl": null,
     "instructor": null,
     "difficulty": "ALL_LEVELS",
-    "status": "PUBLISHED",
+    "status": "DRAFT",
     "order": 9,
     "translationOfId": null,
     "id": "cmsw3kyky0013t75s52ixourk",
+    "category_slug": "particuliers"
+  },
+  {
+    "locale": "fr",
+    "slug": "ia-notaires",
+    "title": "L’IA au service des notaires",
+    "excerpt": "Formation destinée aux notaires et à leurs collaborateurs pour accélérer la rédaction d’actes, la vérification de conformité et le traitement des dossiers grâce à l’IA.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Cette formation s’adresse aux notaires et à leurs collaborateurs qui souhaitent accélérer la rédaction d’actes, la vérification de conformité et le traitement des dossiers grâce à l’IA.",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Cette formation peut être déclinée selon trois niveaux : Sensibilisation, Approfondissement, Expertise.",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    "objectives": [],
+    "audience": [],
+    "modules": [],
+    "duration": null,
+    "priceCents": null,
+    "image": null,
+    "pdfUrl": "/documents/Fiche_IA_Notaires_AR_Sapiens_IA.pdf",
+    "instructor": null,
+    "difficulty": "ALL_LEVELS",
+    "status": "PUBLISHED",
+    "order": 7,
+    "translationOfId": null,
+    "id": "manual-ia-notaires-fr",
+    "category_slug": "particuliers"
+  },
+  {
+    "locale": "en",
+    "slug": "ia-notaires",
+    "title": "AI for notaries",
+    "excerpt": "Designed for notaries and their teams to speed up deed drafting, compliance checks and case processing with AI.",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "This training is designed for notaries and their teams who want to speed up deed drafting, compliance checks and case processing with AI.",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "This training can be delivered at three levels: Awareness, Deep-dive, Expertise.",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    "objectives": [],
+    "audience": [],
+    "modules": [],
+    "duration": null,
+    "priceCents": null,
+    "image": null,
+    "pdfUrl": "/documents/Fiche_IA_Notaires_AR_Sapiens_IA.pdf",
+    "instructor": null,
+    "difficulty": "ALL_LEVELS",
+    "status": "PUBLISHED",
+    "order": 7,
+    "translationOfId": null,
+    "id": "manual-ia-notaires-en",
     "category_slug": "particuliers"
   }
 ]

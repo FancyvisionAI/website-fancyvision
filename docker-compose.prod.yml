@@ -1,0 +1,34 @@
+# Fichier dédié au VPS de production — n'affecte pas docker-compose.yml
+# (utilisé pour le développement local, inchangé) et n'est jamais démarré
+# automatiquement. À utiliser explicitement sur le VPS avec :
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Différences volontaires par rapport à docker-compose.yml :
+# - Port Postgres publié uniquement sur 127.0.0.1 (jamais exposé sur
+#   l'interface publique du VPS) — l'application Next.js (via PM2, sur le
+#   même hôte) s'y connecte en local, aucun accès externe direct à la base.
+# - Port interne/hôte 5432 (pas de décalage 5433 : ce contournement était
+#   spécifique à un PostgreSQL natif Windows sur la machine de développement,
+#   absent sur un VPS Linux neuf).
+# - Volume nommé distinct pour ne jamais partager de données avec un
+#   environnement de développement local.
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB in the server .env file}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in the server .env file}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the server .env file}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - fancyvision_postgres_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  fancyvision_postgres_prod:

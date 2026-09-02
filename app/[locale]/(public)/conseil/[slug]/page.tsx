@@ -1,9 +1,13 @@
-import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
+
+import { redirect } from "@/i18n/navigation";
 
 export default async function ConsultingAlias({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  redirect(`/services/${(await params).slug}`);
+  const locale = await getLocale();
+  const { slug } = await params;
+  redirect({ href: `/services/${slug}`, locale });
 }

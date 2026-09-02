@@ -8,6 +8,7 @@ import { after, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { hasPermission } from "@/lib/rbac";
 import {
   beginServiceTranslation,
   finishServiceTranslation,
@@ -110,6 +111,10 @@ const faqLocale = (value: unknown) => (value === "en" ? "en" : "fr");
 async function requireAdmin() {
   const session = await auth();
   if (!session?.user?.id) return null;
+  // Vérification RBAC minimale (cf. lib/rbac.ts) : sans effet sur l'accès
+  // actuel, le seul rôle existant ("Administrateur") possède déjà cette
+  // permission — voir le commentaire de hasPermission().
+  if (!hasPermission(session, "content.manage")) return null;
   return session;
 }
 

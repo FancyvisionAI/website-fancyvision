@@ -46,13 +46,26 @@ export function ContentCard({
           <span className="text-xs tabular-nums text-ink/40">0{index + 1}</span>
           {eyebrow && <span className="ml-4 text-xs font-bold uppercase tracking-[0.12em]">{eyebrow}</span>}
         </div>
-        <span className="grid size-11 place-items-center rounded-full border border-ink/20 transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-white">
-          <ArrowUpRight className="size-4" />
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="grid size-11 place-items-center rounded-full border border-ink/20 transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-white">
+            <ArrowUpRight className="size-4" />
+          </span>
+        </div>
       </div>
       {visual}
       <div className="mt-auto">
-        <h2 className={cn("font-semibold tracking-[-0.05em]", compact ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl")}>{title}</h2>
+        {/* line-clamp-2 uniquement en variante compacte : les titres plus
+            longs (ex. Agents IA, ~38 caractères en moyenne contre ~21 pour
+            les Secteurs) débordaient sur 2-3 lignes et gonflaient la
+            hauteur réelle de la carte au-delà du gabarit compact visé. */}
+        <h2
+          className={cn(
+            "font-semibold tracking-[-0.05em]",
+            compact ? "line-clamp-2 text-2xl md:text-3xl" : "text-3xl md:text-4xl",
+          )}
+        >
+          {title}
+        </h2>
         <p className="mt-5 line-clamp-3 leading-7 text-ink/55">{description}</p>
         {meta && <p className="mt-6 text-xs font-semibold uppercase tracking-[0.1em] text-ink/45">{meta}</p>}
       </div>

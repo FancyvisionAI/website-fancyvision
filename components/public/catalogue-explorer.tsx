@@ -1,19 +1,22 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ArrowRight, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
-import { NiveauxExpertiseCards } from "@/components/public/niveaux-expertise-cards";
+import {
+  LEVEL_TRANSLATION_KEYS,
+  NiveauxExpertiseCards,
+} from "@/components/public/niveaux-expertise-cards";
+import { TrainingRequestDialog } from "@/components/public/training-request-dialog";
 import { cn } from "@/lib/utils";
 import {
-  CIBLE_LABELS,
-  TYPE_ORGANISATION_LABELS,
-  formationsCatalogue,
+  getFormationsCatalogue,
   getPopulationFilterOptions,
   populationTagLabel,
   type Cible,
   type NiveauExpertise,
+  type PopulationCode,
   type TypeOrganisation,
 } from "@/lib/content/formations-catalogue";
 
@@ -25,27 +28,72 @@ const TYPES_PAR_CIBLE: Record<Cible, TypeOrganisation[]> = {
   "cible-2": ["tpe-professions-liberales"],
 };
 
-const CIBLES: Cible[] = ["cible-1", "cible-2"];
+// Phase 2 (traduction EN) : `entry.prerequis` vaut "Aucun" en FR et "None"
+// en EN — la condition d'affichage doit comparer contre le bon sentinel
+// selon la locale active, sinon "None" s'afficherait à tort comme un vrai
+// prérequis sur la version anglaise.
+const NO_PREREQUIS_LABEL: Record<string, string> = { fr: "Aucun", en: "None" };
+
+// Phase 3 (traduction des libellés visibles) : ces valeurs (cible, type
+// d'organisation, population) restent les clés techniques utilisées par la
+// logique de filtrage — seule leur correspondance vers une clé de
+// traduction next-intl (namespace FormationsCatalogue) est ajoutée ici.
+const CIBLE_LABEL_KEYS: Record<Cible, string> = {
+  "cible-1": "cibleGrandesEntreprises",
+  "cible-2": "cibleTpe",
+};
+
+const TYPE_LABEL_KEYS: Record<TypeOrganisation, string> = {
+  pme: "typePme",
+  "grande-entreprise": "typeGrandeEntreprise",
+  "institution-secteur-public": "typeInstitutionSecteurPublic",
+  "tpe-professions-liberales": "typeTpeProfessionsLiberales",
+};
+
+const POPULATION_LABEL_KEYS: Record<PopulationCode, string> = {
+  DIR: "populationDir",
+  ITD: "populationItd",
+  COM: "populationCom",
+  PROD: "populationProd",
+  SUP: "populationSup",
+  MNG: "populationMng",
+};
 
 export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
   const t = useTranslations("FormationsCatalogue");
+  const tLevel = useTranslations("Pages.trainingDetail");
+  const locale = useLocale();
+  const populationLabels = useMemo(
+    () =>
+      Object.fromEntries(
+        (Object.keys(POPULATION_LABEL_KEYS) as PopulationCode[]).map(
+          (code) => [code, t(POPULATION_LABEL_KEYS[code])],
+        ),
+      ) as Record<PopulationCode, string>,
+    [t],
+  );
   const [cible, setCible] = useState<Cible>(initialCible);
   const [type, setType] = useState<TypeOrganisation | null>(null);
   const [population, setPopulation] = useState<string | null>(null);
   const [niveau, setNiveau] = useState<NiveauExpertise | null>(null);
+  const [selectedTraining, setSelectedTraining] = useState<string | null>(null);
 
   const typesDisponibles = TYPES_PAR_CIBLE[cible];
 
+  // Catalogue résolu dans la langue active : contenu des 70 formations
+  // (theme/secteur/prerequis/populationCibleBrute) traduit (Phase 2).
+  const entries = useMemo(() => getFormationsCatalogue(locale), [locale]);
+
   const byCibleAndType = useMemo(() => {
-    return formationsCatalogue.filter((entry) => {
+    return entries.filter((entry) => {
       if (!entry.cibles.includes(cible)) return false;
       if (type && !entry.typesOrganisation.includes(type)) return false;
       return true;
     });
-  }, [cible, type]);
+  }, [entries, cible, type]);
 
   const populationOptions = useMemo(() => {
-    const all = getPopulationFilterOptions();
+    const all = getPopulationFilterOptions(entries, populationLabels);
     const present = new Set<string>();
     for (const entry of byCibleAndType) {
       for (const tag of entry.populations) {
@@ -53,7 +101,7 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
       }
     }
     return all.filter((option) => present.has(option.key));
-  }, [byCibleAndType]);
+  }, [entries, populationLabels, byCibleAndType]);
 
   // Filtré par Cible + Type + Population, sans le Niveau : sert de base au
   // compteur par niveau (le niveau ne doit pas se filtrer lui-même).
@@ -101,29 +149,31 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
   }
 
   const hasActiveFilters = Boolean(type || population || niveau);
+  const otherCible: Cible = cible === "cible-1" ? "cible-2" : "cible-1";
 
   return (
     <div className="space-y-10">
-      {/* Étape 1 : cible */}
-      <div className="flex flex-wrap gap-2">
-        {CIBLES.map((value) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => {
-              setCible(value);
-              resetBelowCible();
-            }}
-            className={cn(
-              "rounded-pill border px-5 py-2 text-sm font-semibold transition",
-              cible === value
-                ? "border-accent bg-accent text-white"
-                : "border-lime bg-canvas text-ink hover:border-cobalt",
-            )}
-          >
-            {CIBLE_LABELS[value]}
-          </button>
-        ))}
+      {/* La cible est déterminée en amont (lien "Autres thèmes de formations
+          pertinentes" depuis la section correspondante) : ce n'est plus une
+          étape de choix, seulement un rappel + une échappatoire pour changer
+          de cible si l'utilisateur s'est trompé de lien. */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-lime px-5 py-4">
+        <div>
+          <p className="text-ink/45 text-xs font-semibold uppercase tracking-[0.1em]">
+            {t("cibleLabel")}
+          </p>
+          <p className="mt-1 text-lg font-semibold">{t(CIBLE_LABEL_KEYS[cible])}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            setCible(otherCible);
+            resetBelowCible();
+          }}
+          className="text-cobalt-strong text-sm font-semibold hover:underline"
+        >
+          {t("switchCible", { cible: t(CIBLE_LABEL_KEYS[otherCible]) })}
+        </button>
       </div>
 
       {/* Étape 2 : type d'organisation (seulement si plusieurs options) */}
@@ -148,7 +198,7 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
                     : "border-lime bg-canvas text-ink hover:border-cobalt",
                 )}
               >
-                {TYPE_ORGANISATION_LABELS[value]}
+                {t(TYPE_LABEL_KEYS[value])}
               </button>
             ))}
           </div>
@@ -243,7 +293,7 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
                       entry.niveau === "Expertise" && "bg-accent text-white",
                     )}
                   >
-                    {entry.niveau}
+                    {tLevel(LEVEL_TRANSLATION_KEYS[entry.niveau].label)}
                   </span>
                 </div>
                 {entry.populations.length > 0 && (
@@ -253,7 +303,7 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
                         key={tagIndex}
                         className="text-ink/70 rounded-pill bg-lime px-2.5 py-0.5 text-xs font-medium"
                       >
-                        {populationTagLabel(tag)}
+                        {populationTagLabel(tag, populationLabels)}
                       </span>
                     ))}
                   </div>
@@ -262,17 +312,31 @@ export function CatalogueExplorer({ initialCible }: { initialCible: Cible }) {
                   <span>
                     {t("duree")} : {t("joursCount", { count: entry.dureeJours })}
                   </span>
-                  {entry.prerequis !== "Aucun" && (
+                  {entry.prerequis !== (NO_PREREQUIS_LABEL[locale] ?? NO_PREREQUIS_LABEL.fr) && (
                     <span>
                       {t("prerequis")} : {entry.prerequis}
                     </span>
                   )}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedTraining(entry.theme)}
+                  className="text-cobalt-strong mt-4 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+                >
+                  {t("chooseTraining")} <ArrowRight className="size-3.5" />
+                </button>
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      <TrainingRequestDialog
+        training={selectedTraining}
+        onOpenChange={(open) => {
+          if (!open) setSelectedTraining(null);
+        }}
+      />
     </div>
   );
 }

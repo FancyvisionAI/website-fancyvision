@@ -24,7 +24,8 @@ type SectorSlug =
   | "secteur-collectivites-territoriales"
   | "secteur-experts-automobile"
   | "secteur-agences-voyage"
-  | "secteur-avocats-notaires"
+  | "secteur-avocats"
+  | "secteur-notaires"
   | "secteur-experts-comptables"
   | "secteur-a-valider";
 
@@ -172,14 +173,24 @@ function Motif({ slug, gradientId }: { slug: SectorSlug; gradientId: string }) {
           <path d="M31 8 38 12l-3 7-2.5-3.5L29 17l-1.5-2 4-4-3-1.5Z" fill={stroke} />
         </>
       );
-    // Avocats et notaires — balance de la justice.
-    case "secteur-avocats-notaires":
+    // Avocats — balance de la justice.
+    case "secteur-avocats":
       return (
         <>
           <path d="M22 8v25M14 33h16" stroke={stroke} strokeWidth="1.8" strokeLinecap="round" />
           <path d="M8 14h13M22 14h13" stroke={stroke} strokeWidth="1.6" strokeLinecap="round" opacity=".85" />
           <path d="M8 14l-3.5 7a4 4 0 0 0 7.4 0Z" stroke={stroke} strokeWidth="1.4" fill="none" opacity=".55" />
           <path d="M35 14l-3.5 7a4 4 0 0 0 7.4 0Z" stroke={stroke} strokeWidth="1.4" fill="none" opacity=".55" />
+        </>
+      );
+    // Notaires — acte scellé (document et sceau).
+    case "secteur-notaires":
+      return (
+        <>
+          <rect x="9" y="7" width="18" height="24" rx="1.6" stroke={stroke} strokeWidth="1.7" fill="none" />
+          <path d="M13 13h10M13 18h10M13 23h6" stroke={stroke} strokeWidth="1.4" strokeLinecap="round" opacity=".65" />
+          <circle cx="30" cy="27" r="7" stroke={stroke} strokeWidth="1.7" fill="none" opacity=".85" />
+          <path d="M27.2 27.3 29 29l4-4.5" stroke={stroke} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </>
       );
     // Experts-comptables — registre et validation.
@@ -197,7 +208,26 @@ function Motif({ slug, gradientId }: { slug: SectorSlug; gradientId: string }) {
   }
 }
 
-export function SectorVisual({ slug, className = "" }: { slug: string; className?: string }) {
+// La taille n'est volontairement pas fixée par défaut (contrairement à
+// l'ancienne version) : chaque appelant la précise via `className`, comme
+// pour AgentVisual — ce qui permet de réutiliser ce même motif en grande
+// taille (fiche détail secteur) sans que la taille par défaut du listing
+// (`size-14`) n'entre en conflit avec une classe de taille passée en prop.
+export function SectorVisual({
+  slug,
+  className = "",
+  iconScale = "62%",
+}: {
+  slug: string;
+  className?: string;
+  // Taille de l'icône SVG relative à son conteneur. Par défaut 62%
+  // (inchangé pour les petites cartes — listing et aperçu Home, qui
+  // doivent rester compactes) ; une valeur plus grande est utilisée
+  // uniquement sur la fiche détail secteur, où le même icône, dans un
+  // conteneur bien plus grand, paraissait trop petit par rapport à
+  // l'espace disponible.
+  iconScale?: string;
+}) {
   const gradientId = useId();
   const validSlug = (
     [
@@ -216,7 +246,8 @@ export function SectorVisual({ slug, className = "" }: { slug: string; className
       "secteur-collectivites-territoriales",
       "secteur-experts-automobile",
       "secteur-agences-voyage",
-      "secteur-avocats-notaires",
+      "secteur-avocats",
+      "secteur-notaires",
       "secteur-experts-comptables",
       "secteur-a-valider",
     ] as const
@@ -227,9 +258,14 @@ export function SectorVisual({ slug, className = "" }: { slug: string; className
   return (
     <div
       aria-hidden="true"
-      className={`glow-cobalt relative flex size-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong transition-transform duration-500 motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-3 ${className}`}
+      className={`glow-cobalt relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-accent via-[#101b33] to-cobalt-strong transition-transform duration-500 motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-3 ${className}`}
     >
-      <svg viewBox="0 0 44 44" className="relative size-[62%]" fill="none">
+      <svg
+        viewBox="0 0 44 44"
+        className="relative"
+        style={{ width: iconScale, height: iconScale }}
+        fill="none"
+      >
         <defs>
           <linearGradient id={gradientId} x1="6" y1="8" x2="38" y2="34" gradientUnits="userSpaceOnUse">
             <stop stopColor="#60A5FA" />

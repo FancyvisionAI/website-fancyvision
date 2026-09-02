@@ -26,7 +26,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!parsed.success) return null;
         const user = await db.user.findUnique({
           where: { email: parsed.data.email.toLowerCase() },
-          include: { role: true },
+          include: {
+            role: {
+              include: { permissions: { include: { permission: true } } },
+            },
+          },
         });
         if (!user?.passwordHash || user.status !== "ACTIVE") return null;
         if (!(await compare(parsed.data.password, user.passwordHash)))
@@ -37,6 +41,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           email: user.email,
           image: user.image,
           role: user.role?.name,
+          permissions:
+            user.role?.permissions.map((rp) => rp.permission.key) ?? [],
         };
       },
     }),

@@ -134,7 +134,7 @@ export default async function EventsPage({
             </h1>
           </div>
           <Link
-            href="/rendez-vous"
+            href="/rendez-vous?context=consultation"
             className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#142746] px-4 text-xs font-semibold text-white/80 transition hover:bg-[#1b3155] hover:text-white"
           >
             <Plus className="size-4" /> {t("organizeEvent")}

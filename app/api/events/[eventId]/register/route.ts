@@ -40,7 +40,10 @@ export async function POST(
 
   const parsed = eventRegistrationSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: t.invalid }, { status: 400 });
+    return NextResponse.json(
+      { error: t.invalid, fields: parsed.error.flatten() },
+      { status: 400 },
+    );
   }
 
   const event = await db.event.findFirst({

@@ -46,7 +46,10 @@ export async function Footer({ locale }: { locale: string }) {
             <p className="mt-5 text-sm leading-6 text-white/55">{t("description")}</p>
             <div className="mt-7 space-y-2 text-xs leading-5 text-white/65">
               <p>{company?.address}</p>
-              <a href={`tel:${company?.phone}`} className="block hover:text-white">
+              <a
+                href={`tel:${company?.phone?.replace(/\s+/g, "")}`}
+                className="block hover:text-white"
+              >
                 {company?.phone}
               </a>
               {/* Lien LinkedIn volontairement masqué : la valeur actuelle
@@ -55,7 +58,7 @@ export async function Footer({ locale }: { locale: string }) {
                   URL officielle est fournie. */}
             </div>
             <Link
-              href="/rendez-vous"
+              href="/rendez-vous?context=consultation"
               className="mt-7 inline-flex h-10 items-center gap-3 rounded-xl bg-white px-4 text-xs font-semibold text-accent transition hover:-translate-y-0.5 hover:bg-slate-100"
             >
               {t("talkToConsultant")} <ArrowUpRight className="size-3.5" />

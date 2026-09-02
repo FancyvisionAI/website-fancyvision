@@ -52,8 +52,8 @@ const HOME_TRAINING_ENTERPRISE_SLUGS = [
   "concevoir-deployer-agents-ia-entreprise",
 ];
 const HOME_TRAINING_INDIVIDUAL_SLUGS = [
-  "decouvrir-ia-generative-quotidien",
-  "maitriser-outils-ia-quotidien",
+  "ia-immobilier",
+  "ia-experts-comptables",
 ];
 
 export default async function HomePage({

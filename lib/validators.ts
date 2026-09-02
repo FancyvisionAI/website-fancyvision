@@ -23,6 +23,14 @@ export const appointmentSchema = z.object({
   topic: z.string().trim().min(2).max(160),
   preferredDate: z.string().datetime().optional().or(z.literal("")),
   message: z.string().trim().max(3000).optional(),
+  // Champs de la demande "Choisir cette formation" (catalogue des autres
+  // thèmes) : la formation sélectionnée est envoyée en clair, distincte du
+  // libellé générique "sector"/"organizationSize" utilisé par le formulaire
+  // de rendez-vous classique.
+  training: z.string().trim().max(200).optional(),
+  role: z.string().trim().max(120).optional(),
+  participants: z.string().trim().max(60).optional(),
+  needs: z.string().trim().max(1000).optional(),
   website: honeypot,
 });
 

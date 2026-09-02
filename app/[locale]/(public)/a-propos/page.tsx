@@ -62,6 +62,7 @@ export default async function AboutPage() {
                         alt={member.name}
                         fill
                         className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="grid h-full place-items-center text-8xl font-black tracking-[-0.08em] text-lime">

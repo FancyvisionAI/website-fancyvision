@@ -1,14 +1,34 @@
-import { Mail, MapPin } from "lucide-react";
+import type { Metadata } from "next";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { ContactForm } from "@/components/public/contact-form";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 // Formulaire de contact : garde un rendu par requête (le layout parent
 // utilise désormais l'ISR par défaut, voir Lot 2).
 export const dynamic = "force-dynamic";
+
+// Réutilise le titre/la description déjà affichés par PageHero (contenu
+// CMS existant, cf. contentRepository.page ci-dessous) : pas de nouveau
+// texte, seulement reflété dans les métadonnées, comme sur les fiches
+// détail (services/[slug], etc.).
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const page = await contentRepository.page("contact", locale);
+  if (!page) return {};
+  return {
+    title: page.headline ?? page.title,
+    description: page.description,
+    alternates: {
+      canonical: localizedPath("/contact", locale),
+      languages: languageAlternates("/contact"),
+    },
+  };
+}
 
 export default async function ContactPage() {
   const t = await getTranslations("Pages.contact");
@@ -19,11 +39,10 @@ export default async function ContactPage() {
   ]);
   if (!page) notFound();
   const company = settings.find((item) => item.key === "company")?.value as
-    { email?: string; address?: string } | undefined;
-  // Téléphone volontairement exclu : Setting.company.phone n'est pas encore
-  // un numéro marocain validé (voir Lot Nettoyage / audit coordonnées).
+    { email?: string; phone?: string; address?: string } | undefined;
   const coordinates = [
     company?.email && { key: "email", Icon: Mail, value: company.email },
+    company?.phone && { key: "phone", Icon: Phone, value: company.phone },
     company?.address && {
       key: "address",
       Icon: MapPin,
@@ -57,7 +76,16 @@ export default async function ContactPage() {
                       className="text-ink/70 flex items-center gap-3 text-sm"
                     >
                       <Icon className="size-4 shrink-0 text-cobalt" />
-                      <span>{value}</span>
+                      {key === "phone" ? (
+                        <a
+                          href={`tel:${value.replace(/\s+/g, "")}`}
+                          className="hover:text-ink"
+                        >
+                          {value}
+                        </a>
+                      ) : (
+                        <span>{value}</span>
+                      )}
                     </div>
                   ))}
                 </div>

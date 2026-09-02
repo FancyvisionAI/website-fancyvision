@@ -400,7 +400,7 @@ export async function SectorsSection({
                 href={`/solutions-par-secteur/${sector.slug}`}
                 className="group flex min-h-40 flex-col rounded-card border border-border bg-canvas p-6 transition hover:-translate-y-1 hover:border-cobalt/40 hover:shadow-card"
               >
-                <SectorVisual slug={sector.slug} className="mb-5" />
+                <SectorVisual slug={sector.slug} className="mb-5 size-14" />
                 <div className="mt-auto">
                   <span className="text-lg font-medium text-ink">{sector.title}</span>
                   <div className="mt-3 flex items-end justify-between gap-3">

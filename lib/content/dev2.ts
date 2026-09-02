@@ -403,6 +403,6 @@ export const dev2Events = [
     offsetDays: 40,
     hour: 8,
     image: dev2Assets.events,
-    href: "/rendez-vous",
+    href: "/rendez-vous?context=consultation",
   },
 ] as const;

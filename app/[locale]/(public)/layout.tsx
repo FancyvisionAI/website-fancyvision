@@ -4,7 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Footer } from "@/components/public/footer";
 import { Header } from "@/components/public/header";
 import { CookieBanner } from "@/components/public/cookie-banner";
-import { FancyVisionChat } from "@/components/public/fancyvision-chat";
+import { FloatingContact } from "@/components/public/floating-contact";
 import { contentRepository } from "@/lib/repositories/content";
 
 // Public content is database-backed. Plutôt que de forcer un rendu
@@ -65,7 +65,7 @@ export default async function PublicLayout({
       <Suspense fallback={null}>
         <CookieBannerLoader locale={locale} />
       </Suspense>
-      <FancyVisionChat />
+      <FloatingContact locale={locale} />
     </>
   );
 }

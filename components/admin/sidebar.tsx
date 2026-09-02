@@ -17,11 +17,14 @@ import {
   SearchCheck,
   Settings,
   ShieldCheck,
+  Ticket,
   Users,
   Waypoints,
 } from "lucide-react";
 
-const groups = [
+// Exporté pour être réutilisé par AdminMobileNav (tiroir de navigation
+// mobile) sans dupliquer la liste des sections admin.
+export const groups = [
   {
     label: "Vue d’ensemble",
     items: [
@@ -52,6 +55,11 @@ const groups = [
     items: [
       { href: "/admin/contacts", label: "Contacts", icon: Inbox },
       { href: "/admin/appointments", label: "Rendez-vous", icon: CalendarDays },
+      {
+        href: "/admin/event-registrations",
+        label: "Inscriptions événements",
+        icon: Ticket,
+      },
     ],
   },
   {

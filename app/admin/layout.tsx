@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { LogOut, Menu } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import { auth, signOut } from "@/auth";
+import { AdminMobileNav } from "@/components/admin/admin-mobile-nav";
 import { Sidebar } from "@/components/admin/sidebar";
 
 export const dynamic = "force-dynamic";
@@ -22,9 +23,7 @@ export default async function AdminLayout({
           <Link href="/admin" className="font-semibold lg:hidden">
             Sapiens-IA CMS
           </Link>
-          <button className="grid size-10 place-items-center rounded-full border border-border lg:hidden">
-            <Menu className="size-4" />
-          </button>
+          <AdminMobileNav />
           <div className="ml-auto flex items-center gap-4">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-semibold">{session.user.name}</p>
