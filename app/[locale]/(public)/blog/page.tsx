@@ -5,12 +5,18 @@ import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/public/article-card";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const t = await getTranslations("Pages.blog");
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/blog", locale),
+      languages: languageAlternates("/blog"),
+    },
   };
 }
 

@@ -6,6 +6,7 @@ import { PageHero } from "@/components/public/page-hero";
 import { Reveal } from "@/components/public/reveal";
 import { SectorVisual } from "@/components/public/sector-visual";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -17,6 +18,10 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/solutions-par-secteur", locale),
+      languages: languageAlternates("/solutions-par-secteur"),
+    },
   };
 }
 

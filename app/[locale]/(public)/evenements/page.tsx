@@ -17,14 +17,20 @@ import { notFound } from "next/navigation";
 import { EventRegistrationForm } from "@/components/public/event-registration-form";
 import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const t = await getTranslations("Pages.events");
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/evenements", locale),
+      languages: languageAlternates("/evenements"),
+    },
   };
 }
 

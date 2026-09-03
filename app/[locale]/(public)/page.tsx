@@ -1,4 +1,5 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { getLocale, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import {
@@ -12,8 +13,25 @@ import {
   TrainingsSection,
 } from "@/components/public/home-sections";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export const revalidate = 60;
+
+// Réutilise le titre/la description déjà affichés par les sections CMS de
+// l'accueil (contenu existant) : pas de nouveau texte.
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const page = await contentRepository.page("accueil", locale);
+  if (!page) return {};
+  return {
+    title: page.title,
+    description: page.description,
+    alternates: {
+      canonical: localizedPath("/", locale),
+      languages: languageAlternates("/"),
+    },
+  };
+}
 
 // Sections CMS qui n'appartiennent pas à la structure officielle du site
 // (M. Bassit) : les données restent intactes en base et sur leurs pages

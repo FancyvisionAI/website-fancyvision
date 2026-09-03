@@ -11,7 +11,7 @@ import { ScrollToHash } from "@/components/public/scroll-to-hash";
 import { cardVariants } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
-import { cn } from "@/lib/utils";
+import { cn, languageAlternates, localizedPath } from "@/lib/utils";
 
 // Images de section (mêmes fichiers que sur la Home, cf. Section
 // "services-intro" catégories "conseil"/"data" en base — réutilisées à
@@ -119,6 +119,10 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/services", locale),
+      languages: languageAlternates("/services"),
+    },
   };
 }
 

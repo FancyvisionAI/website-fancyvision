@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -40,6 +41,10 @@ export async function generateMetadata({
   return {
     title: page.title,
     description: page.description,
+    alternates: {
+      canonical: localizedPath(`/${slug}`, locale),
+      languages: languageAlternates(`/${slug}`),
+    },
   };
 }
 

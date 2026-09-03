@@ -6,6 +6,7 @@ import { ContentCard } from "@/components/public/content-card";
 import { PageHero } from "@/components/public/page-hero";
 import { Reveal } from "@/components/public/reveal";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -17,6 +18,10 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/solutions-ia", locale),
+      languages: languageAlternates("/solutions-ia"),
+    },
   };
 }
 

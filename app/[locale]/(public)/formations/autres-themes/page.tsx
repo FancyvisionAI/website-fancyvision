@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CatalogueExplorer } from "@/components/public/catalogue-explorer";
 import { PageHero } from "@/components/public/page-hero";
 import type { Cible } from "@/lib/content/formations-catalogue";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 function resolveCible(value: string | undefined): Cible {
   return value === "cible-2" ? "cible-2" : "cible-1";
@@ -23,6 +24,10 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/formations/autres-themes", locale),
+      languages: languageAlternates("/formations/autres-themes"),
+    },
   };
 }
 

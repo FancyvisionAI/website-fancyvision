@@ -6,12 +6,18 @@ import { notFound } from "next/navigation";
 import { PageHero } from "@/components/public/page-hero";
 import { Reveal } from "@/components/public/reveal";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const t = await getTranslations("Pages.about");
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/a-propos", locale),
+      languages: languageAlternates("/a-propos"),
+    },
   };
 }
 

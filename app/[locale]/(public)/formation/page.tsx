@@ -9,7 +9,12 @@ import { Reveal } from "@/components/public/reveal";
 import { TrainingIconTile } from "@/components/public/training-icon-tile";
 import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
+import { languageAlternates, localizedPath } from "@/lib/utils";
 
+// Canonical fixé sur /formation (route liée dans la navigation) : cette
+// fonction est aussi réutilisée telle quelle par app/[locale]/(public)/
+// formations/page.tsx (réexport), qui sert donc le même contenu — ce
+// canonical déclare /formation comme adresse de référence pour les deux.
 export async function generateMetadata({
   params,
 }: {
@@ -20,6 +25,10 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical: localizedPath("/formation", locale),
+      languages: languageAlternates("/formation"),
+    },
   };
 }
 
