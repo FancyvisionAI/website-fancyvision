@@ -11,13 +11,20 @@ export type AdminField = {
     | "json"
     | "media"
     | "relation"
-    | "list";
+    | "list"
+    | "datetime";
   options?: Array<{ label: string; value: string }>;
   required?: boolean;
   /** Uniquement pour type "media" : restreint le sélecteur au bon type de fichier. */
   mediaKind?: "image" | "pdf";
   /** Uniquement pour type "relation" : clé dans `relationOptions` fournie par la page admin. */
   relationOptionsKey?: string;
+  /**
+   * Uniquement pour type "datetime" : fuseau horaire utilisé pour l'affichage
+   * (ex. "Africa/Casablanca"), indépendamment du fuseau du navigateur de
+   * l'administrateur. Si absent, le fuseau local du navigateur est utilisé.
+   */
+  timeZone?: string;
 };
 
 export type AdminModule = {
@@ -302,7 +309,12 @@ export const adminModules: Record<string, AdminModule> = {
       { name: "phone", label: "Téléphone" },
       { name: "company", label: "Entreprise" },
       { name: "topic", label: "Sujet" },
-      { name: "preferredDate", label: "Date souhaitée" },
+      {
+        name: "preferredDate",
+        label: "Date souhaitée",
+        type: "datetime",
+        timeZone: "Africa/Casablanca",
+      },
       { name: "message", label: "Message", type: "textarea" },
       {
         name: "status",
@@ -316,6 +328,12 @@ export const adminModules: Record<string, AdminModule> = {
         ],
       },
       { name: "notes", label: "Notes internes", type: "textarea" },
+      {
+        name: "createdAt",
+        label: "Demande reçue le",
+        type: "datetime",
+        timeZone: "Africa/Casablanca",
+      },
     ],
     exportable: true,
   },

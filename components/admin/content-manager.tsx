@@ -22,13 +22,14 @@ const STATUS_LABELS: Record<string, string> = {
   ARCHIVED: "Archivé",
 };
 
-function formatDateTime(value: unknown) {
+function formatDateTime(value: unknown, timeZone?: string) {
   if (!value || typeof value !== "string") return null;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
   return new Intl.DateTimeFormat("fr-FR", {
     dateStyle: "medium",
     timeStyle: "short",
+    timeZone,
   }).format(date);
 }
 
@@ -539,6 +540,20 @@ function FieldInput({
           </option>
         ))}
       </select>
+    );
+  }
+  if (field.type === "datetime") {
+    // Toujours en lecture seule : afficher une date/heure formatée dans le
+    // fuseau métier (field.timeZone) plutôt que la chaîne ISO UTC brute
+    // (ancien comportement par défaut) ou un champ éditable en texte libre,
+    // source d'erreurs de fuseau horaire.
+    return (
+      <Input
+        readOnly
+        disabled
+        value={formatDateTime(value, field.timeZone) ?? "—"}
+        className="bg-canvas/50 text-muted"
+      />
     );
   }
   if (field.type === "boolean") {

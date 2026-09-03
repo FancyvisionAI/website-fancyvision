@@ -19,6 +19,54 @@ import { Input } from "@/components/ui/input";
 const slots = ["16:00", "17:00"];
 const BOOKABLE_WEEKDAYS = [1, 3, 5]; // 0=dimanche ... 6=samedi (Date#getDay)
 
+// Fuseau métier des créneaux ci-dessus : "16:00"/"17:00" signifient toujours
+// heure du Maroc, jamais l'heure locale du navigateur du visiteur. Le Maroc
+// n'est pas systématiquement à UTC+1 (bascule à UTC+0 pendant le Ramadan,
+// dates variables chaque année) : l'offset réel est donc calculé
+// dynamiquement via Intl (aucune dépendance npm requise) plutôt que supposé
+// fixe.
+const BUSINESS_TIME_ZONE = "Africa/Casablanca";
+
+// Offset (en minutes, positif = en avance sur UTC) de `timeZone` à l'instant
+// `instant` donné. Technique standard : on formate cet instant dans
+// `timeZone`, on relit les composants obtenus comme s'ils étaient déjà de
+// l'UTC, et on compare au même instant réel pour en déduire l'écart.
+function timeZoneOffsetMinutes(instant: Date, timeZone: string): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(instant);
+  const get = (type: string) =>
+    Number(parts.find((part) => part.type === type)?.value ?? 0);
+  const asUtc = Date.UTC(
+    get("year"),
+    get("month") - 1,
+    get("day"),
+    get("hour"),
+    get("minute"),
+    get("second"),
+  );
+  return (asUtc - instant.getTime()) / 60_000;
+}
+
+// Convertit une date/heure choisie dans le calendrier (heure du Maroc) en
+// instant UTC réel, indépendamment du fuseau horaire du navigateur.
+function businessTimeToUtcISOString(dateValue: string, time: string): string {
+  // Première approximation : traiter l'heure choisie comme si elle était
+  // déjà UTC, uniquement pour déterminer l'offset applicable à cette date
+  // précise (proche à quelques minutes près, largement suffisant pour
+  // résoudre l'offset horaire réel du fuseau métier).
+  const approx = new Date(`${dateValue}T${time}:00Z`);
+  const offsetMinutes = timeZoneOffsetMinutes(approx, BUSINESS_TIME_ZONE);
+  return new Date(approx.getTime() - offsetMinutes * 60_000).toISOString();
+}
+
 function dateKey(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -104,9 +152,10 @@ export function AppointmentForm({
         values.name = `${firstName} ${lastName}`.trim();
         delete values.firstName;
         delete values.lastName;
-        values.preferredDate = new Date(
-          `${selectedDate}T${selectedTime}:00`,
-        ).toISOString();
+        values.preferredDate = businessTimeToUtcISOString(
+          selectedDate,
+          selectedTime,
+        );
         const response = await fetch("/api/appointments", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
