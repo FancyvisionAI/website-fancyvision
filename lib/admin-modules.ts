@@ -295,6 +295,12 @@ export const adminModules: Record<string, AdminModule> = {
         ],
       },
       { name: "replyStatus", label: "Suivi de réponse" },
+      {
+        name: "createdAt",
+        label: "Demande reçue le",
+        type: "datetime",
+        timeZone: "Africa/Casablanca",
+      },
     ],
     exportable: true,
   },
