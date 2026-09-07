@@ -28,9 +28,11 @@ export async function POST(request: Request) {
   }
   const data = { ...parsed.data };
   delete data.website;
-  const contact = await db.contactRequest.create({
-    data: { ...data, metadata: { ip } },
-  });
+  // L'IP n'est utilisée que pour le rate-limiting ci-dessus : elle n'est
+  // jamais relue une fois la demande créée (pas d'affichage admin, pas
+  // d'export, pas d'audit) — inutile de la conserver dans metadata (audit
+  // sécurité, finding F9).
+  const contact = await db.contactRequest.create({ data });
   await notifyTeam(
     `Nouveau contact Sapiens IA — ${data.name}`,
     `${data.name} (${data.email})\n${data.company ?? ""}\n\n${data.message}`,
