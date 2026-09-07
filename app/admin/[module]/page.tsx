@@ -75,8 +75,18 @@ async function itemsFor(moduleKey: string) {
         eventTitle: registration.event?.title ?? "",
       }));
     case "users":
+      // Sélection explicite : ContentManager n'affiche que id/name/email/
+      // status/dates (cf. titleOf/subtitleOf) — `passwordHash` ne doit
+      // jamais quitter le serveur (audit sécurité, finding F1).
       return db.user.findMany({
-        include: { role: true },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+        },
         orderBy: { createdAt: "desc" },
       });
     case "media":
@@ -96,8 +106,13 @@ async function itemsFor(moduleKey: string) {
         take: 500,
       });
     case "audit":
+      // Sélection explicite de l'utilisateur lié : identité minimale
+      // (id/name/email) pour le journal — `passwordHash` ne doit jamais
+      // quitter le serveur (audit sécurité, finding F1).
       return db.auditLog.findMany({
-        include: { user: true },
+        include: {
+          user: { select: { id: true, name: true, email: true } },
+        },
         orderBy: { createdAt: "desc" },
         take: 500,
       });
