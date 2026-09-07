@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 import { notifyTeam } from "@/lib/email";
-import { rateLimit } from "@/lib/rate-limit";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { eventRegistrationSchema } from "@/lib/validators";
 
 // L'API est hors du routing next-intl (/api n'est pas préfixé par la
@@ -31,7 +31,7 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ eventId: string }> },
 ) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+  const ip = getClientIp(request.headers);
   const body = await request.json();
   const t = messagesFor(body?.locale);
   if (!rateLimit(`event-registration:${ip}`, 6, 60_000).allowed) {

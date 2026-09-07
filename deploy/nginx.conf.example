@@ -47,7 +47,9 @@ server {
 
         # En-têtes transmis à Next.js/Auth.js — nécessaires pour :
         # - AUTH_TRUST_HOST (Auth.js doit reconnaître le host/protocole réels)
-        # - le rate-limiting par IP (lib/rate-limit.ts lit x-forwarded-for)
+        # - le rate-limiting par IP (lib/rate-limit.ts priorise X-Real-IP,
+        #   toujours réécrit ci-dessous depuis $remote_addr et donc non
+        #   falsifiable par le client)
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

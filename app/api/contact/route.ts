@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 import { notifyTeam } from "@/lib/email";
-import { rateLimit } from "@/lib/rate-limit";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { contactSchema } from "@/lib/validators";
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+  const ip = getClientIp(request.headers);
   if (!rateLimit(`contact:${ip}`, 4, 60_000).allowed) {
     return NextResponse.json({ error: "Trop de tentatives." }, { status: 429 });
   }

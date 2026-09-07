@@ -6,7 +6,7 @@ import { AuthError } from "next-auth";
 import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { rateLimit } from "@/lib/rate-limit";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 export default async function SignInPage({
   searchParams,
@@ -50,9 +50,7 @@ export default async function SignInPage({
             // formulaires publics (contact, rendez-vous, inscription) —
             // cf. lib/rate-limit.ts. Cette page n'est pas une route API,
             // l'IP est donc lue via next/headers plutôt que request.headers.
-            const ip =
-              (await headers()).get("x-forwarded-for")?.split(",")[0] ??
-              "unknown";
+            const ip = getClientIp(await headers());
             if (!rateLimit(`connexion:${ip}`, 5, 60_000).allowed) {
               redirect("/connexion?error=rate-limit");
             }
