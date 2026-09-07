@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { hasPermission } from "@/lib/rbac";
 
 const escape = (value: unknown) =>
   `"${String(value ?? "").replaceAll('"', '""')}"`;
@@ -10,7 +11,11 @@ export async function GET(
   _: Request,
   { params }: { params: Promise<{ module: string }> },
 ) {
-  if (!(await auth())?.user)
+  // Export de contacts/rendez-vous = export de demandes entrantes : même
+  // permission que celle qui gère ces modules dans /api/admin/content
+  // (audit sécurité, finding F3).
+  const session = await auth();
+  if (!session?.user || !hasPermission(session, "requests.manage"))
     return NextResponse.json({ error: "Non autorisé." }, { status: 401 });
   const moduleKey = (await params).module;
   let rows: unknown[][] = [];

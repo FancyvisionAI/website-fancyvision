@@ -1,6 +1,7 @@
 import { after, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
+import { hasPermission } from "@/lib/rbac";
 import {
   beginServiceTranslation,
   finishServiceTranslation,
@@ -30,7 +31,10 @@ import {
  */
 export async function POST(request: Request) {
   const session = await auth();
-  if (!session?.user?.id)
+  // Même permission que celle qui gère ces modules dans
+  // /api/admin/content : la traduction est une opération sur du contenu
+  // (audit sécurité, finding F3).
+  if (!session?.user?.id || !hasPermission(session, "content.manage"))
     return NextResponse.json({ error: "Non autorisé." }, { status: 401 });
 
   const body = (await request.json().catch(() => null)) as {

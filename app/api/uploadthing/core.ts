@@ -3,6 +3,7 @@ import { UploadThingError } from "uploadthing/server";
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { hasPermission } from "@/lib/rbac";
 
 const f = createUploadthing();
 
@@ -13,7 +14,12 @@ export const ourFileRouter = {
   })
     .middleware(async () => {
       const session = await auth();
-      if (!session?.user?.id) throw new UploadThingError("Unauthorized");
+      // Même permission que le module "media" dans /api/admin/content
+      // (audit sécurité, finding F3). Cet uploader n'est utilisé que par
+      // le sélecteur de médias du CMS (components/admin/media-uploader.tsx),
+      // aucun usage public.
+      if (!session?.user?.id || !hasPermission(session, "content.manage"))
+        throw new UploadThingError("Unauthorized");
       return { userId: session.user.id };
     })
     .onUploadComplete(async ({ file, metadata }) => {
