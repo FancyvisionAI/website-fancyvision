@@ -5,13 +5,36 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { contentRepository } from "@/lib/repositories/content";
 
+// Setting.value est un Json libre : un champ comme "address"/"phone" peut
+// être soit l'ancien format `string`, soit un nouveau format multilingue
+// `{ fr, en }` — même situation que "cookie" (cf. resolveCookieText dans
+// app/[locale]/(public)/layout.tsx). Sans cette résolution, un objet
+// atteindrait directement le JSX et provoquerait React error #31.
+type LocalizedText = string | { fr?: string; en?: string };
+
+function resolveLocalizedText(
+  value: LocalizedText | undefined,
+  locale: string,
+): string | undefined {
+  if (!value) return undefined;
+  if (typeof value === "string") return value;
+  return (locale === "en" ? value.en : value.fr) ?? value.fr;
+}
+
 export async function Footer({ locale }: { locale: string }) {
   // Locale reçue en prop, voir header.tsx pour la justification (ISR / Lot 2).
   const t = await getTranslations({ locale, namespace: "Footer" });
   const settings = await contentRepository.settings();
   const company = settings.find((item) => item.key === "company")?.value as
-    | { email?: string; phone?: string; address?: string; linkedin?: string }
+    | {
+        email?: LocalizedText;
+        phone?: LocalizedText;
+        address?: LocalizedText;
+        linkedin?: LocalizedText;
+      }
     | undefined;
+  const companyAddress = resolveLocalizedText(company?.address, locale);
+  const companyPhone = resolveLocalizedText(company?.phone, locale);
   // Footer volontairement simplifié (Lot Design) : ne reproduit plus
   // l'arborescence complète du site (tous les Services/Formations) —
   // seulement une sélection de pages essentielles + les pages légales.
@@ -45,12 +68,12 @@ export async function Footer({ locale }: { locale: string }) {
             </Link>
             <p className="mt-5 text-sm leading-6 text-white/55">{t("description")}</p>
             <div className="mt-7 space-y-2 text-xs leading-5 text-white/65">
-              <p>{company?.address}</p>
+              <p>{companyAddress}</p>
               <a
-                href={`tel:${company?.phone?.replace(/\s+/g, "")}`}
+                href={`tel:${companyPhone?.replace(/\s+/g, "") ?? ""}`}
                 className="block hover:text-white"
               >
-                {company?.phone}
+                {companyPhone}
               </a>
               {/* Lien LinkedIn volontairement masqué : la valeur actuelle
                   de Setting.company.linkedin est un placeholder générique,

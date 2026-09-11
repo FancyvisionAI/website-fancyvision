@@ -8,6 +8,22 @@ import { PageHero } from "@/components/public/page-hero";
 import { contentRepository } from "@/lib/repositories/content";
 import { languageAlternates, localizedPath } from "@/lib/utils";
 
+// Setting.value est un Json libre : "email"/"phone"/"address" peuvent être
+// soit l'ancien format `string`, soit un nouveau format multilingue
+// `{ fr, en }` — même situation que "cookie" (cf. resolveCookieText dans
+// app/[locale]/(public)/layout.tsx). Sans cette résolution, un objet
+// atteindrait directement le JSX ci-dessous (React error #31).
+type LocalizedText = string | { fr?: string; en?: string };
+
+function resolveLocalizedText(
+  value: LocalizedText | undefined,
+  locale: string,
+): string | undefined {
+  if (!value) return undefined;
+  if (typeof value === "string") return value;
+  return (locale === "en" ? value.en : value.fr) ?? value.fr;
+}
+
 // Formulaire de contact : garde un rendu par requête (le layout parent
 // utilise désormais l'ISR par défaut, voir Lot 2).
 export const dynamic = "force-dynamic";
@@ -39,14 +55,18 @@ export default async function ContactPage() {
   ]);
   if (!page) notFound();
   const company = settings.find((item) => item.key === "company")?.value as
-    { email?: string; phone?: string; address?: string } | undefined;
+    | { email?: LocalizedText; phone?: LocalizedText; address?: LocalizedText }
+    | undefined;
+  const companyEmail = resolveLocalizedText(company?.email, locale);
+  const companyPhone = resolveLocalizedText(company?.phone, locale);
+  const companyAddress = resolveLocalizedText(company?.address, locale);
   const coordinates = [
-    company?.email && { key: "email", Icon: Mail, value: company.email },
-    company?.phone && { key: "phone", Icon: Phone, value: company.phone },
-    company?.address && {
+    companyEmail && { key: "email", Icon: Mail, value: companyEmail },
+    companyPhone && { key: "phone", Icon: Phone, value: companyPhone },
+    companyAddress && {
       key: "address",
       Icon: MapPin,
-      value: company.address,
+      value: companyAddress,
     },
   ].filter(Boolean) as Array<{ key: string; Icon: typeof Mail; value: string }>;
 
